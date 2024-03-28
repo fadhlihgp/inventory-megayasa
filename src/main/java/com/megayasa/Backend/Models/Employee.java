@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "employee")
 @Entity
@@ -27,13 +28,19 @@ public class Employee {
     @Column(name = "gender", nullable = false, length = 255)
     private String gender;
 
-    @Column(name = "phoneNumber", nullable = true, unique = true, length = 15)
+    @Column(name = "phone_number", nullable = true, unique = true, length = 15)
     private String phoneNumber;
 
-    @Column(name = "identityNumber", nullable = true, unique = true, length = 255)
+    @Column(name = "identity_number", nullable = true, unique = true)
     private String identityNumber;
 
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
+
     @ManyToOne
-    @JoinColumn(name = "positionId")
+    @JoinColumn(name = "position_id")
     private Position position;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Absence> absences;
 }

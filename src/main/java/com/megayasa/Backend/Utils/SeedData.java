@@ -14,14 +14,14 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
 public class SeedData implements CommandLineRunner {
 
-    private final PositionRepository positionRepository;
-    private final AccountRepository accountRepository;
-    private final RoleRepository roleRepository;
+    private PositionRepository positionRepository;
+    private AccountRepository accountRepository;
+    private RoleRepository roleRepository;
 
-    @Autowired
+//    @Autowired
     public SeedData(PositionRepository positionRepository, AccountRepository accountRepository, RoleRepository roleRepository) {
         this.positionRepository = positionRepository;
         this.accountRepository = accountRepository;
