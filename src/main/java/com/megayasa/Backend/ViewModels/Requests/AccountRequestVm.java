@@ -1,5 +1,6 @@
 package com.megayasa.Backend.ViewModels.Requests;
 
+import com.megayasa.Backend.Annotations.MustEmail;
 import com.megayasa.Backend.Annotations.NotNullProp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class AccountRequestVm {
     private String username;
 
     @NotNullProp(message = "Kolom email tidak boleh kosong")
+    @MustEmail
     private String email;
     private String password;
     private String phoneNumber;

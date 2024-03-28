@@ -2,6 +2,7 @@ package com.megayasa.Backend.Services;
 
 import com.megayasa.Backend.Annotations.Util.ValidationUtils;
 import com.megayasa.Backend.Dialogs.InformationDialog;
+import com.megayasa.Backend.Exceptions.ErrorException;
 import com.megayasa.Backend.Exceptions.NotFoundException;
 import com.megayasa.Backend.Exceptions.WarningException;
 import com.megayasa.Backend.Models.Account;
@@ -48,12 +49,13 @@ public class AccountServiceImpl implements AccountService {
 
         Account account = new Account();
         account.setId(UUID.randomUUID().toString());
-        account.setIsActive(accountRequestVm.getIsActive());
+        account.setIsActive(accountRequestVm.getIsActive() == null || accountRequestVm.getIsActive());
         account.setRole(roleService.findById(accountRequestVm.getRoleId()));
         account.setUsername(accountRequestVm.getUsername());
         account.setEmail(accountRequestVm.getEmail());
+        account.setFullName(accountRequestVm.getFullName());
         account.setPassword(BCrypt.hashpw(accountRequestVm.getPassword(), BCrypt.gensalt()));
-        account.setPhoneNumber(account.getPhoneNumber());
+        account.setPhoneNumber(accountRequestVm.getPhoneNumber());
         if (accountRequestVm.getEmployeeId() != null) {
             Employee employee = employeeService.findById(accountRequestVm.getEmployeeId());
             Account accountByEmpId = accountRepository.findAccountByEmployee_Id(accountRequestVm.getEmployeeId())
@@ -61,8 +63,12 @@ public class AccountServiceImpl implements AccountService {
             if (accountByEmpId != null) throw new WarningException("Karyawan tidak boleh lebih dari satu akun!");
             account.setEmployee(employee);
         }
-        accountRepository.save(account);
-        InformationDialog.successMessage("Berhasil menambah data akun");
+        try {
+            accountRepository.save(account);
+            InformationDialog.successMessage("Berhasil menambah data akun");
+        } catch (Exception e) {
+            throw new ErrorException(e.getMessage());
+        }
     }
 
     @Override
