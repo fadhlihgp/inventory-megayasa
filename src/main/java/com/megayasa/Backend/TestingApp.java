@@ -19,13 +19,13 @@ public class TestingApp implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Username: ");
-        String username = input.nextLine();
-        System.out.println("Password: ");
-        String password = input.nextLine();
-
-        var login = loginController.login(new LoginRequestVm(username, password));
-        System.out.println(login);
+//        Scanner input = new Scanner(System.in);
+//        System.out.print("Username: ");
+//        String username = input.nextLine();
+//        System.out.println("Password: ");
+//        String password = input.nextLine();
+//
+//        var login = loginController.login(new LoginRequestVm(username, password));
+//        System.out.println(login);
     }
 }

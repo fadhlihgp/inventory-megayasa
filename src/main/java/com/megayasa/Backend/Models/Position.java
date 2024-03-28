@@ -1,9 +1,12 @@
 package com.megayasa.Backend.Models;
 
+import com.megayasa.Backend.Annotations.NotNullProp;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Table(name = "position")
 @Entity
@@ -15,4 +18,7 @@ public class Position {
 
     @Column(nullable = false, name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    private List<Employee> employees;
 }
