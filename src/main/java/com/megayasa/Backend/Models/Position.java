@@ -1,6 +1,5 @@
 package com.megayasa.Backend.Models;
 
-import com.megayasa.Backend.Annotations.NotNullProp;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

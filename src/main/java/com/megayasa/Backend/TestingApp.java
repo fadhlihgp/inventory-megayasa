@@ -1,7 +1,6 @@
 package com.megayasa.Backend;
 
 import com.megayasa.Backend.Controllers.LoginController;
-import com.megayasa.Backend.ViewModels.Requests.LoginRequestVm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
