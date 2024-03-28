@@ -9,4 +9,5 @@ public interface PositionService {
     void updatePosition(String positionId, String positionName);
     void deletePosition(String positionId);
     List<Position> findAllPositions();
+    Position findPositionById(String positionId);
 }

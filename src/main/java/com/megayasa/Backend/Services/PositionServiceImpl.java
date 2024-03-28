@@ -26,7 +26,7 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     public void createPosition(String positionName) {
-        Position position = new Position(UUID.randomUUID().toString(), positionName, null);
+        Position position = new Position(UUID.randomUUID().toString(), positionName);
         try {
             positionRepository.save(position);
             InformationDialog.successMessage("Berhasil menambah data jabatan");
@@ -61,5 +61,10 @@ public class PositionServiceImpl implements PositionService {
     @Override
     public List<Position> findAllPositions() {
         return positionRepository.findAll();
+    }
+
+    @Override
+    public Position findPositionById(String positionId) {
+        return positionRepository.findById(positionId).orElseThrow(() -> new NotFoundException("Jabatan tidak ditemukan"));
     }
 }

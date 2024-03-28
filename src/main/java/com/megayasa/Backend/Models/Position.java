@@ -18,6 +18,6 @@ public class Position {
     @Column(nullable = false, name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    private List<Employee> employees;
+//    @OneToMany(mappedBy = "position", cascade = CascadeType.DETACH)
+//    private List<Employee> employees;
 }
