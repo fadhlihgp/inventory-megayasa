@@ -18,13 +18,13 @@ public class Absence {
     @Column(name = "date", nullable = false)
     private Date date;
 
-    @Column(name = "information", nullable = false, length = 255)
+    @Column(name = "information", nullable = false)
     private String information;
 
-    @Column(name = "note", nullable = true)
+    @Column(name = "note")
     private String note;
 
     @ManyToOne
-    @JoinColumn(name = "employeeId", nullable = false)
+    @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 }
