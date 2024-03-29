@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -53,7 +54,7 @@ public class InventoryServiceImpl implements InventoryService {
         inventoryByCode.setStock(inventoryRequestVm.getStock());
 
         try {
-            inventoryRepository.updateInventoryByCode(code,inventoryByCode);
+            inventoryRepository.save(inventoryByCode);
             InformationDialog.successMessage("Berhasil mengubah data barang");
         } catch (Exception e) {
             throw new ErrorException(e.getMessage());
@@ -113,5 +114,11 @@ public class InventoryServiceImpl implements InventoryService {
                 .orElseThrow(() -> new NotFoundException("Data barang tidak ditemukan"));
 
         return new InventoryResponseVm(inventory.getId(), inventory.getName(), inventory.getCode() ,inventory.getStock(), inventory.getType());
+    }
+
+    @Override
+    public Inventory findInventoryById(String inventoryId) {
+        return inventoryRepository.findById(inventoryId)
+                .orElseThrow(() -> new NotFoundException("Barang tidak ditemukan"));
     }
 }
