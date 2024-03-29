@@ -16,6 +16,9 @@ public class StockInOut {
     private String id;
 
     @Column(nullable = false)
+    private Integer amount;
+
+    @Column(nullable = false)
     private Date date;
 
     @Column(nullable = true)
