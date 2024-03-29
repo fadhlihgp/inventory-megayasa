@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Table(name = "stockInOut")
+@Table(name = "stock_in_out")
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class StockInOut {
@@ -25,6 +25,6 @@ public class StockInOut {
     private Boolean status;
 
     @ManyToOne
-    @JoinColumn(name = "inventoryId", nullable = false)
+    @JoinColumn(name = "inventory_id", nullable = false)
     private Inventory inventory;
 }
