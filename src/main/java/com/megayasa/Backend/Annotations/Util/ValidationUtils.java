@@ -1,9 +1,9 @@
 package com.megayasa.Backend.Annotations.Util;
 
-import com.megayasa.Backend.Annotations.LengthConstraint;
-import com.megayasa.Backend.Annotations.MustEmail;
-import com.megayasa.Backend.Annotations.MustNumber;
-import com.megayasa.Backend.Annotations.NotNullProp;
+import com.megayasa.Backend.Annotations.Validations.LengthConstraint;
+import com.megayasa.Backend.Annotations.Validations.MustEmail;
+import com.megayasa.Backend.Annotations.Validations.MustNumber;
+import com.megayasa.Backend.Annotations.Validations.NotNullProp;
 import com.megayasa.Backend.Exceptions.WarningException;
 
 import java.lang.reflect.Field;

@@ -1,18 +1,16 @@
 package com.megayasa.Backend.Controllers;
 
+import com.google.inject.Inject;
 import com.megayasa.Backend.Services.Interfaces.InventoryService;
 import com.megayasa.Backend.ViewModels.Requests.InventoryRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.InventoryResponseVm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-@Controller
 public class InventoryController {
     private final InventoryService inventoryService;
 
-    @Autowired
+    @Inject
     public InventoryController(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
     }

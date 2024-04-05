@@ -1,29 +1,26 @@
 package com.megayasa.Backend.Services;
 
+import com.google.inject.Inject;
 import com.megayasa.Backend.Annotations.Util.ValidationUtils;
+import com.megayasa.Backend.Context.TransactionUtil;
 import com.megayasa.Backend.Dialogs.InformationDialog;
-import com.megayasa.Backend.Exceptions.ErrorException;
 import com.megayasa.Backend.Exceptions.NotFoundException;
 import com.megayasa.Backend.Exceptions.WarningException;
 import com.megayasa.Backend.Models.Employee;
+import com.megayasa.Backend.Models.Position;
 import com.megayasa.Backend.Repositories.EmployeeRepository;
 import com.megayasa.Backend.Services.Interfaces.EmployeeService;
 import com.megayasa.Backend.Services.Interfaces.PositionService;
 import com.megayasa.Backend.ViewModels.Requests.EmployeeRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.EmployeeResponseVm;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@Transactional
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final PositionService positionService;
 
-    @Autowired
+    @Inject
     public EmployeeServiceImpl(EmployeeRepository employeeRepository, PositionService positionService) {
         this.employeeRepository = employeeRepository;
         this.positionService = positionService;
@@ -35,8 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new NotFoundException("Karyawan tidak ditemukan"));
     }
 
-    @Override
-    public void createEmployee(EmployeeRequestVm employeeRequestVm) {
+    private void createEmployee(EmployeeRequestVm employeeRequestVm) {
         ValidationUtils.validate(employeeRequestVm);
         Employee findId = employeeRepository.findById(employeeRequestVm.getEmployeeId()).orElse(null);
         if (findId != null) throw new WarningException("Id karyawan sudah tersedia!");
@@ -44,61 +40,68 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = new Employee(employeeRequestVm.getEmployeeId(), employeeRequestVm.getFullName(), employeeRequestVm.getBirthDate(),
                 employeeRequestVm.getAddress(), employeeRequestVm.getGender(), employeeRequestVm.getPhoneNumber(),
                 employeeRequestVm.getIdentityNumber(), (employeeRequestVm.getIsActive() == null || employeeRequestVm.getIsActive()),
-                positionService.findPositionById(employeeRequestVm.getPositionId()), null);
-        try {
-            employeeRepository.save(employee);
+                positionService.findPositionById(employeeRequestVm.getPositionId()).getId());
+
+        TransactionUtil.performTransaction(() -> {
+            employeeRepository.create(employee);
             InformationDialog.successMessage("Berhasil menambah data karyawan");
-        } catch (Exception e) {
-            throw new ErrorException(e.getMessage());
-        }
+        });
 
     }
 
-    @Override
-    public void updateEmployee(String employeeId, EmployeeRequestVm employeeRequestVm) {
+    private void updateEmployee(String employeeId, EmployeeRequestVm employeeRequestVm) {
         ValidationUtils.validate(employeeRequestVm);
         Employee employee = findById(employeeId);
         employee.setFullName(employeeRequestVm.getFullName());
-        employee.setActive(employeeRequestVm.getIsActive());
+        employee.setActive(employeeRequestVm.getIsActive() == null || employeeRequestVm.getIsActive());
         employee.setAddress(employeeRequestVm.getAddress());
         employee.setGender(employeeRequestVm.getGender());
         employee.setBirthDate(employeeRequestVm.getBirthDate());
-        employee.setPosition(positionService.findPositionById(employeeRequestVm.getPositionId()));
+        employee.setPositionId(positionService.findPositionById(employeeRequestVm.getPositionId()).getId());
         employee.setPhoneNumber(employeeRequestVm.getPhoneNumber());
         employee.setIdentityNumber(employeeRequestVm.getIdentityNumber());
 
-        try {
-            employeeRepository.save(employee);
-            InformationDialog.successMessage("Berhasil mengubah data karyawan");
-        } catch (Exception e) {
-            throw new ErrorException(e.getMessage());
-        }
+        TransactionUtil.performTransaction(() -> {
+            employeeRepository.update(employee);
+            InformationDialog.successMessage("Berhasil memperbarui data karyawan");
+        });
     }
 
     @Override
     public void deleteEmployee(String employeeId) {
         Employee employee = findById(employeeId);
 
-        try {
+        TransactionUtil.performTransaction(() -> {
             employeeRepository.delete(employee);
             InformationDialog.deleteSuccess("Berhasil menghapus data karyawan");
-        } catch (Exception e) {
-            throw new ErrorException(e.getMessage());
+        });
+    }
+
+    @Override
+    public void createOrUpdateEmployee(String employeeId, EmployeeRequestVm employeeRequest) {
+        if (employeeId == null) {
+            createEmployee(employeeRequest);
+        } else {
+            updateEmployee(employeeId, employeeRequest);
         }
     }
 
     @Override
     public List<EmployeeResponseVm> findAllEmployees() {
         List<Employee> employees = employeeRepository.findAll();
+        List<Position> positions = positionService.findAllPositions();
 
         return employees.stream().map(e -> {
             EmployeeResponseVm responseVm = new EmployeeResponseVm();
+            Position result = positions.stream().filter(p -> p.getId().equals(e.getPositionId()))
+                    .findFirst().orElse(null);
+
             responseVm.setId(e.getId());
             responseVm.setFullName(e.getFullName());
             responseVm.setIdentityNumber(e.getIdentityNumber());
             responseVm.setPhoneNumber(e.getPhoneNumber());
-            responseVm.setPositionId(e.getPosition().getId());
-            responseVm.setPosition(e.getPosition().getName());
+            responseVm.setPositionId(e.getPositionId());
+            responseVm.setPosition(result.getName());
             responseVm.setActive(e.isActive());
             responseVm.setGender(e.getGender());
             responseVm.setBirthDate(e.getBirthDate());

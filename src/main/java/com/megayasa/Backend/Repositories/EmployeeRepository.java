@@ -1,11 +1,14 @@
 package com.megayasa.Backend.Repositories;
 
 import com.megayasa.Backend.Models.Employee;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface EmployeeRepository extends JpaRepository<Employee, String> {
+import java.util.List;
+import java.util.Optional;
+
+public interface EmployeeRepository {
+    Optional<Employee> findById(String employeeId);
+    void delete(Employee employee);
+    List<Employee> findAll();
+    void create(Employee employee);
+    void update(Employee employee);
 }

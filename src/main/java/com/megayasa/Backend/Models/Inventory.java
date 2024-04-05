@@ -1,31 +1,28 @@
 package com.megayasa.Backend.Models;
 
-import jakarta.persistence.*;
+import com.megayasa.Backend.Annotations.Db.Column;
+import com.megayasa.Backend.Annotations.Db.Id;
+import com.megayasa.Backend.Annotations.Db.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Table(name = "inventory")
-@Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Inventory {
     @Id
-    @Column(name = "id", length = 36, nullable = false)
+    @Column(name = "id")
     private String id;
 
-    @Column(nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "code")
     private String code;
 
-    @Column(nullable = false)
+    @Column(name = "stock")
     private Integer stock;
 
+    @Column(name = "type")
     private String type;
-
-    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
-    private List<StockInOut> stockInOuts;
 }

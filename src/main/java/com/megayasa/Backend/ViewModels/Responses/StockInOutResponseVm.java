@@ -17,4 +17,5 @@ public class StockInOutResponseVm {
     private String note;
     private String inventoryId;
     private String inventoryName;
+    private String inventoryCode;
 }

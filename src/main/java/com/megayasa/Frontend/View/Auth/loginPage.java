@@ -4,6 +4,14 @@
  */
 package com.megayasa.Frontend.View.Auth;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.megayasa.Backend.Controllers.LoginController;
+import com.megayasa.Backend.Dialogs.InformationDialog;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Requests.LoginRequestVm;
+import com.megayasa.Backend.ViewModels.Responses.LoginResponseVm;
+
 import javax.swing.JFrame;
 
 /**
@@ -15,21 +23,24 @@ public class loginPage extends javax.swing.JFrame {
     /**
      * Creates new form LoginPage
      */
-    
+
     int xx, xy;
-    
-    
-    
+    Injector injector;
+    LoginController loginController;
+
+
     public loginPage() {
+        injector = Guice.createInjector(new Injection());
+        loginController = injector.getInstance(LoginController.class);
         initComponents();
         txUsername.setBackground(new java.awt.Color(0,0,0,1));
         txPassword.setBackground(new java.awt.Color(0,0,0,1));
-        
+
         txUsername.setText("USERNAME");
         txPassword.setText("PASSWORD");
 
 //        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    
+
           // Menambahkan window listener untuk menangani event windowDeiconified
 //        addWindowListener(new WindowAdapter() {
 //            @Override
@@ -66,7 +77,6 @@ public class loginPage extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1200, 700));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 formMouseDragged(evt);
@@ -150,6 +160,11 @@ public class loginPage extends javax.swing.JFrame {
         Login.setMaximumSize(new java.awt.Dimension(300, 45));
         Login.setMinimumSize(new java.awt.Dimension(300, 45));
         Login.setPreferredSize(new java.awt.Dimension(300, 45));
+        Login.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LoginMouseClicked(evt);
+            }
+        });
         jPanel1.add(Login, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 483, 300, 45));
 
         logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -168,9 +183,6 @@ public class loginPage extends javax.swing.JFrame {
 
         Bg.setBackground(new java.awt.Color(33, 72, 192));
         Bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg-login.png"))); // NOI18N
-        Bg.setMaximumSize(new java.awt.Dimension(1280, 720));
-        Bg.setMinimumSize(new java.awt.Dimension(1280, 720));
-        Bg.setPreferredSize(new java.awt.Dimension(1280, 720));
         jPanel1.add(Bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -225,6 +237,16 @@ public class loginPage extends javax.swing.JFrame {
             txUsername.setText("USERNAME");
         }
     }//GEN-LAST:event_UsernameFocusLost
+
+    private void LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseClicked
+        // TODO add your handling code here:
+        String username = txUsername.getText();
+        String password = txPassword.getText();
+        LoginResponseVm response = loginController.login(new LoginRequestVm(username, password));
+        if (response != null){
+            InformationDialog.successMessage("Sukses Login");
+        }
+    }//GEN-LAST:event_LoginMouseClicked
     /**
      * @param args the command line arguments
      */
@@ -232,7 +254,7 @@ public class loginPage extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

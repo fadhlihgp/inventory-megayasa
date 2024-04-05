@@ -1,6 +1,7 @@
 package com.megayasa.Backend.Models;
-
-import jakarta.persistence.*;
+import com.megayasa.Backend.Annotations.Db.Column;
+import com.megayasa.Backend.Annotations.Db.Id;
+import com.megayasa.Backend.Annotations.Db.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,23 +9,21 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Table(name = "absence")
-@Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Absence {
     @Id
-    @Column(name = "id", length = 36, nullable = false)
+    @Column(name = "id")
     private String id;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "date")
     private Date date;
 
-    @Column(name = "information", nullable = false)
+    @Column(name = "information")
     private String information;
 
     @Column(name = "note")
     private String note;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false)
-    private Employee employee;
+    @Column(name = "employee_id")
+    private String employeeId;
 }

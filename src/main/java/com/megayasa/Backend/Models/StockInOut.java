@@ -1,6 +1,8 @@
 package com.megayasa.Backend.Models;
 
-import jakarta.persistence.*;
+import com.megayasa.Backend.Annotations.Db.Column;
+import com.megayasa.Backend.Annotations.Db.Id;
+import com.megayasa.Backend.Annotations.Db.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,26 +10,24 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Table(name = "stock_in_out")
-@Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class StockInOut {
     @Id
-    @Column(name = "id", length = 36, nullable = false)
+    @Column(name = "id")
     private String id;
 
-    @Column(nullable = false)
+    @Column(name = "amount")
     private Integer amount;
 
-    @Column(nullable = false)
+    @Column(name = "date")
     private Date date;
 
-    @Column(nullable = true)
+    @Column(name = "note")
     private String note;
 
-    @Column(nullable = false)
+    @Column(name = "status")
     private Boolean status;
 
-    @ManyToOne
-    @JoinColumn(name = "inventory_id", nullable = false)
-    private Inventory inventory;
+    @Column(name = "inventory_id")
+    private String inventoryId;
 }
