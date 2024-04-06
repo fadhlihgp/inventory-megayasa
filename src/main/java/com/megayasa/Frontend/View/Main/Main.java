@@ -1,26 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package com.megayasa.Frontend.View.Auth;
+package com.megayasa.Frontend.View.Main;
 
 import javax.swing.JFrame;
 
-/**
- *
- * @author Rimuza
- */
-public class loginPage extends javax.swing.JFrame {
-
+public class Main extends javax.swing.JFrame {
     /**
      * Creates new form LoginPage
      */
-    
     int xx, xy;
-    
-    
-    
-    public loginPage() {
+    public Main() {
         initComponents();
         txUsername.setBackground(new java.awt.Color(0,0,0,1));
         txPassword.setBackground(new java.awt.Color(0,0,0,1));
@@ -57,7 +44,7 @@ public class loginPage extends javax.swing.JFrame {
         txUsername = new javax.swing.JTextField();
         lock = new javax.swing.JLabel();
         txPassword = new javax.swing.JPasswordField();
-        bt_Login = new javax.swing.JButton();
+        btLogin = new javax.swing.JButton();
         forgotPassword = new javax.swing.JLabel();
         copyright = new javax.swing.JLabel();
         Bg = new javax.swing.JLabel();
@@ -149,11 +136,11 @@ public class loginPage extends javax.swing.JFrame {
         txPassword.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
         jPanel1.add(txPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 395, 300, 45));
 
-        bt_Login.setBackground(new java.awt.Color(255, 255, 255));
-        bt_Login.setFont(new java.awt.Font("Monospaced", 1, 16)); // NOI18N
-        bt_Login.setForeground(new java.awt.Color(33, 72, 192));
-        bt_Login.setText("LOGIN");
-        jPanel1.add(bt_Login, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 483, 300, 45));
+        btLogin.setBackground(new java.awt.Color(255, 255, 255));
+        btLogin.setFont(new java.awt.Font("Monospaced", 1, 16)); // NOI18N
+        btLogin.setForeground(new java.awt.Color(33, 72, 192));
+        btLogin.setText("LOGIN");
+        jPanel1.add(btLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 483, 300, 45));
 
         forgotPassword.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         forgotPassword.setForeground(new java.awt.Color(255, 255, 255));
@@ -239,21 +226,23 @@ public class loginPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(loginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(loginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(loginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(loginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new loginPage().setVisible(true);
+                new Main().setVisible(true);
             }
         });
     }
@@ -261,7 +250,7 @@ public class loginPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Bg;
     private javax.swing.JLabel User;
-    private javax.swing.JButton bt_Login;
+    private javax.swing.JButton btLogin;
     private javax.swing.JLabel bt_close;
     private javax.swing.JLabel bt_minimize;
     private javax.swing.JLabel copyright;
