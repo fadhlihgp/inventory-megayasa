@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Raven
+ * @author Ridho Multazam
  */
 public class SimpleForm extends JPanel {
 

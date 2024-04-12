@@ -15,6 +15,10 @@ import com.megayasa.Frontend.View.Asset.forms.Dashboard;
 import com.megayasa.Frontend.View.Asset.menu.FormManager;
 import raven.popup.GlassPanePopup;
 
+/**
+ *
+ * @author Ridho Multazam
+ */
 public class Application extends JFrame {
 
     public Application() {

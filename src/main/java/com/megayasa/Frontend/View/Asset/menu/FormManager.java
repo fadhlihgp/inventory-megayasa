@@ -9,6 +9,10 @@ import com.megayasa.Frontend.View.Asset.swing.slider.PanelSlider;
 import com.megayasa.Frontend.View.Asset.swing.slider.SimpleTransition;
 import com.megayasa.Frontend.View.Asset.utils.UndoRedo;
 
+/**
+ *
+ * @author Ridho Multazam
+ */
 public class FormManager {
 
     private static FormManager instance;

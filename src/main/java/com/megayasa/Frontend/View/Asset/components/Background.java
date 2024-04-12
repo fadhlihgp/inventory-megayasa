@@ -8,6 +8,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
+/**
+ *
+ * @author Ridho Multazam
+ */
 public class Background extends JPanel {
 
     public Background() {
