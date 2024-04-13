@@ -45,18 +45,8 @@
   </Layout>
   <SubComponents>
     <Component class="com.megayasa.Frontend.View.Asset.Table.ActionButton" name="btEdit">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/icon/edit.png"/>
-        </Property>
-      </Properties>
     </Component>
     <Component class="com.megayasa.Frontend.View.Asset.Table.ActionButton" name="btDelete">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/icon/delete_1.png"/>
-        </Property>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

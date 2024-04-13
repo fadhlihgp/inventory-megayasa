@@ -49,10 +49,6 @@ public class PanelAction extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(96, 36));
 
-        btEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/edit.png"))); // NOI18N
-
-        btDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete_1.png"))); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(

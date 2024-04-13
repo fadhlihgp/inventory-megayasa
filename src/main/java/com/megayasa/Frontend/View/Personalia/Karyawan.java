@@ -58,10 +58,10 @@ public class Karyawan extends SimpleForm {
     
     private void applyTableStyle(JTable table) {
 
-        cmdAdd.setIcon(new FlatSVGIcon("iconSVG/add.svg", 0.35f));
-        cmdPrint.setIcon(new FlatSVGIcon("iconSVG/print.svg", 0.35f));
+        btAdd.setIcon(new FlatSVGIcon("iconSVG/add.svg", 0.35f));
+        btPrint.setIcon(new FlatSVGIcon("iconSVG/print.svg", 0.35f));
 
-        txtSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("iconSVG/search.svg", 0.35f));
+        txSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("iconSVG/search.svg", 0.35f));
         //  Change scroll style
         JScrollPane scroll = (JScrollPane) table.getParent().getParent();
         scroll.setBorder(BorderFactory.createEmptyBorder());
@@ -82,9 +82,9 @@ public class Karyawan extends SimpleForm {
         jLabel1 = new javax.swing.JLabel();
         crazyPanel1 = new raven.crazypanel.CrazyPanel();
         crazyPanel2 = new raven.crazypanel.CrazyPanel();
-        txtSearch = new javax.swing.JTextField();
-        cmdAdd = new javax.swing.JButton();
-        cmdPrint = new javax.swing.JButton();
+        txSearch = new javax.swing.JTextField();
+        btAdd = new javax.swing.JButton();
+        btPrint = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableKaryawan = new javax.swing.JTable();
 
@@ -107,7 +107,6 @@ public class Karyawan extends SimpleForm {
             new String[]{
                 "JTextField.placeholderText=Search;background:@background",
                 "background:lighten(@background,8%);borderWidth:1",
-                "background:lighten(@background,8%);borderWidth:1",
                 "background:lighten(@background,8%);borderWidth:1"
             }
         ));
@@ -120,19 +119,19 @@ public class Karyawan extends SimpleForm {
             }
         ));
 
-        txtSearch.setText("Cari");
-        crazyPanel2.add(txtSearch);
+        txSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        crazyPanel2.add(txSearch);
 
-        cmdAdd.setText("Tambah");
-        cmdAdd.addActionListener(new java.awt.event.ActionListener() {
+        btAdd.setText("Tambah");
+        btAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdAddActionPerformed(evt);
+                btAddActionPerformed(evt);
             }
         });
-        crazyPanel2.add(cmdAdd);
+        crazyPanel2.add(btAdd);
 
-        cmdPrint.setText("Print");
-        crazyPanel2.add(cmdPrint);
+        btPrint.setText("Print");
+        crazyPanel2.add(btPrint);
 
         crazyPanel1.add(crazyPanel2);
 
@@ -184,17 +183,17 @@ public class Karyawan extends SimpleForm {
                 .addGap(627, 627, 627))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(54, Short.MAX_VALUE)
-                    .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(69, Short.MAX_VALUE)
+                    .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmdAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAddActionPerformed
+    private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         // TODO add your handling code here:
         tambahKaryawan a = new tambahKaryawan();
         a.setVisible(true);
-    }//GEN-LAST:event_cmdAddActionPerformed
+    }//GEN-LAST:event_btAddActionPerformed
 
     public static void main(String[] args) {
         FlatRobotoFont.install();
@@ -207,13 +206,13 @@ public class Karyawan extends SimpleForm {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cmdAdd;
-    private javax.swing.JButton cmdPrint;
+    private javax.swing.JButton btAdd;
+    private javax.swing.JButton btPrint;
     private raven.crazypanel.CrazyPanel crazyPanel1;
     private raven.crazypanel.CrazyPanel crazyPanel2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableKaryawan;
-    private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txSearch;
     // End of variables declaration//GEN-END:variables
 }

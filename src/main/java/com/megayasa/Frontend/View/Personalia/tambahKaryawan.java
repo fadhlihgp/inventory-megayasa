@@ -60,16 +60,15 @@ public class tambahKaryawan extends javax.swing.JFrame {
                 "showClearButton:true;JTextField.placeholderText=Nama Depan",
                 "showClearButton:true;JTextField.placeholderText=Nama Belakang",
                 "",
-                "",
                 "showClearButton:true",
                 "",
                 "showClearButton:true",
                 "",
                 "",
+                "",
                 "showClearButton:true",
                 "",
-                "showClearButton:true;JTextField.placeholderText=KTP",
-                ""
+                "showClearButton:true;JTextField.placeholderText=KTP"
             }
         ));
         crazyPanel1.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
@@ -136,11 +135,11 @@ public class tambahKaryawan extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
