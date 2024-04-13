@@ -1,6 +1,6 @@
 package com.megayasa.Backend.ViewModels.Requests;
 
-import com.megayasa.Backend.Annotations.NotNullProp;
+import com.megayasa.Backend.Annotations.Validations.NotNullProp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

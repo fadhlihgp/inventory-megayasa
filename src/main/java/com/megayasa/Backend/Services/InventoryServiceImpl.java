@@ -1,7 +1,9 @@
 package com.megayasa.Backend.Services;
 
+import com.google.inject.Inject;
+import com.megayasa.Backend.Annotations.Util.ValidationUtils;
+import com.megayasa.Backend.Context.TransactionUtil;
 import com.megayasa.Backend.Dialogs.InformationDialog;
-import com.megayasa.Backend.Exceptions.ErrorException;
 import com.megayasa.Backend.Exceptions.NotFoundException;
 import com.megayasa.Backend.Exceptions.WarningException;
 import com.megayasa.Backend.Models.Inventory;
@@ -9,42 +11,36 @@ import com.megayasa.Backend.Repositories.InventoryRepository;
 import com.megayasa.Backend.Services.Interfaces.InventoryService;
 import com.megayasa.Backend.ViewModels.Requests.InventoryRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.InventoryResponseVm;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-@Service
-@Transactional
 public class InventoryServiceImpl implements InventoryService {
     private final InventoryRepository inventoryRepository;
 
-    @Autowired
+    @Inject
     public InventoryServiceImpl(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
     }
 
     @Override
     public void createInventory(InventoryRequestVm inventoryRequestVm) {
+        ValidationUtils.validate(inventoryRequestVm);
         Inventory inventoryByCode = inventoryRepository.findInventoryByCode(inventoryRequestVm.getCode());
         if (inventoryByCode != null) throw new WarningException("Kode barang sudah tersedia, silahkan cari kode lain");
 
         Inventory saveInventory = new Inventory(UUID.randomUUID().toString(), inventoryRequestVm.getName(),
-                inventoryRequestVm.getCode(), (inventoryRequestVm.getStock() == null ? 0 : inventoryRequestVm.getStock()), inventoryRequestVm.getType(), null);
+                inventoryRequestVm.getCode(), (inventoryRequestVm.getStock() == null ? 0 : inventoryRequestVm.getStock()), inventoryRequestVm.getType());
 
-        try {
-            inventoryRepository.save(saveInventory);
+        TransactionUtil.performTransaction(() -> {
+            inventoryRepository.create(saveInventory);
             InformationDialog.successMessage("Berhasil menambah data barang");
-        } catch (Exception e) {
-            throw new ErrorException(e.getMessage());
-        }
+        });
     }
 
     @Override
     public void updateInventoryByCode(String code, InventoryRequestVm inventoryRequestVm) {
+        ValidationUtils.validate(inventoryRequestVm);
         Inventory inventoryByCode = inventoryRepository.findInventoryByCode(code);
         if (inventoryByCode == null) throw new NotFoundException("Kode barang tidak ditemukan");
 
@@ -53,16 +49,15 @@ public class InventoryServiceImpl implements InventoryService {
         inventoryByCode.setType(inventoryByCode.getType());
         inventoryByCode.setStock(inventoryRequestVm.getStock());
 
-        try {
-            inventoryRepository.save(inventoryByCode);
+        TransactionUtil.performTransaction(() -> {
+            inventoryRepository.update(inventoryByCode);
             InformationDialog.successMessage("Berhasil mengubah data barang");
-        } catch (Exception e) {
-            throw new ErrorException(e.getMessage());
-        }
+        });
     }
 
     @Override
     public void updateInventoryById(String inventoryId, InventoryRequestVm inventoryRequestVm) {
+        ValidationUtils.validate(inventoryRequestVm);
         Inventory inventoryByid = inventoryRepository.findById(inventoryId)
                 .orElseThrow(() -> new NotFoundException("Id Barang tidak ditemukan"));
 
@@ -71,26 +66,21 @@ public class InventoryServiceImpl implements InventoryService {
         inventoryByid.setType(inventoryByid.getType());
         inventoryByid.setStock(inventoryRequestVm.getStock());
 
-        try {
-            inventoryRepository.save(inventoryByid);
+        TransactionUtil.performTransaction(() -> {
+            inventoryRepository.update(inventoryByid);
             InformationDialog.successMessage("Berhasil mengubah data barang");
-        } catch (Exception e) {
-            throw new ErrorException(e.getMessage());
-        }
+        });
     }
 
     @Override
     public void deleteInventoryByIdOrCode(String idOrCode) {
-        Inventory inventory = inventoryRepository.findInventoryByIdOrCode(idOrCode, idOrCode)
+                Inventory inventory = inventoryRepository.findInventoryByIdOrCode(idOrCode)
                 .orElseThrow(() -> new NotFoundException("Barang tidak ditemukan"));
 
-        try {
+        TransactionUtil.performTransaction(() -> {
             inventoryRepository.delete(inventory);
             InformationDialog.deleteSuccess("Berhasil menghapus data barang");
-        } catch (Exception e) {
-            throw new ErrorException(e.getMessage());
-        }
-
+        });
     }
 
     @Override
@@ -110,7 +100,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public InventoryResponseVm findInventoryByIdOrCode(String codeOrId) {
-        Inventory inventory = inventoryRepository.findInventoryByIdOrCode(codeOrId, codeOrId)
+        Inventory inventory = inventoryRepository.findInventoryByIdOrCode(codeOrId)
                 .orElseThrow(() -> new NotFoundException("Data barang tidak ditemukan"));
 
         return new InventoryResponseVm(inventory.getId(), inventory.getName(), inventory.getCode() ,inventory.getStock(), inventory.getType());

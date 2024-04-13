@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface StockInOutService {
     void createOrUpdateStockInOut(String stockId, StockInOutRequestVm stockInOutRequestVm);
-//    void updateStockInOut(String id, StockInOutRequestVm stockInOutRequestVm);
     StockInOutResponseVm findStockInOutById(String id);
     List<StockInOutResponseVm> findStockInOuts();
     void deleteStockInOut(String id);

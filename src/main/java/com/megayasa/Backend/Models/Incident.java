@@ -1,9 +1,8 @@
 package com.megayasa.Backend.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.megayasa.Backend.Annotations.Db.Column;
+import com.megayasa.Backend.Annotations.Db.Id;
+import com.megayasa.Backend.Annotations.Db.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,24 +10,21 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Table(name = "incident")
-@Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Incident {
     @Id
-    @Column(length = 36, nullable = false)
+    @Column(name = "id")
     private String id;
 
-    @Column(nullable = false)
+    @Column(name = "date")
     private Date date;
 
-    @Column(nullable = true)
+    @Column(name = "picture_url")
     private String pictureUrl;
 
-    @Column(nullable = false)
+    @Column(name = "title")
     private String title;
 
-    @Column(nullable = false)
+    @Column(name = "description")
     private String description;
-
-
 }

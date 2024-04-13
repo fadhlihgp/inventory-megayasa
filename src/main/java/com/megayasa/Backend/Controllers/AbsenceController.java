@@ -1,19 +1,17 @@
 package com.megayasa.Backend.Controllers;
 
+import com.google.inject.Inject;
 import com.megayasa.Backend.Services.Interfaces.AbsenceService;
 import com.megayasa.Backend.ViewModels.Requests.AbsenceRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.AbsenceDetailResponseVm;
 import com.megayasa.Backend.ViewModels.Responses.AbsenceResponseVm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-@Controller
 public class AbsenceController {
     private final AbsenceService absenceService;
 
-    @Autowired
+    @Inject
     public AbsenceController(AbsenceService absenceService) {
         this.absenceService = absenceService;
     }

@@ -1,15 +1,15 @@
 package com.megayasa.Backend.Controllers;
 
+import com.google.inject.Inject;
 import com.megayasa.Backend.Models.Position;
 import com.megayasa.Backend.Services.Interfaces.PositionService;
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-@Controller
 public class PositionController {
     private final PositionService positionService;
 
+    @Inject
     public PositionController(PositionService positionService) {
         this.positionService = positionService;
     }

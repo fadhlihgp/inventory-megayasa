@@ -1,18 +1,19 @@
 package com.megayasa.Backend.Models;
 
-import jakarta.persistence.*;
+import com.megayasa.Backend.Annotations.Db.Column;
+import com.megayasa.Backend.Annotations.Db.Id;
+import com.megayasa.Backend.Annotations.Db.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Table(name = "role")
-@Entity
 @Data@AllArgsConstructor @NoArgsConstructor
 public class Role {
     @Id
-    @Column(length = 36, name = "id", nullable = false)
+    @Column(name = "id")
     private String id;
 
-    @Column(name = "name", nullable = false )
+    @Column(name = "name")
     private String name;
 }

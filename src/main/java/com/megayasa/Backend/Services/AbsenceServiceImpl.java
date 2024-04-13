@@ -1,5 +1,7 @@
 package com.megayasa.Backend.Services;
 
+import com.google.inject.Inject;
+import com.megayasa.Backend.Annotations.Util.ValidationUtils;
 import com.megayasa.Backend.Dialogs.InformationDialog;
 import com.megayasa.Backend.Exceptions.ErrorException;
 import com.megayasa.Backend.Exceptions.NotFoundException;
@@ -11,20 +13,16 @@ import com.megayasa.Backend.Services.Interfaces.EmployeeService;
 import com.megayasa.Backend.ViewModels.Requests.AbsenceRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.AbsenceDetailResponseVm;
 import com.megayasa.Backend.ViewModels.Responses.AbsenceResponseVm;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.megayasa.Backend.ViewModels.Responses.EmployeeResponseVm;
 
 import java.util.List;
 import java.util.UUID;
 
-@Service
-@Transactional
 public class AbsenceServiceImpl implements AbsenceService {
     private final AbsenceRepository absenceRepository;
     private final EmployeeService employeeService;
 
-    @Autowired
+    @Inject
     public AbsenceServiceImpl(AbsenceRepository absenceRepository, EmployeeService employeeService) {
         this.absenceRepository = absenceRepository;
         this.employeeService = employeeService;
@@ -32,6 +30,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     @Override
     public void createOrUpdateAbsence(String absenceId, AbsenceRequestVm absenceRequestVm) {
+        ValidationUtils.validate(absenceRequestVm);
         Employee employee = employeeService.findById(absenceRequestVm.getEmployeeId());
         Absence absence = new Absence();
         if (absenceId != null) {
@@ -43,20 +42,15 @@ public class AbsenceServiceImpl implements AbsenceService {
         absence.setDate(absenceRequestVm.getDate());
         absence.setNote(absenceRequestVm.getNote());
         absence.setInformation(absenceRequestVm.getInformation());
-        absence.setEmployee(employee);
+        absence.setEmployeeId(employee.getId());
 
         try {
-            absenceRepository.save(absence);
+            absenceRepository.create(absence);
             String successMessage = absenceId == null ? "Berhasil menambah data absen karyawan" : "Berhasil memperbarui data asben karyawan";
             InformationDialog.successMessage(successMessage);
         } catch (Exception e) {
             throw new ErrorException(e.getMessage());
         }
-    }
-
-    @Override
-    public void updateAbsence(String absenceId, AbsenceRequestVm absenceRequestVm) {
-
     }
 
     @Override
@@ -79,14 +73,18 @@ public class AbsenceServiceImpl implements AbsenceService {
     @Override
     public AbsenceDetailResponseVm findAbsenceById(String id) {
         Absence absence = absenceRepository.findById(id).orElseThrow(() -> new NotFoundException("Data absen tidak ditemukan"));
-        return new AbsenceDetailResponseVm(absence.getId(), absence.getEmployee().getId(), absence.getEmployee().getFullName(),
+        Employee employee = employeeService.findById(absence.getEmployeeId());
+        return new AbsenceDetailResponseVm(absence.getId(), employee.getId(), employee.getFullName(),
                 absence.getInformation(), absence.getNote(), absence.getDate());
     }
 
     @Override
     public List<AbsenceDetailResponseVm> absenceDetailList() {
         List<Absence> absences = absenceRepository.findAll();
-        return absences.stream().map(absence -> new AbsenceDetailResponseVm(absence.getId(), absence.getEmployee().getId(), absence.getEmployee().getFullName(),
+        List<EmployeeResponseVm> employees = employeeService.findAllEmployees();
+
+        return absences.stream().map(absence -> new AbsenceDetailResponseVm(absence.getId(), absence.getEmployeeId(),
+                employees.stream().filter(e -> e.getId().equals(absence.getEmployeeId())).findFirst().orElse(null).getFullName(),
                 absence.getInformation(), absence.getNote(), absence.getDate())).toList();
     }
 }

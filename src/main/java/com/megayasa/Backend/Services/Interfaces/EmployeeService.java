@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface EmployeeService {
     Employee findById(String employeeId);
-    void createEmployee(EmployeeRequestVm employeeRequestVm);
-    void updateEmployee(String employeeId, EmployeeRequestVm employeeRequestVm);
+//    void createEmployee(EmployeeRequestVm employeeRequestVm);
+//    void updateEmployee(String employeeId, EmployeeRequestVm employeeRequestVm);
     void deleteEmployee(String employeeId);
+    void createOrUpdateEmployee(String employeeId, EmployeeRequestVm employeeRequest);
     List<EmployeeResponseVm> findAllEmployees();
 }

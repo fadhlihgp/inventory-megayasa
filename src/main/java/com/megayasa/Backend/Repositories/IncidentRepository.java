@@ -1,14 +1,16 @@
 package com.megayasa.Backend.Repositories;
 
 import com.megayasa.Backend.Models.Incident;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
-@Repository
-public interface IncidentRepository extends JpaRepository<Incident, String> {
-    @Query("SELECT COUNT(i) from Incident i WHERE i.date = CURRENT_DATE ")
+public interface IncidentRepository {
     Long countIncidentToday();
+    void save(Incident incident);
+    void update(Incident incident);
+    Optional<Incident> findById(String id);
+    List<Incident> findAll();
+    void delete(Incident incident);
 }

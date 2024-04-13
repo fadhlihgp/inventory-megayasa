@@ -1,6 +1,8 @@
 package com.megayasa.Backend.Models;
 
-import jakarta.persistence.*;
+import com.megayasa.Backend.Annotations.Db.Column;
+import com.megayasa.Backend.Annotations.Db.Id;
+import com.megayasa.Backend.Annotations.Db.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,38 +11,33 @@ import java.sql.Date;
 import java.util.List;
 
 @Table(name = "employee")
-@Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Employee {
     @Id
-    @Column(name = "id", length = 36, nullable = false)
+    @Column(name = "id")
     private String id;
 
-    @Column(name = "name", length = 255, nullable = false)
+    @Column(name = "name")
     private String fullName;
 
-    @Column(name = "birthdate", nullable = false)
+    @Column(name = "birthdate")
     private Date birthDate;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     private String address;
 
-    @Column(name = "gender", nullable = false, length = 255)
+    @Column(name = "gender")
     private String gender;
 
-    @Column(name = "phone_number", nullable = true, unique = true, length = 15)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "identity_number", nullable = true, unique = true)
+    @Column(name = "identity_number")
     private String identityNumber;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private boolean isActive;
 
-    @ManyToOne
-    @JoinColumn(name = "position_id")
-    private Position position;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Absence> absences;
+    @Column(name = "position_id")
+    private String positionId;
 }

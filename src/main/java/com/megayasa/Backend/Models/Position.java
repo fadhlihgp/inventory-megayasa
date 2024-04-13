@@ -1,23 +1,20 @@
 package com.megayasa.Backend.Models;
 
-import jakarta.persistence.*;
+import com.megayasa.Backend.Annotations.Db.Column;
+import com.megayasa.Backend.Annotations.Db.Id;
+import com.megayasa.Backend.Annotations.Db.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @Table(name = "position")
-@Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Position {
     @Id
-    @Column(name = "id", length = 36, nullable = false)
+    @Column(name = "id")
     private String id;
 
-    @Column(nullable = false, name = "name")
+    @Column(name = "name")
     private String name;
-
-//    @OneToMany(mappedBy = "position", cascade = CascadeType.DETACH)
-//    private List<Employee> employees;
 }

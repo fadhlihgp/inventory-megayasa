@@ -1,46 +1,45 @@
 package com.megayasa.Backend.Models;
 
-import jakarta.persistence.*;
+import com.megayasa.Backend.Annotations.Db.Column;
+import com.megayasa.Backend.Annotations.Db.Id;
+import com.megayasa.Backend.Annotations.Db.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Table(name = "account")
-@Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Account {
     @Id
-    @Column(length = 36, name = "id", nullable = false)
+    @Column(name = "id")
     private String id;
 
-    @Column(name = "username", unique = true, nullable = false, length = 255)
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "email", unique = true, nullable = false, length = 255)
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "fullName", nullable = false, length = 255)
+    @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "phoneNumber", nullable = true, length = 15)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "lastLogin", nullable = true)
-    private Date lastLogin;
+    @Column(name = "last_login")
+    private LocalDateTime lastLogin;
 
-    @Column(name = "isActive", nullable = false)
+    @Column(name = "is_active")
     private Boolean isActive;
 
-    @ManyToOne
-    @JoinColumn(name = "roleId", nullable = false)
-    private Role role;
+    @Column(name = "role_id")
+    private String roleId;
 
-    @OneToOne
-    @JoinColumn(name = "employeeId", nullable = true)
-    private Employee employee;
+    @Column(name = "employee_id")
+    private String employeeId;
 }

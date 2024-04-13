@@ -1,6 +1,8 @@
 package com.megayasa.Backend.Services;
 
+import com.google.inject.Inject;
 import com.megayasa.Backend.Annotations.Util.ValidationUtils;
+import com.megayasa.Backend.Context.TransactionUtil;
 import com.megayasa.Backend.Dialogs.InformationDialog;
 import com.megayasa.Backend.Exceptions.ErrorException;
 import com.megayasa.Backend.Exceptions.NotFoundException;
@@ -12,63 +14,59 @@ import com.megayasa.Backend.Services.Interfaces.AccountService;
 import com.megayasa.Backend.Services.Interfaces.EmployeeService;
 import com.megayasa.Backend.Services.Interfaces.RoleService;
 import com.megayasa.Backend.ViewModels.Requests.AccountRequestVm;
-import jakarta.transaction.Transactional;
 import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-@Service
-@Transactional
+
 public class AccountServiceImpl implements AccountService {
-    private final AccountRepository accountRepository;
-    private final RoleService roleService;
-    private final EmployeeService employeeService;
+    private AccountRepository accountRepository;
+//    private final EmployeeService employeeService;
 
 
-    @Autowired
-    public AccountServiceImpl(AccountRepository accountRepository, RoleService roleService, EmployeeService employeeService) {
+    @Inject
+    public AccountServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
-        this.roleService = roleService;
-        this.employeeService = employeeService;
+//        this.employeeService = employeeService;
     }
 
     @Override
     public void createAccount(AccountRequestVm accountRequestVm) {
         ValidationUtils.validate(accountRequestVm);
-        var findAccountByEmail = accountRepository.findAccountByEmail(accountRequestVm.getEmail())
+
+        Map<String, Object> filtersByEmail = new HashMap<>();
+        filtersByEmail.put("email", accountRequestVm.getEmail());
+        var findAccountByEmail = accountRepository.findByOne(filtersByEmail, "AND")
                 .orElse(null);
         if (findAccountByEmail != null) throw new WarningException("Email sudah digunakan, silahkan cari email lain!");
 
-        var findAccountByUsername = accountRepository.findAccountByUsername(accountRequestVm.getUsername())
+        Map<String, Object> filtersByUsername = new HashMap<>();
+        filtersByUsername.put("username", accountRequestVm.getUsername());
+        var findAccountByUsername = accountRepository.findByOne(filtersByUsername,"AND" )
                 .orElse(null);
         if (findAccountByUsername != null) throw new WarningException("Username sudah digunakan, silahkan cari username lain!");
 
         Account account = new Account();
         account.setId(UUID.randomUUID().toString());
-        account.setIsActive(accountRequestVm.getIsActive() == null || accountRequestVm.getIsActive());
-        account.setRole(roleService.findById(accountRequestVm.getRoleId()));
+        account.setIsActive(accountRequestVm.getActive() == null || accountRequestVm.getActive());
+        account.setRoleId(accountRequestVm.getRoleId());
         account.setUsername(accountRequestVm.getUsername());
         account.setEmail(accountRequestVm.getEmail());
         account.setFullName(accountRequestVm.getFullName());
         account.setPassword(BCrypt.hashpw(accountRequestVm.getPassword(), BCrypt.gensalt()));
         account.setPhoneNumber(accountRequestVm.getPhoneNumber());
         if (accountRequestVm.getEmployeeId() != null) {
-            Employee employee = employeeService.findById(accountRequestVm.getEmployeeId());
-            Account accountByEmpId = accountRepository.findAccountByEmployee_Id(accountRequestVm.getEmployeeId())
-                    .orElse(null);
-            if (accountByEmpId != null) throw new WarningException("Karyawan tidak boleh lebih dari satu akun!");
-            account.setEmployee(employee);
+//            Employee employee = employeeService.findById(accountRequestVm.getEmployeeId());
+//            Account accountByEmpId = accountRepository.findAccountByEmployee_Id(accountRequestVm.getEmployeeId())
+//                    .orElse(null);
+//            if (accountByEmpId != null) throw new WarningException("Karyawan tidak boleh lebih dari satu akun!");
+//            account.setEmployee(employee);
+            account.setEmployeeId(accountRequestVm.getEmployeeId());
         }
-        try {
+        TransactionUtil.performTransaction(() -> {
             accountRepository.save(account);
-            InformationDialog.successMessage("Berhasil menambah data akun");
-        } catch (Exception e) {
-            throw new ErrorException(e.getMessage());
-        }
+            InformationDialog.successMessage("Berhasil menambah akun");
+        });
     }
 
     @Override
@@ -83,30 +81,31 @@ public class AccountServiceImpl implements AccountService {
         findAccount.setEmail(accountRequestVm.getEmail());
         findAccount.setFullName(accountRequestVm.getFullName());
         findAccount.setPhoneNumber(accountRequestVm.getPhoneNumber());
-        findAccount.setIsActive(accountRequestVm.getIsActive());
-        findAccount.setRole(roleService.findById(accountRequestVm.getRoleId()));
-        if (accountRequestVm.getEmployeeId() != null) {
-            Employee employee = employeeService.findById(accountRequestVm.getEmployeeId());
-            Account accountByEmpId = accountRepository.findAccountByEmployee_Id(accountRequestVm.getEmployeeId())
-                    .orElse(null);
-            if ((accountByEmpId != null) &&  !findAccount.getId().equals(accountByEmpId.getId()))
-                throw new WarningException("Karyawan tidak boleh lebih dari satu akun!");
-            findAccount.setEmployee(employee);
-        }
+        findAccount.setIsActive(accountRequestVm.getActive());
+        findAccount.setRoleId(accountRequestVm.getRoleId());
+//        if (accountRequestVm.getEmployeeId() != null) {
+//            Employee employee = employeeService.findById(accountRequestVm.getEmployeeId());
+//            Account accountByEmpId = accountRepository.findAccountByEmployee_Id(accountRequestVm.getEmployeeId())
+//                    .orElse(null);
+//            if ((accountByEmpId != null) &&  !findAccount.getId().equals(accountByEmpId.getId()))
+//                throw new WarningException("Karyawan tidak boleh lebih dari satu akun!");
+//            findAccount.setEmployeeId(accountRequestVm.getEmployeeId());
+//        }
         accountRepository.save(findAccount);
         InformationDialog.successMessage("Berhasil memperbarui akun");
     }
 
     @Override
     public List<Account> getAllAccounts() {
-        return accountRepository.findAll(Sort.by(Sort.Order.asc("Role")));
+//        return accountRepository.findAll(Sort.by(Sort.Order.asc("Role")));
+        return new ArrayList<Account>();
     }
 
     @Override
     public void deleteAccount(String accountId) {
         Account findAccountById = accountRepository.findById(accountId)
                 .orElseThrow(() -> new NotFoundException("Akun tidak ditemukan!"));
-        accountRepository.delete(findAccountById);
+        accountRepository.deleteById(findAccountById.getId());
         InformationDialog.deleteSuccess("Berhasil menghapus akun");
     }
 }

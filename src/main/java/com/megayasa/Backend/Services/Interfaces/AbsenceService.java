@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface AbsenceService {
     void createOrUpdateAbsence(String absenceId, AbsenceRequestVm absenceRequestVm);
-    void updateAbsence(String absenceId, AbsenceRequestVm absenceRequestVm);
     void deleteAbsence(String id);
     List<AbsenceResponseVm> absenceList();
     AbsenceDetailResponseVm findAbsenceById(String id);

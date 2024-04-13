@@ -1,28 +1,23 @@
 package com.megayasa.Backend.Controllers;
 
+import com.google.inject.Inject;
 import com.megayasa.Backend.Models.Incident;
 import com.megayasa.Backend.Services.Interfaces.IncidentService;
 import com.megayasa.Backend.ViewModels.Requests.IncidentRequestVm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-@Controller
 public class IncidentController {
     private final IncidentService incidentService;
 
-    @Autowired
+    @Inject
     public IncidentController(IncidentService incidentService) {
         this.incidentService = incidentService;
     }
 
-    public void createIncident(IncidentRequestVm incidentRequestVm){
-        incidentService.createIncident(incidentRequestVm);
-    }
 
-    public void updateIncident(String incidentId, IncidentRequestVm incidentRequestVm){
-        incidentService.updateIncident(incidentId, incidentRequestVm);
+    public void createOrUpdateIncident(String incidentId, IncidentRequestVm incidentRequestVm){
+        incidentService.createOrUpdateIncident(incidentId, incidentRequestVm);
     }
 
     public void deleteIncident(String incidentId){

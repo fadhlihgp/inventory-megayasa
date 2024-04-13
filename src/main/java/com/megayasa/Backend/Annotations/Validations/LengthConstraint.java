@@ -1,4 +1,4 @@
-package com.megayasa.Backend.Annotations;
+package com.megayasa.Backend.Annotations.Validations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,19 +1,16 @@
 package com.megayasa.Backend.Controllers;
 
-import com.megayasa.Backend.Dialogs.InformationDialog;
+import com.google.inject.Inject;
 import com.megayasa.Backend.Models.Account;
 import com.megayasa.Backend.Services.Interfaces.AccountService;
 import com.megayasa.Backend.ViewModels.Requests.AccountRequestVm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-@Controller
 public class AccountController {
     private final AccountService accountService;
 
-    @Autowired
+    @Inject
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }

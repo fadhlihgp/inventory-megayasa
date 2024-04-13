@@ -1,18 +1,16 @@
 package com.megayasa.Backend.Controllers;
 
+import com.google.inject.Inject;
 import com.megayasa.Backend.Services.Interfaces.StockInOutService;
 import com.megayasa.Backend.ViewModels.Requests.StockInOutRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.StockInOutResponseVm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-@Controller
 public class StockInOutController {
     private final StockInOutService stockInOutService;
 
-    @Autowired
+    @Inject
     public StockInOutController(StockInOutService stockInOutService) {
         this.stockInOutService = stockInOutService;
     }

@@ -19,7 +19,7 @@ public class DataProperties {
 
     static {
         try {
-            Configuration config = configs.properties("config.properties");
+            Configuration config = configs.properties("application.properties");
             URL_DB = config.getString("db.url");
             USER_DB = config.getString("db.user");
             PASSWORD_DB = config.getString("db.password");
