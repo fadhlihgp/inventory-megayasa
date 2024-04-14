@@ -11,6 +11,10 @@ import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.UIManager;
 
+/**
+ *
+ * @author Ridho Multazam
+ */
 public class SimpleTransition {
 
     private static final float ZOOM_IN = 0.1f;

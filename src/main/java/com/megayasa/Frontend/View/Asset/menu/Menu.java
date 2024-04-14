@@ -9,6 +9,10 @@ import net.miginfocom.swing.MigLayout;
 import raven.drawer.component.DrawerBuilder;
 import raven.drawer.component.DrawerPanel;
 
+/**
+ *
+ * @author Ridho Multazam
+ */
 public class Menu extends JPanel {
 
     private final DrawerBuilder drawerBuilder;

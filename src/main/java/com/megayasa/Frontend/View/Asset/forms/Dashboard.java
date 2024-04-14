@@ -21,6 +21,10 @@ import raven.chart.pie.PieChart;
 import com.megayasa.Frontend.View.Asset.components.SimpleForm;
 import com.megayasa.Frontend.View.Asset.utils.DateCalculator;
 
+/**
+ *
+ * @author Ridho Multazam
+ */
 public class Dashboard extends SimpleForm {
 
     public Dashboard() {

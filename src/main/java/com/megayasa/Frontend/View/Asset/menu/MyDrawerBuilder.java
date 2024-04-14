@@ -20,12 +20,16 @@ import raven.drawer.component.menu.SimpleMenuStyle;
 import raven.drawer.component.menu.data.Item;
 import raven.drawer.component.menu.data.MenuItem;
 import com.megayasa.Frontend.View.Asset.forms.Dashboard;
-import com.megayasa.Frontend.View.Asset.forms.Karyawan;
-import com.megayasa.Frontend.View.Asset.forms.Absensi;
-import com.megayasa.Frontend.View.Asset.forms.Barang;
-import com.megayasa.Frontend.View.Asset.forms.Forms;
+import com.megayasa.Frontend.View.Personalia.Karyawan;
+import com.megayasa.Frontend.View.Personalia.Absensi;
+import com.megayasa.Frontend.View.Produksi.Barang;
+import com.megayasa.Frontend.View.Produksi.Forms;
 import raven.swing.AvatarIcon;
 
+/**
+ *
+ * @author Ridho Multazam
+ */
 public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
     private final ThemesChange themesChange;
@@ -64,7 +68,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     }
 
     @Override
-    public SimpleFooterData getSimpleFooterData() {
+    public SimpleFooterData getSimpleFooterData() {       
         return new SimpleFooterData();
     }
 
@@ -148,7 +152,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
         });
 
         simpleMenuOption.setMenus(items)
-                        .setBaseIconPath("iconMenu")
+                        .setBaseIconPath("iconSVG")
                         .setIconScale(0.45f);
         return simpleMenuOption;
     }

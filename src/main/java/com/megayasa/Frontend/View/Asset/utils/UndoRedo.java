@@ -3,6 +3,10 @@ package com.megayasa.Frontend.View.Asset.utils;
 import java.util.Iterator;
 import java.util.Stack;
 
+/**
+ *
+ * @author Ridho Multazam
+ */
 public class UndoRedo<E> implements Iterable<E> {
 
     private final Stack<E> stack1;

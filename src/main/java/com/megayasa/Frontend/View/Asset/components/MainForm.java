@@ -13,6 +13,10 @@ import com.megayasa.Frontend.View.Asset.swing.slider.PanelSlider;
 import com.megayasa.Frontend.View.Asset.swing.slider.SimpleTransition;
 import com.megayasa.Frontend.View.Asset.swing.slider.SliderTransition;
 
+/**
+ *
+ * @author Ridho Multazam
+ */
 public class MainForm extends JPanel {
 
     public MainForm() {
@@ -42,10 +46,10 @@ public class MainForm extends JPanel {
         panel.putClientProperty(FlatClientProperties.STYLE, ""
                 + "background:null");
 
-        cmdMenu = createButton(new FlatSVGIcon(getClass().getResource("/iconDashboard/menu.svg")));
-        cmdUndo = createButton(new FlatSVGIcon(getClass().getResource("/iconDashboard/undo.svg")));
-        cmdRedo = createButton(new FlatSVGIcon(getClass().getResource("/iconDashboard/redo.svg")));
-        cmdRefresh = createButton(new FlatSVGIcon(getClass().getResource("/iconDashboard/refresh.svg")));
+        cmdMenu = createButton(new FlatSVGIcon(getClass().getResource("/iconSVG/menu.svg")));
+        cmdUndo = createButton(new FlatSVGIcon(getClass().getResource("/iconSVG/undo.svg")));
+        cmdRedo = createButton(new FlatSVGIcon(getClass().getResource("/iconSVG/redo.svg")));
+        cmdRefresh = createButton(new FlatSVGIcon(getClass().getResource("/iconSVG/refresh.svg")));
         cmdMenu.addActionListener(e -> {
             FormManager.showMenu();
         });

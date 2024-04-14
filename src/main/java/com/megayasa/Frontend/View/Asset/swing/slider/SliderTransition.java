@@ -4,6 +4,10 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 
+/**
+ *
+ * @author Ridho Multazam
+ */
 public abstract class SliderTransition {
 
     public abstract void renderImageOld(Component component, Graphics g, Image image, int width, int height, float animate);

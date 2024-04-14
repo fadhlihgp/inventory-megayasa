@@ -5,9 +5,9 @@ import java.awt.*;
 import java.util.Objects;
 
 public class ConfirmationDialog {
-    private static final ImageIcon deleteIcon = new ImageIcon(Objects.requireNonNull(ConfirmationDialog.class.getResource("/icons/delete2.png")));
-    private static final ImageIcon saveIcon = new ImageIcon(Objects.requireNonNull(ConfirmationDialog.class.getResource("/icons/save.png")));
-    private static final ImageIcon otherIcon = new ImageIcon(Objects.requireNonNull(ConfirmationDialog.class.getResource("/icons/question.png")));
+    private static final ImageIcon deleteIcon = new ImageIcon(Objects.requireNonNull(ConfirmationDialog.class.getResource("/icon/delete2.png")));
+    private static final ImageIcon saveIcon = new ImageIcon(Objects.requireNonNull(ConfirmationDialog.class.getResource("/icon/save.png")));
+    private static final ImageIcon otherIcon = new ImageIcon(Objects.requireNonNull(ConfirmationDialog.class.getResource("/icon/question.png")));
     private static final Font customFont = new Font("Arial", Font.PLAIN, 14);
 
     static {

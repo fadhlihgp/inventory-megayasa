@@ -11,6 +11,10 @@ import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
+/**
+ *
+ * @author Ridho Multazam
+ */
 public class PanelSlider extends JLayeredPane {
 
     private PanelSnapshot panelSnapshot;

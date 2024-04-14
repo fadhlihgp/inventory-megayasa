@@ -59,9 +59,9 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="bt_close">
           <Properties>
-            <Property name="horizontalAlignment" type="int" value="11"/>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icons/close-30.png"/>
+              <Image iconType="3" name="/icon/close-30.png"/>
             </Property>
           </Properties>
           <Events>
@@ -75,9 +75,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="bt_minimize">
           <Properties>
-            <Property name="horizontalAlignment" type="int" value="11"/>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icons/minimize-30.png"/>
+              <Image iconType="3" name="/icon/minimize-30.png"/>
             </Property>
           </Properties>
           <Events>
@@ -93,7 +93,7 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icons/worker-male-skin-type-3-100.png"/>
+              <Image iconType="3" name="/icon/worker-male-skin-type-3-100.png"/>
             </Property>
           </Properties>
           <Constraints>
@@ -109,7 +109,7 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icons/user.png"/>
+              <Image iconType="3" name="/icon/user.png"/>
             </Property>
           </Properties>
           <Events>
@@ -165,7 +165,7 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icons/lock.png"/>
+              <Image iconType="3" name="/icon/lock.png"/>
             </Property>
           </Properties>
           <Events>
@@ -265,7 +265,7 @@
               <Font name="Monospaced" size="16" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/bg-login.png"/>
+              <Image iconType="3" name="/image/bg-login.png"/>
             </Property>
           </Properties>
           <Constraints>
