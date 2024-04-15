@@ -31,6 +31,7 @@ public class Injection extends AbstractModule {
         bind(InventoryRepository.class).to(InventoryRepositoryImpl.class).in(Singleton.class);
         bind(RoleRepository.class).to(RoleRepositoryImpl.class).in(Singleton.class);
         bind(StockInOutRepository.class).to(StockInOutRepositoryImpl.class).in(Singleton.class);
+        bind(LoginInformationRepository.class).to(LoginInformationRepositoryImpl.class).in(Singleton.class);
 
         // Service
         bind(LoginService.class).to(LoginServiceImpl.class).in(Singleton.class);
@@ -42,6 +43,7 @@ public class Injection extends AbstractModule {
         bind(InventoryService.class).to(InventoryServiceImpl.class).in(Singleton.class);
         bind(RoleService.class).to(RoleServiceImpl.class).in(Singleton.class);
         bind(StockInOutService.class).to(StockInOutServiceImpl.class).in(Singleton.class);
+        bind(LoginInformationService.class).to(LoginInformationServiceImpl.class).in(Singleton.class);
 
         //Controller
         bind(LoginController.class).in(Singleton.class);
@@ -53,5 +55,6 @@ public class Injection extends AbstractModule {
         bind(InventoryController.class).in(Singleton.class);
         bind(RoleController.class).in(Singleton.class);
         bind(StockInOutController.class).in(Singleton.class);
+        bind(LoginInformationController.class).in(Singleton.class);
     }
 }

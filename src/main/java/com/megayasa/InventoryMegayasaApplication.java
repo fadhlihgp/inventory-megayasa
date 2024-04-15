@@ -3,6 +3,8 @@ package com.megayasa;
 import com.google.inject.Guice;
 import com.megayasa.Backend.Controllers.AccountController;
 import com.megayasa.Backend.Controllers.EmployeeController;
+import com.megayasa.Backend.Controllers.LoginInformationController;
+import com.megayasa.Backend.Models.LoginInformation;
 import com.megayasa.Backend.Repositories.AccountRepository;
 import com.megayasa.Backend.Utils.Injection;
 import com.megayasa.Backend.ViewModels.Requests.AccountRequestVm;
@@ -18,7 +20,8 @@ public class InventoryMegayasaApplication {
 //        new SpringApplicationBuilder(InventoryMegayasaApplication.class)
 //                .headless(false).run(args);
 //        testAccount();
-        testEmployee();
+//        testEmployee();
+        loginInformation();
     }
 
     private static void testAccount() {
@@ -55,4 +58,9 @@ public class InventoryMegayasaApplication {
 //        employeeController.deleteEmployee("123345");
     }
 
+    private static void loginInformation() {
+        LoginInformationController loginInformationController = Guice.createInjector(new Injection()).getInstance(LoginInformationController.class);
+        LoginInformation loginInformation1 = loginInformationController.currentLogin();
+        System.out.println(loginInformation1);
+    }
 }
