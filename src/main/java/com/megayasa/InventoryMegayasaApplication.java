@@ -60,7 +60,8 @@ public class InventoryMegayasaApplication {
 
     private static void loginInformation() {
         LoginInformationController loginInformationController = Guice.createInjector(new Injection()).getInstance(LoginInformationController.class);
-        LoginInformation loginInformation1 = loginInformationController.currentLogin();
-        System.out.println(loginInformation1);
+//        LoginInformation loginInformation1 = loginInformationController.currentLogin();
+        final Boolean aBoolean = loginInformationController.deleteLoginInformation();
+        System.out.println(aBoolean);
     }
 }

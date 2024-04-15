@@ -23,7 +23,7 @@ public class LoginInformationRepositoryImpl implements LoginInformationRepositor
 
     @Override
     public void deleteLoginInformation() {
-        queryRepository.deleteByClass(currentLogin());
+        queryRepository.deleteById(currentLogin().getId());
     }
 
     @Override
