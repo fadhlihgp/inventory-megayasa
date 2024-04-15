@@ -10,9 +10,16 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.LoginInformationController;
+import com.megayasa.Backend.Models.LoginInformation;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Responses.LoginResponseVm;
 import com.megayasa.Frontend.View.Asset.components.Background;
 import com.megayasa.Frontend.View.Asset.forms.Dashboard;
 import com.megayasa.Frontend.View.Asset.menu.FormManager;
+import com.megayasa.Frontend.View.Main.Main;
 import raven.popup.GlassPanePopup;
 
 /**
@@ -21,7 +28,13 @@ import raven.popup.GlassPanePopup;
  */
 public class Application extends JFrame {
 
+    LoginResponseVm loginResponseVm;
+    LoginInformationController loginInformationController;
+    LoginInformation loginInformation;
+
+
     public Application() {
+        checkLogin();
         init();
     }
 
@@ -45,5 +58,22 @@ public class Application extends JFrame {
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
         FlatMacLightLaf.setup();
         EventQueue.invokeLater(() -> new Application().setVisible(true));
+    }
+
+    public void open() {
+        FlatRobotoFont.install();
+        FlatLaf.registerCustomDefaultsSource("themes");
+        UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
+        FlatMacLightLaf.setup();
+        EventQueue.invokeLater(() -> new Application().setVisible(true));
+    }
+
+    public void checkLogin() {
+        loginInformationController = Guice.createInjector(new Injection()).getInstance(LoginInformationController.class);
+        LoginInformation loginInformation1 = loginInformationController.currentLogin();
+        if (loginInformation1 == null) {
+            EventQueue.invokeLater(() -> this.setVisible(false));
+            new Main().setVisible(true);
+        }
     }
 }

@@ -1,6 +1,20 @@
 package com.megayasa.Frontend.View.Main;
 
-import javax.swing.JFrame;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.LoginController;
+import com.megayasa.Backend.Controllers.LoginInformationController;
+import com.megayasa.Backend.Models.LoginInformation;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Requests.LoginRequestVm;
+import com.megayasa.Backend.ViewModels.Responses.LoginResponseVm;
+import com.megayasa.Frontend.View.Asset.application.Application;
+
+import javax.swing.*;
+import java.awt.*;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -11,7 +25,12 @@ public class Main extends javax.swing.JFrame {
      * Creates new form LoginPage
      */
     int xx, xy;
+    private final LoginController loginController;
+    private final LoginInformationController loginInformationController;
     public Main() {
+        loginController = Guice.createInjector(new Injection()).getInstance(LoginController.class);
+        loginInformationController = Guice.createInjector(new Injection()).getInstance(LoginInformationController.class);
+        checkLogin();
         initComponents();
         txUsername.setBackground(new java.awt.Color(0,0,0,1));
         txPassword.setBackground(new java.awt.Color(0,0,0,1));
@@ -31,6 +50,18 @@ public class Main extends javax.swing.JFrame {
 //        });
     }
 
+//    Jika masih ada riwayat login (Belum logout) dan timeout expired login belum berakhir, maka akan dialihkan langsung ke halaman utama
+    private void checkLogin() {
+        LoginInformation loginInformation = loginInformationController.currentLogin();
+        if (loginInformation != null) {
+            if (loginInformation.getExpiredLogin().isAfter(LocalDateTime.now())) {
+                EventQueue.invokeLater(() -> this.setVisible(false));
+                new Application().open();
+            } else {
+                loginInformationController.deleteLoginInformation();
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,10 +171,14 @@ public class Main extends javax.swing.JFrame {
         txPassword.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
         jPanel1.add(txPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 395, 300, 45));
 
-        btLogin.setBackground(new java.awt.Color(255, 255, 255));
         btLogin.setFont(new java.awt.Font("Monospaced", 1, 16)); // NOI18N
         btLogin.setForeground(new java.awt.Color(33, 72, 192));
         btLogin.setText("LOGIN");
+        btLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLoginActionPerformed(evt);
+            }
+        });
         jPanel1.add(btLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 483, 300, 45));
 
         forgotPassword.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
@@ -213,6 +248,18 @@ public class Main extends javax.swing.JFrame {
             txUsername.setText("USERNAME");
         }
     }//GEN-LAST:event_UserFocusLost
+
+    private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
+        // TODO add your handling code here:
+        String username = txUsername.getText();
+        String password = txPassword.getText();
+
+        LoginResponseVm login = loginController.login(new LoginRequestVm(username, password));
+        if (login != null) {
+            this.setVisible(false);
+            new Application().open();
+        }
+    }//GEN-LAST:event_btLoginActionPerformed
     /**
      * @param args the command line arguments
      */

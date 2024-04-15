@@ -8,6 +8,11 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.LoginInformationController;
+import com.megayasa.Backend.Models.LoginInformation;
+import com.megayasa.Backend.Utils.Injection;
 import raven.drawer.component.DrawerPanel;
 import raven.drawer.component.SimpleDrawerBuilder;
 import raven.drawer.component.footer.SimpleFooterData;
@@ -33,9 +38,16 @@ import raven.swing.AvatarIcon;
 public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
     private final ThemesChange themesChange;
+    private LoginInformation loginInformation;
+    private LoginInformationController loginInformationController;
 
     public MyDrawerBuilder() {
         themesChange = new ThemesChange();
+    }
+
+    private void initializeProperty() {
+        loginInformationController = Guice.createInjector(new Injection()).getInstance(LoginInformationController.class);
+        this.loginInformation = loginInformationController.currentLogin();
     }
 
     @Override
@@ -45,12 +57,13 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
     @Override
     public SimpleHeaderData getSimpleHeaderData() {
+        initializeProperty();
         AvatarIcon icon = new AvatarIcon(getClass().getResource("/image/logoME.png"), 60, 60, 999);
         icon.setBorder(2);
         return new SimpleHeaderData()
                 .setIcon(icon)
                 .setTitle("PT MEGAYASA ENGINEERING")
-                .setDescription("Admin")
+                .setDescription(loginInformation.getRole())
                 .setHeaderStyle(new SimpleHeaderStyle() {
 
                     @Override
@@ -68,18 +81,18 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     }
 
     @Override
-    public SimpleFooterData getSimpleFooterData() {       
+    public SimpleFooterData getSimpleFooterData() {
         return new SimpleFooterData();
     }
 
     @Override
     public SimpleMenuOption getSimpleMenuOption() {
-        
+
         // management Menu
         MenuItem items[] = new MenuItem[]{
             new Item.Label("MAIN"),
             new Item("Dashboard", "dashboard.svg"),
-            // 
+            //
             new Item.Label("PERSONALIA"),
             new Item("Karyawan", "employee.svg"),
             new Item("Absensi", "presence.svg"),
@@ -122,7 +135,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         + "[dark]foreground:darken($Label.foreground,30%)");
             }
         });
-        
+
         // Action Menu
         simpleMenuOption.addMenuEvent(new MenuEvent() {
     @Override
