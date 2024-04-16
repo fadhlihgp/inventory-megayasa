@@ -167,21 +167,25 @@
             <artifactId>swing-glasspane-popup</artifactId>
             <version>1.4.0</version>
         </dependency>
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> c59a9db48c2bf776f65b9f093834481ee2b5f656
         <!-- MANUAL LOCAL SWING CRAZY PANEL  -->
         <dependency>
             <groupId>raven.crazypanel</groupId>
             <artifactId>swing-crazy-panel</artifactId>
             <version>1.0.0</version>
         </dependency>
-        
+
         <!-- MANUAL LOCAL TABEL CUSTOM  -->
         <dependency>
             <groupId>raven.tabel</groupId>
             <artifactId>table-custom</artifactId>
             <version>1.0.0</version>
         </dependency>
-        
+
         <!-- https://mvnrepository.com/artifact/net.java.timingframework/timingframework-core -->
         <dependency>
             <groupId>net.java.dev.timingframework</groupId>
@@ -189,18 +193,25 @@
             <version>1.0</version>
             <type>jar</type>
         </dependency>
-        
+
          <!-- MANUAL LOCAL GLASSMORPHISM ICON  -->
         <dependency>
             <groupId>raven.glassmorphism</groupId>
             <artifactId>swing-glassmorphism-icon</artifactId>
             <version>1.0.1</version>
         </dependency>
+<<<<<<< HEAD
         
         
         
         
         
+=======
+
+
+
+
+>>>>>>> c59a9db48c2bf776f65b9f093834481ee2b5f656
 
     </dependencies>
 
