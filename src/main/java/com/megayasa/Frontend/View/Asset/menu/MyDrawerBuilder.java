@@ -99,8 +99,12 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             //
             new Item.Label("PRODUKSI"),
             new Item("Barang", "warehouse.svg"),
-            new Item("Forms", "file.svg"),
             //
+            new Item.Label("Pengaturan"),
+            new Item("Akun", "userSetting.svg")
+            .subMenu("Admin")
+            .subMenu("User"),
+            new Item("Keluar", "logout.svg"),
         };
 
         SimpleMenuOption simpleMenuOption = new SimpleMenuOption() {
@@ -153,9 +157,6 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     break;
                 case 3:
                     FormManager.showForm(new Barang());
-                    break;
-                case 4:
-                    FormManager.showForm(new Forms());
                     break;
                 default:
                     // Do nothing

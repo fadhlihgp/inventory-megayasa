@@ -52,13 +52,13 @@ public class Application extends JFrame {
         // applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
     }
 
-    public static void main(String[] args) {
-        FlatRobotoFont.install();
-        FlatLaf.registerCustomDefaultsSource("themes");
-        UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
-        FlatMacLightLaf.setup();
-        EventQueue.invokeLater(() -> new Application().setVisible(true));
-    }
+//    public static void main(String[] args) {
+//        FlatRobotoFont.install();
+//        FlatLaf.registerCustomDefaultsSource("themes");
+//        UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
+//        FlatMacLightLaf.setup();
+//        EventQueue.invokeLater(() -> new Application().setVisible(true));
+//    }
 
     public void open() {
         FlatRobotoFont.install();

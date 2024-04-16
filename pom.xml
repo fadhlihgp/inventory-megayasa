@@ -167,11 +167,6 @@
             <artifactId>swing-glasspane-popup</artifactId>
             <version>1.4.0</version>
         </dependency>
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> c59a9db48c2bf776f65b9f093834481ee2b5f656
         <!-- MANUAL LOCAL SWING CRAZY PANEL  -->
         <dependency>
             <groupId>raven.crazypanel</groupId>
@@ -200,18 +195,11 @@
             <artifactId>swing-glassmorphism-icon</artifactId>
             <version>1.0.1</version>
         </dependency>
-<<<<<<< HEAD
         
         
         
         
-        
-=======
-
-
-
-
->>>>>>> c59a9db48c2bf776f65b9f093834481ee2b5f656
+       
 
     </dependencies>
 
