@@ -14,12 +14,12 @@ import javax.swing.UIManager;
  *
  * @author Ridho Multazam
  */
-public class tambahKaryawan extends javax.swing.JFrame {
+public class editKaryawan extends javax.swing.JFrame {
 
     /**
      * Creates new form Test
      */
-    public tambahKaryawan() {
+    public editKaryawan() {
         initComponents();
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {
@@ -120,7 +120,7 @@ public class tambahKaryawan extends javax.swing.JFrame {
             }
         ));
 
-        jLabel1.setText("Tambah Karyawan");
+        jLabel1.setText("Ubah Data Karyawan");
         crazyPanel1.add(jLabel1);
 
         jLabel2.setText("Data Pribadi");
@@ -197,7 +197,7 @@ public class tambahKaryawan extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new tambahKaryawan().setVisible(true);
+                new editKaryawan().setVisible(true);
             }
         });
     }

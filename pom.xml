@@ -196,11 +196,19 @@
             <version>1.0.1</version>
         </dependency>
         
+        <!-- MANUAL LOCAL DATE TIME   -->
+        <dependency>
+            <groupId>raven.datetime</groupId>
+            <artifactId>swing-datetime-picker</artifactId>
+            <version>1.1.0</version>
+        </dependency>
         
-        
-        
-       
-
+         <!-- MANUAL LOCAL DATE CHOOSER   -->
+        <dependency>
+            <groupId>com.raven</groupId>
+            <artifactId>datechooser-swing</artifactId>
+            <version>1.4.1</version>
+        </dependency>
     </dependencies>
 
     <build>

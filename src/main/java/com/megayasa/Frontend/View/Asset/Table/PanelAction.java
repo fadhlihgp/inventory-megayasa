@@ -1,6 +1,7 @@
 package com.megayasa.Frontend.View.Asset.Table;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.megayasa.Frontend.View.Personalia.editKaryawan;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,7 +24,8 @@ public class PanelAction extends javax.swing.JPanel {
         btEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-               event.onEdit(row);
+               editKaryawan a = new editKaryawan();
+               a.setVisible(true);
             }
         });
         
