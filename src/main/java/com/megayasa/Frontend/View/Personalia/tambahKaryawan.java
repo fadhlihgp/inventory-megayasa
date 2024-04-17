@@ -1,6 +1,7 @@
 package com.megayasa.Frontend.View.Personalia;
 
 import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.google.inject.Guice;
@@ -30,6 +31,9 @@ public class tambahKaryawan extends javax.swing.JFrame {
     public tambahKaryawan() {
         employeeController = Guice.createInjector(new Injection()).getInstance(EmployeeController.class);
         initComponents();
+        
+        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
+        
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {
             @Override
@@ -52,26 +56,37 @@ public class tambahKaryawan extends javax.swing.JFrame {
     private void initComponents() {
 
         dateChooser = new com.raven.datechooser.DateChooser();
+        status = new javax.swing.ButtonGroup();
+        JK = new javax.swing.ButtonGroup();
         crazyPanel1 = new raven.crazypanel.CrazyPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        Title = new javax.swing.JLabel();
+        subTitle = new javax.swing.JLabel();
+        idKaryawan = new javax.swing.JLabel();
         txIdkaryawan = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        Nama = new javax.swing.JLabel();
         txFirst = new javax.swing.JTextField();
         txLast = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txBirthday = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        txAddress = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        jk = new javax.swing.JComboBox<>();
-        jLabel13 = new javax.swing.JLabel();
-        txNumber = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
+        Posisi = new javax.swing.JLabel();
+        Jabatan = new javax.swing.JComboBox<>();
+        Status = new javax.swing.JLabel();
+        jAktif = new javax.swing.JRadioButton();
+        jtidakAktif = new javax.swing.JRadioButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        subTitle2 = new javax.swing.JLabel();
+        Identitas = new javax.swing.JLabel();
         txIdentity = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        TanggalLahir = new javax.swing.JLabel();
+        txBirthday = new javax.swing.JTextField();
+        btCalendar = new javax.swing.JButton();
+        JenisKelamin = new javax.swing.JLabel();
+        jPria = new javax.swing.JRadioButton();
+        jWanita = new javax.swing.JRadioButton();
+        Alamat = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtAlamat = new javax.swing.JTextArea();
+        Telepon = new javax.swing.JLabel();
+        txNumber = new javax.swing.JTextField();
+        btSimpan = new javax.swing.JButton();
 
         dateChooser.setForeground(new java.awt.Color(15, 42, 61));
         dateChooser.setTextRefernce(txBirthday);
@@ -90,16 +105,25 @@ public class tambahKaryawan extends javax.swing.JFrame {
                 "showClearButton:true;JTextField.placeholderText=Nama Depan",
                 "showClearButton:true;JTextField.placeholderText=Nama Belakang",
                 "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "font:bold +1",
+                "",
+                "showClearButton:true;JTextField.placeholderText=KTP",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
                 "showClearButton:true",
-                "",
-                "",
-                "showClearButton:true",
-                "",
-                "",
-                "",
-                "showClearButton:true",
-                "",
-                "showClearButton:true;JTextField.placeholderText=KTP"
+                ""
             }
         ));
         crazyPanel1.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
@@ -115,11 +139,19 @@ public class tambahKaryawan extends javax.swing.JFrame {
                 "split 2",
                 "",
                 "",
+                "",
+                "",
+                "split 2",
+                "",
+                "span 2,grow 1",
+                "wrap,al lead",
+                "",
+                "",
+                "",
                 "split 2",
                 "",
                 "",
-                "",
-                "",
+                "split 2",
                 "",
                 "",
                 "",
@@ -129,66 +161,95 @@ public class tambahKaryawan extends javax.swing.JFrame {
             }
         ));
 
-        jLabel1.setText("Tambah Karyawan");
-        crazyPanel1.add(jLabel1);
+        Title.setText("Tambah Karyawan");
+        crazyPanel1.add(Title);
 
-        jLabel2.setText("Data Pribadi");
-        crazyPanel1.add(jLabel2);
+        subTitle.setText("Publik");
+        crazyPanel1.add(subTitle);
 
-        jLabel7.setText("ID Karyawan");
-        crazyPanel1.add(jLabel7);
+        idKaryawan.setText("ID Karyawan");
+        crazyPanel1.add(idKaryawan);
         crazyPanel1.add(txIdkaryawan);
 
-        jLabel4.setText("Nama Lengkap");
-        crazyPanel1.add(jLabel4);
+        Nama.setText("Nama Lengkap");
+        crazyPanel1.add(Nama);
         crazyPanel1.add(txFirst);
         crazyPanel1.add(txLast);
 
-        jLabel5.setText("Tanggal Lahir");
-        crazyPanel1.add(jLabel5);
+        Posisi.setText("Posisi");
+        crazyPanel1.add(Posisi);
+
+        Jabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Jabatan" }));
+        crazyPanel1.add(Jabatan);
+
+        Status.setText("Status");
+        crazyPanel1.add(Status);
+
+        status.add(jAktif);
+        jAktif.setText("Aktif");
+        crazyPanel1.add(jAktif);
+
+        status.add(jtidakAktif);
+        jtidakAktif.setText("Tidak Aktif");
+        crazyPanel1.add(jtidakAktif);
+        crazyPanel1.add(jSeparator1);
+
+        subTitle2.setText("Privasi");
+        crazyPanel1.add(subTitle2);
+
+        Identitas.setText("No Identitas");
+        crazyPanel1.add(Identitas);
+        crazyPanel1.add(txIdentity);
+
+        TanggalLahir.setText("Tanggal Lahir");
+        crazyPanel1.add(TanggalLahir);
 
         txBirthday.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         crazyPanel1.add(txBirthday);
 
-        jButton5.setText("...");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btCalendar.setMaximumSize(new java.awt.Dimension(72, 23));
+        btCalendar.setMinimumSize(new java.awt.Dimension(72, 23));
+        btCalendar.setPreferredSize(new java.awt.Dimension(72, 23));
+        btCalendar.setSelected(true);
+        btCalendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btCalendarActionPerformed(evt);
             }
         });
-        crazyPanel1.add(jButton5);
+        crazyPanel1.add(btCalendar);
 
-        jLabel6.setText("Alamat");
-        crazyPanel1.add(jLabel6);
-        crazyPanel1.add(txAddress);
+        JenisKelamin.setText("Jenis Kelamin");
+        crazyPanel1.add(JenisKelamin);
 
-        jLabel12.setText("Jenis Kelamin");
-        crazyPanel1.add(jLabel12);
+        JK.add(jPria);
+        jPria.setText("Pria");
+        crazyPanel1.add(jPria);
 
-        jk.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pria", "Wanita" }));
-        crazyPanel1.add(jk);
+        JK.add(jWanita);
+        jWanita.setText("Wanita");
+        crazyPanel1.add(jWanita);
 
-        jLabel13.setText("No Telepon");
-        crazyPanel1.add(jLabel13);
+        Alamat.setText("Alamat");
+        crazyPanel1.add(Alamat);
+
+        jtAlamat.setColumns(20);
+        jtAlamat.setRows(3);
+        jScrollPane1.setViewportView(jtAlamat);
+
+        crazyPanel1.add(jScrollPane1);
+
+        Telepon.setText("No Telepon");
+        crazyPanel1.add(Telepon);
         crazyPanel1.add(txNumber);
 
-        jLabel14.setText("No Identitas");
-        crazyPanel1.add(jLabel14);
-        crazyPanel1.add(txIdentity);
-
-        jButton1.setText("Simpan");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        crazyPanel1.add(jButton1);
+        btSimpan.setText("Simpan");
+        crazyPanel1.add(btSimpan);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 529, Short.MAX_VALUE)
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,26 +260,9 @@ public class tambahKaryawan extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalendarActionPerformed
         dateChooser.showPopup();
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        String fullName = txFirst.getText() + " " + txLast.getText();
-        String birthDate = txBirthday.getText();
-        EmployeeRequestVm saveEmployee = new EmployeeRequestVm();
-        saveEmployee.setEmployeeId(txIdkaryawan.getText());
-        saveEmployee.setIdentityNumber(txIdentity.getText());
-        saveEmployee.setGender((String) jk.getSelectedItem());
-        saveEmployee.setAddress(txAddress.getText());
-        saveEmployee.setPhoneNumber(txNumber.getText());
-        saveEmployee.setPositionId("1");
-        saveEmployee.setIsActive(true);
-        saveEmployee.setFullName(fullName);
-        saveEmployee.setBirthDate(ChangeDateFormat.stringToDateSql("dd-MM-yyyy", txBirthday.getText()));
-        System.out.println(saveEmployee);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btCalendarActionPerformed
 
     public static void main(String args[]) {
      FlatRobotoFont.install();
@@ -234,21 +278,32 @@ public class tambahKaryawan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Alamat;
+    private javax.swing.JLabel Identitas;
+    private javax.swing.ButtonGroup JK;
+    private javax.swing.JComboBox<String> Jabatan;
+    private javax.swing.JLabel JenisKelamin;
+    private javax.swing.JLabel Nama;
+    private javax.swing.JLabel Posisi;
+    private javax.swing.JLabel Status;
+    private javax.swing.JLabel TanggalLahir;
+    private javax.swing.JLabel Telepon;
+    private javax.swing.JLabel Title;
+    private javax.swing.JButton btCalendar;
+    private javax.swing.JButton btSimpan;
     private raven.crazypanel.CrazyPanel crazyPanel1;
     private com.raven.datechooser.DateChooser dateChooser;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JComboBox<String> jk;
-    private javax.swing.JTextField txAddress;
+    private javax.swing.JLabel idKaryawan;
+    private javax.swing.JRadioButton jAktif;
+    private javax.swing.JRadioButton jPria;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JRadioButton jWanita;
+    private javax.swing.JTextArea jtAlamat;
+    private javax.swing.JRadioButton jtidakAktif;
+    private javax.swing.ButtonGroup status;
+    private javax.swing.JLabel subTitle;
+    private javax.swing.JLabel subTitle2;
     private javax.swing.JTextField txBirthday;
     private javax.swing.JTextField txFirst;
     private javax.swing.JTextField txIdentity;
