@@ -99,4 +99,8 @@ public class FormManager {
             SwingUtilities.updateComponentTreeUI(f);
         }
     }
+
+    public static void uninstall() {
+        instance.frame.setVisible(false);
+    }
 }

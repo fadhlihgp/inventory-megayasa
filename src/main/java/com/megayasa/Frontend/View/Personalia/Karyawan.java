@@ -44,7 +44,7 @@ public class Karyawan extends SimpleForm {
             }
 
         };
-              
+
         tableKaryawan.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
         tableKaryawan.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor(event));
         tableKaryawan.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
@@ -55,7 +55,7 @@ public class Karyawan extends SimpleForm {
             }
         });
     }
-    
+
     private void applyTableStyle(JTable table) {
 
         btAdd.setIcon(new FlatSVGIcon("iconSVG/add.svg", 0.35f));
@@ -73,8 +73,8 @@ public class Karyawan extends SimpleForm {
         table.getTableHeader().putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
         table.putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
     }
-    
-    
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -137,9 +137,7 @@ public class Karyawan extends SimpleForm {
 
         tableKaryawan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Id", "Id Posisi", "Nama Lengkap", "Tanggal Lahir", "Alamat", "Jenis Kelamin", "No Telp", "NIK", "Action"
@@ -204,7 +202,7 @@ public class Karyawan extends SimpleForm {
             new Karyawan().setVisible(true);
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
     private javax.swing.JButton btPrint;

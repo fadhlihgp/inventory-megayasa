@@ -3,10 +3,16 @@ package com.megayasa.Frontend.View.Personalia;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.EmployeeController;
+import com.megayasa.Backend.Helpers.ChangeDateFormat;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Requests.EmployeeRequestVm;
 import com.raven.datechooser.EventDateChooser;
 import com.raven.datechooser.SelectedAction;
 import com.raven.datechooser.SelectedDate;
 import java.awt.Font;
+import java.sql.Date;
 import javax.swing.JProgressBar;
 import javax.swing.UIManager;
 
@@ -16,10 +22,13 @@ import javax.swing.UIManager;
  */
 public class tambahKaryawan extends javax.swing.JFrame {
 
+    private EmployeeController employeeController;
+
     /**
      * Creates new form Test
      */
     public tambahKaryawan() {
+        employeeController = Guice.createInjector(new Injection()).getInstance(EmployeeController.class);
         initComponents();
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {
@@ -168,13 +177,18 @@ public class tambahKaryawan extends javax.swing.JFrame {
         crazyPanel1.add(txIdentity);
 
         jButton1.setText("Simpan");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         crazyPanel1.add(jButton1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 529, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +202,24 @@ public class tambahKaryawan extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         dateChooser.showPopup();
     }//GEN-LAST:event_jButton5ActionPerformed
-    
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String fullName = txFirst.getText() + " " + txLast.getText();
+        String birthDate = txBirthday.getText();
+        EmployeeRequestVm saveEmployee = new EmployeeRequestVm();
+        saveEmployee.setEmployeeId(txIdkaryawan.getText());
+        saveEmployee.setIdentityNumber(txIdentity.getText());
+        saveEmployee.setGender((String) jk.getSelectedItem());
+        saveEmployee.setAddress(txAddress.getText());
+        saveEmployee.setPhoneNumber(txNumber.getText());
+        saveEmployee.setPositionId("1");
+        saveEmployee.setIsActive(true);
+        saveEmployee.setFullName(fullName);
+        saveEmployee.setBirthDate(ChangeDateFormat.stringToDateSql("dd-MM-yyyy", txBirthday.getText()));
+        System.out.println(saveEmployee);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public static void main(String args[]) {
      FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("addThemes");

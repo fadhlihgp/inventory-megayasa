@@ -2,17 +2,17 @@ package com.megayasa.Frontend.View.Asset.menu;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
+
+import java.awt.*;
+import javax.swing.*;
 
 import com.google.inject.Guice;
 import com.megayasa.Backend.Controllers.LoginInformationController;
+import com.megayasa.Backend.Dialogs.ConfirmationDialog;
 import com.megayasa.Backend.Models.LoginInformation;
 import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Frontend.View.Asset.application.Application;
+import com.megayasa.Frontend.View.Main.Main;
 import raven.drawer.component.DrawerPanel;
 import raven.drawer.component.SimpleDrawerBuilder;
 import raven.drawer.component.footer.SimpleFooterData;
@@ -157,6 +157,9 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                 case 3:
                     FormManager.showForm(new Barang());
                     break;
+                case 5:
+                    logout();
+                    break;
                 default:
                     // Do nothing
             }
@@ -179,5 +182,14 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     @Override
     public int getDrawerWidth() {
         return 270;
+    }
+
+    private void logout() {
+        int signout = ConfirmationDialog.otherConfirmation("Anda yakin ingin logout ?", "Signout");
+        if (signout == JOptionPane.YES_NO_OPTION) {
+            loginInformationController.deleteLoginInformation();
+            FormManager.uninstall();
+            new Main().setVisible(true);
+        }
     }
 }
