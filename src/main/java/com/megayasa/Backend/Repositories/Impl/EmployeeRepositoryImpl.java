@@ -6,7 +6,9 @@ import com.megayasa.Backend.Repositories.EmployeeRepository;
 import com.megayasa.Backend.Repositories.QueryRepository;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class EmployeeRepositoryImpl implements EmployeeRepository {
@@ -23,8 +25,15 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
+    public Optional<Employee> findByIdentity(String identity) {
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("identityNumber", identity);
+        return queryRepository.findOneByFilter(filters, "AND");
+    }
+
+    @Override
     public void delete(Employee employee) {
-        queryRepository.deleteByClass(employee);
+        queryRepository.deleteById(employee.getId());
     }
 
     @Override

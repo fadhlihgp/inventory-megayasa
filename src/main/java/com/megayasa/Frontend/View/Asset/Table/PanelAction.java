@@ -24,11 +24,12 @@ public class PanelAction extends javax.swing.JPanel {
         btEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-               editKaryawan a = new editKaryawan();
-               a.setVisible(true);
+//               editKaryawan a = new editKaryawan();
+//               a.setVisible(true);
+                event.onEdit(row);
             }
         });
-        
+
         btDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {

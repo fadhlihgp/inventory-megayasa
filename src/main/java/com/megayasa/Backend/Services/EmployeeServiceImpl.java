@@ -37,6 +37,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee findId = employeeRepository.findById(employeeRequestVm.getEmployeeId()).orElse(null);
         if (findId != null) throw new WarningException("Id karyawan sudah tersedia!");
 
+        Employee findByIdentity = employeeRepository.findByIdentity(employeeRequestVm.getIdentityNumber()).orElse(null);
+        if (findByIdentity != null) throw new WarningException("Nomor identitas/KTP karyawan sudah tersedia!");
+
         Employee employee = new Employee(employeeRequestVm.getEmployeeId(), employeeRequestVm.getFullName(), employeeRequestVm.getBirthDate(),
                 employeeRequestVm.getAddress(), employeeRequestVm.getGender(), employeeRequestVm.getPhoneNumber(),
                 employeeRequestVm.getIdentityNumber(), (employeeRequestVm.getIsActive() == null || employeeRequestVm.getIsActive()),

@@ -14,4 +14,9 @@ public class ChangeDateFormat {
             throw new RuntimeException(e);
         }
     }
+
+    public static String dateToString(String format, Date value) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        return simpleDateFormat.format(value);
+    }
 }

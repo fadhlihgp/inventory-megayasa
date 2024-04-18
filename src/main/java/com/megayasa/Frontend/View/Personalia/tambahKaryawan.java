@@ -6,16 +6,20 @@ import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.google.inject.Guice;
 import com.megayasa.Backend.Controllers.EmployeeController;
+import com.megayasa.Backend.Controllers.PositionController;
 import com.megayasa.Backend.Helpers.ChangeDateFormat;
+import com.megayasa.Backend.Models.Position;
 import com.megayasa.Backend.Utils.Injection;
 import com.megayasa.Backend.ViewModels.Requests.EmployeeRequestVm;
+import com.megayasa.Frontend.Helpers.ComboBoxListCellRender;
+import com.megayasa.Frontend.View.Asset.menu.FormManager;
 import com.raven.datechooser.EventDateChooser;
 import com.raven.datechooser.SelectedAction;
 import com.raven.datechooser.SelectedDate;
 import java.awt.Font;
 import java.sql.Date;
-import javax.swing.JProgressBar;
-import javax.swing.UIManager;
+import java.util.List;
+import javax.swing.*;
 
 /**
  *
@@ -24,21 +28,23 @@ import javax.swing.UIManager;
 public class tambahKaryawan extends javax.swing.JFrame {
 
     private EmployeeController employeeController;
+    private PositionController positionController;
 
     /**
      * Creates new form Test
      */
     public tambahKaryawan() {
         employeeController = Guice.createInjector(new Injection()).getInstance(EmployeeController.class);
+        positionController = Guice.createInjector(new Injection()).getInstance(PositionController.class);
         initComponents();
-        
+        loadPositionData();
         btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
-        
+
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {
             @Override
             public void dateSelected(SelectedAction action, SelectedDate date) {
-                System.out.println(date.getDay() + "-" + date.getMonth() + "-" + date.getYear());
+//                System.out.println(date.getDay() + "-" + date.getMonth() + "-" + date.getYear());
                 if (action.getAction() == SelectedAction.DAY_SELECTED) {
                     dateChooser.hidePopup();
                 }
@@ -178,8 +184,6 @@ public class tambahKaryawan extends javax.swing.JFrame {
 
         Posisi.setText("Posisi");
         crazyPanel1.add(Posisi);
-
-        Jabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Jabatan" }));
         crazyPanel1.add(Jabatan);
 
         Status.setText("Status");
@@ -243,13 +247,18 @@ public class tambahKaryawan extends javax.swing.JFrame {
         crazyPanel1.add(txNumber);
 
         btSimpan.setText("Simpan");
+        btSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSimpanActionPerformed(evt);
+            }
+        });
         crazyPanel1.add(btSimpan);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 529, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,6 +272,36 @@ public class tambahKaryawan extends javax.swing.JFrame {
     private void btCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalendarActionPerformed
         dateChooser.showPopup();
     }//GEN-LAST:event_btCalendarActionPerformed
+
+    private void btSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSimpanActionPerformed
+        // TODO add your handling code here:
+        Position cbPosition = (Position) Jabatan.getSelectedItem();
+        String employeeId = txIdkaryawan.getText();
+        String fullName = txFirst.getText() + " " + txLast.getText();
+        String position = cbPosition.getId();
+        Boolean status = jAktif.isSelected() ? Boolean.TRUE : jtidakAktif.isSelected() ? false : null ;
+        String identity = txIdentity.getText();
+        Date birthDate = ChangeDateFormat.stringToDateSql("dd-MM-yyyy", txBirthday.getText());
+        String gender = jPria.isSelected() ? "Pria" : jWanita.isSelected() ? "Wanita" : null;
+        String address = jtAlamat.getText();
+        String phone = txNumber.getText();
+
+        EmployeeRequestVm employeeSave = new EmployeeRequestVm(employeeId, identity, fullName, birthDate, address, gender, phone, position, status);
+        employeeController.createOrUpdateEmployee(null, employeeSave);
+        this.setVisible(false);
+        FormManager.showForm(new Karyawan());
+    }//GEN-LAST:event_btSimpanActionPerformed
+
+    private void loadPositionData() {
+        DefaultComboBoxModel<Position> defaultComboBoxModel = new DefaultComboBoxModel<>();
+        List<Position> allPositions = positionController.findAllPositions();
+        allPositions.add(0, new Position(null, "Pilih Jabatan"));
+        for (Position allPosition : allPositions) {
+            defaultComboBoxModel.addElement(allPosition);
+        }
+        Jabatan.setModel(defaultComboBoxModel);
+        Jabatan.setRenderer(new ComboBoxListCellRender());
+    }
 
     public static void main(String args[]) {
      FlatRobotoFont.install();
@@ -281,7 +320,7 @@ public class tambahKaryawan extends javax.swing.JFrame {
     private javax.swing.JLabel Alamat;
     private javax.swing.JLabel Identitas;
     private javax.swing.ButtonGroup JK;
-    private javax.swing.JComboBox<String> Jabatan;
+    private javax.swing.JComboBox<Position> Jabatan;
     private javax.swing.JLabel JenisKelamin;
     private javax.swing.JLabel Nama;
     private javax.swing.JLabel Posisi;

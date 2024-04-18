@@ -5,17 +5,22 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.EmployeeController;
+import com.megayasa.Backend.Dialogs.ConfirmationDialog;
+import com.megayasa.Backend.Helpers.ChangeDateFormat;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Requests.EmployeeRequestVm;
+import com.megayasa.Backend.ViewModels.Responses.EmployeeResponseVm;
 import com.megayasa.Frontend.View.Asset.Table.TableActionCellEditor;
 import com.megayasa.Frontend.View.Asset.Table.TableActionCellRender;
 import com.megayasa.Frontend.View.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.View.Asset.components.SimpleForm;
 import java.awt.Component;
 import java.awt.Font;
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+import java.sql.Date;
+import java.util.List;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,35 +30,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Karyawan extends SimpleForm {
 
+    private EmployeeController employeeController;
+    private List<EmployeeResponseVm> allEmployees;
+    private List<EmployeeResponseVm> employeeFilters;
+
     public Karyawan() {
         initComponents();
+        initializeData();
         applyTableStyle(tableKaryawan);
-        TableActionEvent event = new TableActionEvent() {
-            @Override
-            public void onEdit(int row) {
-                System.out.println("Edit row : " + row);
-            }
-
-            @Override
-            public void onDelete(int row) {
-                if (tableKaryawan.isEditing()) {
-                    tableKaryawan.getCellEditor().stopCellEditing();
-                }
-                DefaultTableModel model = (DefaultTableModel) tableKaryawan.getModel();
-                model.removeRow(row);
-            }
-
-        };
-
-        tableKaryawan.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
-        tableKaryawan.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor(event));
-        tableKaryawan.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-                setHorizontalAlignment(SwingConstants.RIGHT);
-                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
-            }
-        });
     }
 
     private void applyTableStyle(JTable table) {
@@ -120,6 +104,11 @@ public class Karyawan extends SimpleForm {
         ));
 
         txSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txSearchKeyTyped(evt);
+            }
+        });
         crazyPanel2.add(txSearch);
 
         btAdd.setText("Tambah");
@@ -187,11 +176,78 @@ public class Karyawan extends SimpleForm {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void initializeData() {
+        employeeController = Guice.createInjector(new Injection()).getInstance(EmployeeController.class);
+        allEmployees = employeeController.findAllEmployees();
+        employeeFilters = allEmployees;
+        fetchAllEmployees();
+    }
+
+    private void fetchAllEmployees() {
+        String[] headers = {"Id", "Posisi", "Nama Lengkap", "Tanggal Lahir", "Alamat", "Jenis Kelamin", "No Telp", "NIK", "Aksi"};
+        DefaultTableModel defaultTableModel = new DefaultTableModel(null, headers);
+        tableKaryawan.setModel(defaultTableModel);
+
+        for (EmployeeResponseVm employeeFilter : employeeFilters) {
+            String[] values = { employeeFilter.getId(), employeeFilter.getPosition(), employeeFilter.getFullName(),
+                    ChangeDateFormat.dateToString("dd-MMM-yyyy", employeeFilter.getBirthDate()), employeeFilter.getAddress(),
+                    employeeFilter.getGender(), employeeFilter.getPhoneNumber(), employeeFilter.getIdentityNumber()
+            };
+            defaultTableModel.addRow(values);
+        }
+
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {
+                EmployeeResponseVm empResponse = employeeFilters.get(row);
+                EmployeeRequestVm employeeRequestVm = new EmployeeRequestVm(empResponse.getId(), empResponse.getIdentityNumber(),
+                        empResponse.getFullName(), new Date(empResponse.getBirthDate().getTime()), empResponse.getAddress(), empResponse.getGender(),
+                        empResponse.getPhoneNumber(), empResponse.getPositionId(), empResponse.isActive());
+
+                editKaryawan a = new editKaryawan(employeeRequestVm);
+                a.setVisible(true);
+            }
+
+            @Override
+            public void onDelete(int row) {
+                if (tableKaryawan.isEditing()) {
+                    tableKaryawan.getCellEditor().stopCellEditing();
+                }
+                DefaultTableModel model = (DefaultTableModel) tableKaryawan.getModel();
+                EmployeeResponseVm empResponse = employeeFilters.get(row);
+                int confirmDelete = ConfirmationDialog.deleteConfirmation("Yakin ingin menghapus data " + empResponse.getFullName() + " ?", "Konfirmasi Hapus Data Karyawan");
+                if (confirmDelete == JOptionPane.YES_NO_OPTION) {
+                    model.removeRow(row);
+                    employeeController.deleteEmployee(empResponse.getId());
+                }
+            }
+
+        };
+
+        tableKaryawan.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
+        tableKaryawan.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor(event));
+        tableKaryawan.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
+                setHorizontalAlignment(SwingConstants.RIGHT);
+                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
+            }
+        });
+    }
+
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         // TODO add your handling code here:
         tambahKaryawan a = new tambahKaryawan();
         a.setVisible(true);
     }//GEN-LAST:event_btAddActionPerformed
+
+    private void txSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearchKeyTyped
+        // TODO add your handling code here:
+        String search = txSearch.getText().toLowerCase();
+        employeeFilters = allEmployees.stream().filter(e -> e.getFullName().toLowerCase().contains(search)
+                || e.getId().toLowerCase().contains(search)).toList();
+        fetchAllEmployees();
+    }//GEN-LAST:event_txSearchKeyTyped
 
     public static void main(String[] args) {
         FlatRobotoFont.install();

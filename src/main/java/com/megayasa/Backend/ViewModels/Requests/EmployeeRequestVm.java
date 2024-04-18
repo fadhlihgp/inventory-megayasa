@@ -1,5 +1,7 @@
 package com.megayasa.Backend.ViewModels.Requests;
 
+import com.megayasa.Backend.Annotations.Validations.LengthConstraint;
+import com.megayasa.Backend.Annotations.Validations.MustNumber;
 import com.megayasa.Backend.Annotations.Validations.NotNullProp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +16,9 @@ public class EmployeeRequestVm {
     @NotNullProp(message = "Id karyawan tidak boleh kosong")
     private String employeeId;
 
+    @NotNullProp(message = "Nomor identitas karyawan tidak boleh kosong")
+    @MustNumber(message = "Nomor identitas karyawan harus berisikan angka")
+    @LengthConstraint(minLength = 16, maxLength = 16, message = "Nomor identitas karyawan harus berisikan 16 karakter")
     private String identityNumber;
 
     @NotNullProp(message = "Nama lengkap tidak boleh kosong")
@@ -28,6 +33,7 @@ public class EmployeeRequestVm {
     @NotNullProp(message = "Jenis kelamin tidak boleh kosong")
     private String gender;
 
+    @MustNumber(message = "Nomor ponsel harus berisikan tipe data number")
     private String phoneNumber;
 
     @NotNullProp(message = "Jabatan tidak boleh kosong")
