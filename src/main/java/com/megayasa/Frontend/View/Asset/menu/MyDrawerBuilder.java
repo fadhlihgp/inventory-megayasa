@@ -25,6 +25,7 @@ import raven.drawer.component.menu.SimpleMenuStyle;
 import raven.drawer.component.menu.data.Item;
 import raven.drawer.component.menu.data.MenuItem;
 import com.megayasa.Frontend.View.Asset.forms.Dashboard;
+import com.megayasa.Frontend.View.Pengaturan.Akun;
 import com.megayasa.Frontend.View.Personalia.Karyawan;
 import com.megayasa.Frontend.View.Personalia.Absensi;
 import com.megayasa.Frontend.View.Produksi.Barang;
@@ -154,6 +155,9 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     break;
                 case 3:
                     FormManager.showForm(new Barang());
+                    break;
+                case 4:
+                    FormManager.showForm(new Akun());
                     break;
                 case 5:
                     logout();

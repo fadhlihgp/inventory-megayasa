@@ -1,6 +1,11 @@
 package com.megayasa.Frontend.View.Personalia;
 
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.megayasa.Frontend.View.Asset.components.SimpleForm;
+import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -12,9 +17,28 @@ public class Absensi extends SimpleForm {
      * Creates new form ReadForm
      */
     public Absensi() {
-        initComponents();     
+        initComponents();
+        applyTableStyle(tableAbsensi);
     }
 
+    private void applyTableStyle(JTable table) {
+
+        btAdd.setIcon(new FlatSVGIcon("iconSVG/add.svg", 0.35f));
+        btPrint.setIcon(new FlatSVGIcon("iconSVG/print.svg", 0.35f));
+
+        txSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("iconSVG/search.svg", 0.35f));
+        //  Change scroll style
+        JScrollPane scroll = (JScrollPane) table.getParent().getParent();
+        scroll.setBorder(BorderFactory.createEmptyBorder());
+        scroll.getVerticalScrollBar().putClientProperty(FlatClientProperties.STYLE, ""
+                + "background:$Table.background;"
+                + "track:$Table.background;"
+                + "trackArc:999");
+
+        table.getTableHeader().putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
+        table.putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
