@@ -91,6 +91,7 @@ public class Karyawan extends SimpleForm {
             new String[]{
                 "JTextField.placeholderText=Search;background:@background",
                 "background:lighten(@background,8%);borderWidth:1",
+                "background:lighten(@background,8%);borderWidth:1",
                 "background:lighten(@background,8%);borderWidth:1"
             }
         ));
@@ -161,7 +162,7 @@ public class Karyawan extends SimpleForm {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(484, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE))
+                .addComponent(crazyPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,8 +171,8 @@ public class Karyawan extends SimpleForm {
                 .addGap(627, 627, 627))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(69, Short.MAX_VALUE)
-                    .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(59, Short.MAX_VALUE)
+                    .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -223,7 +224,7 @@ public class Karyawan extends SimpleForm {
             }
 
         };
-
+        
         tableKaryawan.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
         tableKaryawan.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor(event));
         tableKaryawan.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
