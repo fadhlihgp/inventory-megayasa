@@ -28,7 +28,9 @@ import com.megayasa.Frontend.View.Asset.forms.Dashboard;
 import com.megayasa.Frontend.View.Pengaturan.Akun;
 import com.megayasa.Frontend.View.Personalia.Karyawan;
 import com.megayasa.Frontend.View.Personalia.Absensi;
-import com.megayasa.Frontend.View.Produksi.Barang;
+import com.megayasa.Frontend.View.Produksi.Berita;
+import com.megayasa.Frontend.View.Produksi.Penyimpanan;
+import com.megayasa.Frontend.View.Produksi.Transaksi;
 import raven.swing.AvatarIcon;
 
 /**
@@ -98,7 +100,10 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             new Item("Absensi", "presence.svg"),
             //
             new Item.Label("PRODUKSI"),
-            new Item("Barang", "warehouse.svg"),
+            new Item("Barang", "warehouse.svg")
+            .subMenu("Penyimpanan")
+            .subMenu("Transaksi"),
+            new Item("Berita", "alert.svg"),
             //
             new Item.Label("Pengaturan"),
             new Item("Akun", "userSetting.svg"),
@@ -141,32 +146,52 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
         // Action Menu
         simpleMenuOption.addMenuEvent(new MenuEvent() {
     @Override
-    public void selected(MenuAction action, int[] index) {
-        if (index.length == 1) {
-            switch (index[0]) {
-                case 0:
-                    FormManager.showForm(new Dashboard());
-                    break;
-                case 1:
-                    FormManager.showForm(new Karyawan());
-                    break;
-                case 2:
-                    FormManager.showForm(new Absensi());
-                    break;
-                case 3:
-                    FormManager.showForm(new Barang());
-                    break;
-                case 4:
-                    FormManager.showForm(new Akun());
-                    break;
-                case 5:
-                    logout();
-                    break;
-                default:
-                    // Do nothing
+        public void selected(MenuAction action, int[] index) {
+            if (index.length == 1) {
+                switch (index[0]) {
+                    case 0:
+                        FormManager.showForm(new Dashboard());
+                        break;
+                    case 1:
+                        FormManager.showForm(new Karyawan());
+                        break;
+                    case 2:
+                        FormManager.showForm(new Absensi());
+                        break;
+                    case 4:
+                        FormManager.showForm(new Berita());
+                        break;
+                    case 5:
+                        FormManager.showForm(new Akun());
+                        break;
+                    case 6:
+                        logout();
+                        break;
+                    default:
+                        // Do nothing
+                }
+            } else if (index.length == 2) {
+                // Memeriksa jika submenu dipilih
+                switch (index[0]) {
+                    case 3:
+                        // Submenu dipilih
+                        switch (index[1]) {
+                            case 0:
+                                FormManager.showForm(new Penyimpanan());
+                                break;
+                            case 1:
+                                FormManager.showForm(new Transaksi());
+                                break;
+                            default:
+                                // Do nothing
+                        }
+                        break;
+                    default:
+                        // Do nothing
+                }
             }
         }
-    }
+
         });
 
         simpleMenuOption.setMenus(items)
