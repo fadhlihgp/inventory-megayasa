@@ -12,7 +12,7 @@ import com.megayasa.Backend.Models.Position;
 import com.megayasa.Backend.Utils.Injection;
 import com.megayasa.Backend.ViewModels.Requests.EmployeeRequestVm;
 import com.megayasa.Frontend.Helpers.ComboBoxListCellRender;
-import com.megayasa.Frontend.View.Asset.menu.FormManager;
+import com.megayasa.Frontend.Asset.menu.FormManager;
 import com.raven.datechooser.EventDateChooser;
 import com.raven.datechooser.SelectedAction;
 import com.raven.datechooser.SelectedDate;
@@ -38,7 +38,7 @@ public class tambahKaryawan extends javax.swing.JFrame {
         positionController = Guice.createInjector(new Injection()).getInstance(PositionController.class);
         initComponents();
         loadPositionData();
-        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
+        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
 
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {

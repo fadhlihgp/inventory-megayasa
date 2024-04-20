@@ -2,7 +2,7 @@ package com.megayasa.Frontend.View.Produksi;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.megayasa.Frontend.View.Asset.components.SimpleForm;
+import com.megayasa.Frontend.Asset.components.SimpleForm;
 import com.megayasa.Frontend.View.Personalia.laporAbsensi;
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;

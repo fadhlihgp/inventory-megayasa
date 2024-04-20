@@ -23,7 +23,7 @@ public class laporAbsensi extends javax.swing.JFrame {
      */
     public laporAbsensi() {
         initComponents();
-        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
+        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
         
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {

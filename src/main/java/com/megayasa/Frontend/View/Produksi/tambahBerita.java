@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.megayasa.Frontend.Asset.jnafilechooser.api.JnaFileChooser;
 import com.raven.datechooser.EventDateChooser;
 import com.raven.datechooser.SelectedAction;
 import com.raven.datechooser.SelectedDate;
@@ -14,15 +15,16 @@ import javax.swing.*;
  *
  * @author Ridho Multazam
  */
-public class transaksiBarang extends javax.swing.JFrame {
+public class tambahBerita extends javax.swing.JFrame {
 
 
     /**
      * Creates new form Test
      */
-    public transaksiBarang() {
+    public tambahBerita() {
         initComponents();
         btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
+        btUpload.setIcon(new FlatSVGIcon("iconSVG/upload.svg", 0.28f));
         
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {
@@ -50,17 +52,16 @@ public class transaksiBarang extends javax.swing.JFrame {
         Title = new javax.swing.JLabel();
         subTitle = new javax.swing.JLabel();
         NamaBarang = new javax.swing.JLabel();
-        Barang = new javax.swing.JComboBox();
-        Jumlah = new javax.swing.JLabel();
-        txJumlah = new javax.swing.JTextField();
+        txJudul = new javax.swing.JTextField();
         Tanggal = new javax.swing.JLabel();
         txDate = new javax.swing.JTextField();
         btCalendar = new javax.swing.JButton();
-        keterangan = new javax.swing.JLabel();
-        Keterangan = new javax.swing.JComboBox();
         Alamat = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtCatatan = new javax.swing.JTextArea();
+        Upload = new javax.swing.JLabel();
+        txUpload = new javax.swing.JTextField();
+        btUpload = new javax.swing.JButton();
         btSimpan = new javax.swing.JButton();
 
         dateChooser.setForeground(new java.awt.Color(15, 42, 61));
@@ -97,33 +98,26 @@ public class transaksiBarang extends javax.swing.JFrame {
                 "",
                 "",
                 "",
-                "",
-                "",
                 "split 2",
                 "",
                 "",
                 "",
                 "",
+                "split 2",
                 "",
                 "span 2,al trail"
             }
         ));
 
-        Title.setText("Transaksi Barang");
+        Title.setText("Tambah Berita Acara");
         crazyPanel1.add(Title);
 
-        subTitle.setText("Barang Keluar / Masuk");
+        subTitle.setText("Laporan Insiden Kejadian");
         crazyPanel1.add(subTitle);
 
-        NamaBarang.setText("Nama Barang");
+        NamaBarang.setText("Judul");
         crazyPanel1.add(NamaBarang);
-
-        Barang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Barang" }));
-        crazyPanel1.add(Barang);
-
-        Jumlah.setText("Jumlah");
-        crazyPanel1.add(Jumlah);
-        crazyPanel1.add(txJumlah);
+        crazyPanel1.add(txJudul);
 
         Tanggal.setText("Tanggal");
         crazyPanel1.add(Tanggal);
@@ -142,12 +136,6 @@ public class transaksiBarang extends javax.swing.JFrame {
         });
         crazyPanel1.add(btCalendar);
 
-        keterangan.setText("Keterangan");
-        crazyPanel1.add(keterangan);
-
-        Keterangan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Barang Masuk", "Barang Keluar" }));
-        crazyPanel1.add(Keterangan);
-
         Alamat.setText("Catatan");
         crazyPanel1.add(Alamat);
 
@@ -156,6 +144,20 @@ public class transaksiBarang extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jtCatatan);
 
         crazyPanel1.add(jScrollPane1);
+
+        Upload.setText("Upload Foto");
+        crazyPanel1.add(Upload);
+        crazyPanel1.add(txUpload);
+
+        btUpload.setMaximumSize(new java.awt.Dimension(72, 23));
+        btUpload.setMinimumSize(new java.awt.Dimension(72, 23));
+        btUpload.setPreferredSize(new java.awt.Dimension(72, 23));
+        btUpload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btUploadActionPerformed(evt);
+            }
+        });
+        crazyPanel1.add(btUpload);
 
         btSimpan.setText("Simpan");
         btSimpan.addActionListener(new java.awt.event.ActionListener() {
@@ -169,7 +171,7 @@ public class transaksiBarang extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,6 +186,15 @@ public class transaksiBarang extends javax.swing.JFrame {
         dateChooser.showPopup();
     }//GEN-LAST:event_btCalendarActionPerformed
 
+    private void btUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btUploadActionPerformed
+        JnaFileChooser jnaCh = new JnaFileChooser();
+        jnaCh.setDefaultFileName("Upload.txt");
+        boolean save = jnaCh.showSaveDialog(this);
+        if (save) {
+            System.out.println(jnaCh.getSelectedFile());
+        }
+    }//GEN-LAST:event_btUploadActionPerformed
+
     private void btSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSimpanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btSimpanActionPerformed
@@ -197,28 +208,27 @@ public class transaksiBarang extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new transaksiBarang().setVisible(true);
+                new tambahBerita().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Alamat;
-    private javax.swing.JComboBox Barang;
-    private javax.swing.JLabel Jumlah;
-    private javax.swing.JComboBox Keterangan;
     private javax.swing.JLabel NamaBarang;
     private javax.swing.JLabel Tanggal;
     private javax.swing.JLabel Title;
+    private javax.swing.JLabel Upload;
     private javax.swing.JButton btCalendar;
     private javax.swing.JButton btSimpan;
+    private javax.swing.JButton btUpload;
     private raven.crazypanel.CrazyPanel crazyPanel1;
     private com.raven.datechooser.DateChooser dateChooser;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jtCatatan;
-    private javax.swing.JLabel keterangan;
     private javax.swing.JLabel subTitle;
     private javax.swing.JTextField txDate;
-    private javax.swing.JTextField txJumlah;
+    private javax.swing.JTextField txJudul;
+    private javax.swing.JTextField txUpload;
     // End of variables declaration//GEN-END:variables
 }
