@@ -1,7 +1,7 @@
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
-<svg width="64px" height="64px" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="SVGRepo_bgCarrier" stroke-width="0"/>
-<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-<g id="SVGRepo_iconCarrier"> <circle opacity="0.5" cx="12" cy="12" r="10" stroke="#969696" stroke-width="1.6799999999999997"/> <path d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15" stroke="#969696" stroke-width="1.6799999999999997" stroke-linecap="round"/> </g>
-</svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 48 48" version="1.1">
+<g id="surface1">
+<path style="fill:none;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(58.823529%,58.823529%,58.823529%);stroke-opacity:1;stroke-miterlimit:4;" d="M 22 12 C 22 17.523438 17.523438 22 12 22 C 6.476562 22 2 17.523438 2 12 C 2 6.476562 6.476562 2 12 2 C 17.523438 2 22 6.476562 22 12 Z M 22 12 " transform="matrix(2,0,0,2,0,0)"/>
+<path style="fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(58.823529%,58.823529%,58.823529%);stroke-opacity:1;stroke-miterlimit:4;" d="M 15 12 L 12 12 M 12 12 L 9 12 M 12 12 L 12 9 M 12 12 L 12 15 " transform="matrix(2,0,0,2,0,0)"/>
+</g>
+</svg>

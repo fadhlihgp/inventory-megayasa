@@ -196,11 +196,11 @@
             <version>1.0.1</version>
         </dependency>
 
-        <!-- MANUAL LOCAL DATE TIME   -->
+        <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
         <dependency>
-            <groupId>raven.datetime</groupId>
-            <artifactId>swing-datetime-picker</artifactId>
-            <version>1.1.0</version>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.5.0</version>
         </dependency>
 
          <!-- MANUAL LOCAL DATE CHOOSER   -->

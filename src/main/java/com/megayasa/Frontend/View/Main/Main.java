@@ -10,7 +10,7 @@ import com.megayasa.Backend.Models.LoginInformation;
 import com.megayasa.Backend.Utils.Injection;
 import com.megayasa.Backend.ViewModels.Requests.LoginRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.LoginResponseVm;
-import com.megayasa.Frontend.View.Asset.application.Application;
+import com.megayasa.Frontend.Asset.application.Application;
 
 import javax.swing.*;
 import java.awt.*;

@@ -2,10 +2,10 @@ package com.megayasa.Frontend.View.Pengaturan;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.megayasa.Frontend.View.Asset.Table.TableActionCellEditor;
-import com.megayasa.Frontend.View.Asset.Table.TableActionCellRender;
-import com.megayasa.Frontend.View.Asset.Table.TableActionEvent;
-import com.megayasa.Frontend.View.Asset.components.SimpleForm;
+import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
+import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
+import com.megayasa.Frontend.Asset.Table.TableActionEvent;
+import com.megayasa.Frontend.Asset.components.SimpleForm;
 import java.awt.Component;
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
@@ -84,7 +84,7 @@ public class Akun extends SimpleForm {
         tableAkun = new javax.swing.JTable();
 
         jLabel1.setFont(new java.awt.Font("Monospaced", 0, 36)); // NOI18N
-        jLabel1.setText("Akun");
+        jLabel1.setText("Kontrol Akun");
 
         crazyPanel1.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "background:$Table.background;[light]border:0,0,0,0,shade(@background,5%),,20;[dark]border:0,0,0,0,tint(@background,5%),,20",
@@ -170,22 +170,22 @@ public class Akun extends SimpleForm {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 674, Short.MAX_VALUE))
+                .addGap(0, 501, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(crazyPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE))
+                .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addContainerGap(632, Short.MAX_VALUE))
+                .addGap(0, 632, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(0, 55, Short.MAX_VALUE)
-                    .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(0, 50, Short.MAX_VALUE)
+                    .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
     }// </editor-fold>//GEN-END:initComponents
- 
+
     private void txSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearchKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txSearchKeyTyped
@@ -195,7 +195,7 @@ public class Akun extends SimpleForm {
         tambahAkun a = new tambahAkun();
         a.setVisible(true);
     }//GEN-LAST:event_btAddActionPerformed
-
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
     private javax.swing.JButton btPrint;
