@@ -10,10 +10,10 @@ import com.megayasa.Backend.Models.Inventory;
 import com.megayasa.Backend.Utils.Injection;
 import com.megayasa.Backend.ViewModels.Requests.EmployeeRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.EmployeeResponseVm;
-import com.megayasa.Frontend.View.Asset.Table.TableActionCellEditor;
-import com.megayasa.Frontend.View.Asset.Table.TableActionCellRender;
-import com.megayasa.Frontend.View.Asset.Table.TableActionEvent;
-import com.megayasa.Frontend.View.Asset.components.SimpleForm;
+import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
+import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
+import com.megayasa.Frontend.Asset.Table.TableActionEvent;
+import com.megayasa.Frontend.Asset.components.SimpleForm;
 import com.megayasa.Frontend.View.Personalia.editKaryawan;
 import com.megayasa.Frontend.View.Personalia.laporAbsensi;
 

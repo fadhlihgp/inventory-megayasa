@@ -8,7 +8,7 @@ import com.megayasa.Backend.Controllers.InventoryController;
 import com.megayasa.Backend.Utils.Injection;
 import com.megayasa.Backend.ViewModels.Requests.InventoryRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.InventoryResponseVm;
-import com.megayasa.Frontend.View.Asset.menu.FormManager;
+import com.megayasa.Frontend.Asset.menu.FormManager;
 
 import java.awt.Font;
 import javax.swing.*;

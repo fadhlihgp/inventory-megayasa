@@ -1,7 +1,6 @@
 package com.megayasa.Backend.Controllers;
 
 import com.google.inject.Inject;
-import com.megayasa.Backend.Models.Absence;
 import com.megayasa.Backend.Services.Interfaces.AbsenceService;
 import com.megayasa.Backend.ViewModels.Requests.AbsenceRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.AbsenceDetailResponseVm;

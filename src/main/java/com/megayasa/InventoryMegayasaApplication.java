@@ -20,10 +20,10 @@ public class InventoryMegayasaApplication {
 //        SpringApplication.run(InventoryMegayasaApplication.class, args);
 //        new SpringApplicationBuilder(InventoryMegayasaApplication.class)
 //                .headless(false).run(args);
-//        testAccount();
+        testAccount();
 //        testEmployee();
 //        loginInformation();
-        absenceTest();
+//        absenceTest();
     }
 
     private static void testAccount() {
@@ -39,7 +39,8 @@ public class InventoryMegayasaApplication {
 
 //        accountController.updateAccount("6de99109-6ae7-4da2-a461-846f7d674471", createAccount);
 //        accountRepository.createAccount(createAccount);
-        accountController.deleteAccount("951cc965-6e62-4ad1-9bc4-55cb3e15c39f");
+//        accountController.deleteAccount("951cc965-6e62-4ad1-9bc4-55cb3e15c39f");
+        System.out.println(accountController.getAllAccounts());
     }
 
     private static void testEmployee(){

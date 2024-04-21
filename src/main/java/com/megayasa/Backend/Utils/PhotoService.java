@@ -10,7 +10,7 @@ import java.nio.file.Files;
 public class PhotoService {
 
     public String UploadPhoto(String fileName){
-        String newPath = "src/upload";
+        String newPath = DataProperties.UPLOAD_FOLDER;
         File directory = new File(newPath);
         if (!directory.exists()){
             directory.mkdirs();

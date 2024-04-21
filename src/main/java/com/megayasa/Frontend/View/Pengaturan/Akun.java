@@ -2,15 +2,20 @@ package com.megayasa.Frontend.View.Pengaturan;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.AccountController;
+import com.megayasa.Backend.Dialogs.ConfirmationDialog;
+import com.megayasa.Backend.Helpers.ChangeDateFormat;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Responses.AccountResponseVm;
 import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
 import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
 import com.megayasa.Frontend.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.Asset.components.SimpleForm;
 import java.awt.Component;
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import java.sql.Date;
+import java.util.List;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,38 +25,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Akun extends SimpleForm {
 
+    private AccountController accountController;
+    private List<AccountResponseVm> allAccounts;
+    private List<AccountResponseVm> filteredAccounts;
+
     public Akun() {
         initComponents();
         applyTableStyle(tableAkun);
-        
-        TableActionEvent event = new TableActionEvent() {
-        @Override
-            public void onEdit(int row) {
-                editAkun a = new editAkun();
-                a.setVisible(true);
-            }
-
-            @Override
-            public void onDelete(int row) {
-                if (tableAkun.isEditing()) {
-                    tableAkun.getCellEditor().stopCellEditing();
-                }
-                DefaultTableModel model = (DefaultTableModel) tableAkun.getModel();
-                model.removeRow(row);
-            }
-            };
-        
-            tableAkun.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
-            tableAkun.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor(event));
-            tableAkun.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-                setHorizontalAlignment(SwingConstants.RIGHT);
-                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
-            }
-        });
+        initializeData();
     }
-    
+
     private void applyTableStyle(JTable table) {
 
         btPrint.setIcon(new FlatSVGIcon("iconSVG/print.svg", 0.35f));
@@ -188,6 +171,10 @@ public class Akun extends SimpleForm {
 
     private void txSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearchKeyTyped
         // TODO add your handling code here:
+        String search = txSearch.getText().toLowerCase();
+        filteredAccounts = allAccounts.stream().filter(a -> a.getFullName().toLowerCase().contains(search) ||
+                a.getUsername().toLowerCase().contains(search) || a.getEmail().toLowerCase().contains(search)).toList();
+        fetchAccounts();
     }//GEN-LAST:event_txSearchKeyTyped
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
@@ -195,7 +182,56 @@ public class Akun extends SimpleForm {
         tambahAkun a = new tambahAkun();
         a.setVisible(true);
     }//GEN-LAST:event_btAddActionPerformed
- 
+
+    private void initializeData() {
+        accountController = Guice.createInjector(new Injection()).getInstance(AccountController.class);
+        allAccounts = accountController.getAllAccounts();
+        filteredAccounts = allAccounts;
+        fetchAccounts();
+    }
+
+    private void fetchAccounts() {
+        String[] headers = { "Nama Lengkap", "Username", "Email", "Role", "Id Karyawan", "Terakhir Login", "Status Akun", "Aksi" };
+        DefaultTableModel defaultTableModel = new DefaultTableModel(null, headers);
+        tableAkun.setModel(defaultTableModel);
+
+        for (AccountResponseVm filteredAccount : filteredAccounts) {
+            String lastLogin = filteredAccount.getLastLogin() == null ? "-" : ChangeDateFormat.localDateToString("dd-MMM-yyyy HH:mm:ss", filteredAccount.getLastLogin());
+            String employeeId = filteredAccount.getEmployee() != null ? filteredAccount.getEmployee().getId() : "-";
+            String[] values = { filteredAccount.getFullName(), filteredAccount.getUsername(), filteredAccount.getEmail(),
+                    filteredAccount.getRole().getName(), employeeId, lastLogin
+                    , filteredAccount.getIsActive() ? "Aktif" : "Tidak Aktif"
+            };
+            defaultTableModel.addRow(values);
+        }
+
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {
+                AccountResponseVm accountResponseVm = filteredAccounts.get(row);
+                tambahAkun a = new tambahAkun(accountResponseVm.getId());
+                a.setVisible(true);
+            }
+
+            @Override
+            public void onDelete(int row) {
+                if (tableAkun.isEditing()) {
+                    tableAkun.getCellEditor().stopCellEditing();
+                }
+                DefaultTableModel model = (DefaultTableModel) tableAkun.getModel();
+                AccountResponseVm accountResponseVm = filteredAccounts.get(row);
+                int confirm = ConfirmationDialog.deleteConfirmation("Data yang sudah dihapus tidak dapat dikembalikan. Anda yakin ?", "Konfirmasi hapus akun");
+                if (confirm == JOptionPane.YES_NO_OPTION) {
+                    accountController.deleteAccount(accountResponseVm.getId());
+                    model.removeRow(row);
+                }
+            }
+        };
+
+        tableAkun.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRender());
+        tableAkun.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditor(event));
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
     private javax.swing.JButton btPrint;

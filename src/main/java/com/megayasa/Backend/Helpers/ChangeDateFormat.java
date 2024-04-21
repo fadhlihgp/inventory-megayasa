@@ -1,6 +1,8 @@
 package com.megayasa.Backend.Helpers;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class ChangeDateFormat {
@@ -18,5 +20,9 @@ public class ChangeDateFormat {
     public static String dateToString(String format, Date value) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
         return simpleDateFormat.format(value);
+    }
+
+    public static String localDateToString(String format, LocalDateTime value) {
+        return value.format(DateTimeFormatter.ofPattern(format));
     }
 }

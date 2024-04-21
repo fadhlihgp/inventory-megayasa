@@ -13,7 +13,7 @@ import com.megayasa.Backend.Utils.Injection;
 import com.megayasa.Backend.ViewModels.Requests.StockInOutRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.StockInOutResponseVm;
 import com.megayasa.Frontend.Helpers.ComboBoxListCellRender;
-import com.megayasa.Frontend.View.Asset.menu.FormManager;
+import com.megayasa.Frontend.Asset.menu.FormManager;
 import com.raven.datechooser.EventDateChooser;
 import com.raven.datechooser.SelectedAction;
 import com.raven.datechooser.SelectedDate;

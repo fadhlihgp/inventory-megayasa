@@ -12,6 +12,7 @@ public class DataProperties {
     public static String GLOBAL_PASSWORD;
     public static String REPORT_FOLDER;
     public static Integer EXPIRED_LOGIN_TIMEOUT;
+    public static String UPLOAD_FOLDER;
     public static String DataNotFoundMessage = "Data tidak ditemukan";
     public static String SuccessCreateMessage = "Berhasil menambah data";
     public static String SuccessUpdateMessage = "Berhasil memperbarui data";
@@ -27,6 +28,7 @@ public class DataProperties {
             GLOBAL_PASSWORD = config.getString("global.password");
             REPORT_FOLDER = config.getString("report.folder");
             EXPIRED_LOGIN_TIMEOUT = Integer.valueOf(config.getString("expired.login.timeout"));
+            UPLOAD_FOLDER = config.getString("photo.folder");
         } catch (ConfigurationException e) {
             throw new RuntimeException(e);
         }

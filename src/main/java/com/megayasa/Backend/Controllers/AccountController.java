@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.megayasa.Backend.Models.Account;
 import com.megayasa.Backend.Services.Interfaces.AccountService;
 import com.megayasa.Backend.ViewModels.Requests.AccountRequestVm;
+import com.megayasa.Backend.ViewModels.Responses.AccountResponseVm;
 
 import java.util.List;
 
@@ -23,11 +24,13 @@ public class AccountController {
         accountService.updateAccount(accountId, accountRequestVm);
     }
 
-    public List<Account> getAllAccounts() {
+    public List<AccountResponseVm> getAllAccounts() {
         return accountService.getAllAccounts();
     }
 
     public void deleteAccount(String accountId) {
         accountService.deleteAccount(accountId);
     }
+
+    public Account findAccountById(String accountId) { return accountService.findAccountById(accountId); }
 }
