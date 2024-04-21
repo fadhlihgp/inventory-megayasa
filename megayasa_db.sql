@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2024 at 05:03 PM
+-- Generation Time: Apr 21, 2024 at 10:09 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -29,11 +29,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `absence` (
   `id` varchar(36) NOT NULL,
-  `date` datetime(6) NOT NULL,
+  `date` date NOT NULL,
   `information` varchar(255) NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   `employee_id` varchar(36) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `absence`
+--
+
+INSERT INTO `absence` (`id`, `date`, `information`, `note`, `employee_id`) VALUES
+('401540ca-82fa-4495-b3f7-59e4da551d0f', '2024-03-06', 'Sakit', 'Okee', '110004'),
+('45314493-990a-4381-954e-155c9e685f73', '2024-04-15', 'Cuti', '', '110002'),
+('92692a81-608f-459b-ab79-7ea77dfa5ce2', '2024-04-22', 'Sakit', '', '110005');
 
 -- --------------------------------------------------------
 
@@ -59,7 +68,8 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `email`, `full_name`, `is_active`, `last_login`, `password`, `phone_number`, `username`, `employee_id`, `role_id`) VALUES
-('16ecf466-577a-48b9-82a9-d9431e08cf8c', 'superadmin@email.com', 'Super Admin', b'1', '2024-04-15 21:59:16.000000', '$2a$10$it1K5OK3rSdanv.Ns75YJuH8Z15tN0W8VlFiZqBMqybFcUMHMkVBm', '0898989898', 'superadmin', NULL, '1');
+('16ecf466-577a-48b9-82a9-d9431e08cf8c', 'superadmin@email.com', 'Super Admin', b'1', '2024-04-21 14:21:08.000000', '$2a$10$it1K5OK3rSdanv.Ns75YJuH8Z15tN0W8VlFiZqBMqybFcUMHMkVBm', '0898989898', 'superadmin', NULL, '1'),
+('1f3439e5-7562-4680-b1d0-f655449cf8bc', 'syifa@email.com', 'Syifa Putri', b'1', NULL, '$2a$10$xm5P7mUHdFbQVIimN6jSgeVMHSQKP.dssnBLSyE5FerlSMvLfAR0W', '089882122', 'syifa123', '110003', '2');
 
 -- --------------------------------------------------------
 
@@ -84,7 +94,11 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `address`, `birthdate`, `name`, `gender`, `identity_number`, `phone_number`, `position_id`, `is_active`) VALUES
-('123345', 'Bekasi', '2000-11-17', 'Indra Gunawan', 'Laki-Laki', '3276322333', '08839223', '345da386-3326-464c-83dc-d6fe6a401f05', b'1');
+('110001', 'Bekasi', '2000-11-17', 'Fadhlih Girindra Putra', 'Pria', '32750488981121', '08989823323', '345da386-3326-464c-83dc-d6fe6a401f05', b'1'),
+('110002', 'Bogor', '2002-06-13', 'Putri Angela', 'Wanita', '3275041711111188', '089877261222', '50272cac-93f7-42c9-8a16-5b35859dc80f', b'1'),
+('110003', 'Jakarta', '2001-08-16', 'Syifa Putri', 'Wanita', '3275043434756234', '08988832332', '2f71adf7-d91f-46c1-8479-ca25b81b0065', b'1'),
+('110004', 'Kuningan, Jakarta Selatan', '2002-11-13', 'Rio Rahmat Iriawan', 'Pria', '3276654789876543', '08988821223', 'f39c1540-4524-40fc-9d75-51ff8b9c9e0e', b'1'),
+('110005', 'Duren Sawit, Jakarta Timur', '2004-06-18', 'Dendy Sulistiawan', 'Pria', '3276123489074563', '089788993364', '50272cac-93f7-42c9-8a16-5b35859dc80f', b'1');
 
 -- --------------------------------------------------------
 
@@ -114,6 +128,14 @@ CREATE TABLE `inventory` (
   `type` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`id`, `code`, `name`, `stock`, `type`) VALUES
+('deda9237-167f-4e8a-a27b-ca200a7cd605', 'BRG111', 'Suntik', 1, 'Barang'),
+('fc8338da-6a90-4eb6-b1c9-14991ee12069', 'BRG110', 'Kabel', 5, 'Yooi');
+
 -- --------------------------------------------------------
 
 --
@@ -137,7 +159,7 @@ CREATE TABLE `login_information` (
 --
 
 INSERT INTO `login_information` (`id`, `account_id`, `username`, `email`, `full_name`, `phone_number`, `role`, `role_id`, `expired_login`) VALUES
-('76002b21-4039-4091-b963-ffa0dfea323b', '16ecf466-577a-48b9-82a9-d9431e08cf8c', 'superadmin', 'superadmin@email.com', 'Super Admin', '0898989898', 'SuperAdmin', '1', '2024-04-18 21:59:16');
+('71927317-14a9-4db4-8079-027d3711f2f5', '16ecf466-577a-48b9-82a9-d9431e08cf8c', 'superadmin', 'superadmin@email.com', 'Super Admin', '0898989898', 'SuperAdmin', '1', '2024-04-24 14:21:08');
 
 -- --------------------------------------------------------
 
@@ -188,12 +210,21 @@ INSERT INTO `role` (`id`, `name`) VALUES
 
 CREATE TABLE `stock_in_out` (
   `id` varchar(36) NOT NULL,
-  `date` datetime(6) NOT NULL,
+  `date` date NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   `status` bit(1) NOT NULL,
   `inventory_id` varchar(36) NOT NULL,
   `amount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stock_in_out`
+--
+
+INSERT INTO `stock_in_out` (`id`, `date`, `note`, `status`, `inventory_id`, `amount`) VALUES
+('IN-210424202', '2024-04-19', '', b'1', 'fc8338da-6a90-4eb6-b1c9-14991ee12069', 5),
+('IN-210424511', '2024-04-21', '', b'0', 'deda9237-167f-4e8a-a27b-ca200a7cd605', 3),
+('OUT-210424231', '2024-04-21', '', b'1', 'deda9237-167f-4e8a-a27b-ca200a7cd605', 4);
 
 --
 -- Indexes for dumped tables

@@ -41,17 +41,7 @@ public class AccountServiceImpl implements AccountService {
     public void createAccount(AccountRequestVm accountRequestVm) {
         ValidationUtils.validate(accountRequestVm);
 
-        Map<String, Object> filtersByEmail = new HashMap<>();
-        filtersByEmail.put("email", accountRequestVm.getEmail());
-        var findAccountByEmail = accountRepository.findByOne(filtersByEmail, "AND")
-                .orElse(null);
-        if (findAccountByEmail != null) throw new WarningException("Email sudah digunakan, silahkan cari email lain!");
-
-        Map<String, Object> filtersByUsername = new HashMap<>();
-        filtersByUsername.put("username", accountRequestVm.getUsername());
-        var findAccountByUsername = accountRepository.findByOne(filtersByUsername,"AND" )
-                .orElse(null);
-        if (findAccountByUsername != null) throw new WarningException("Username sudah digunakan, silahkan cari username lain!");
+        createValidation(accountRequestVm);
 
         if (accountRequestVm.getPassword() == null || accountRequestVm.getPassword().equals("")) {
             accountRequestVm.setPassword(DataProperties.GLOBAL_PASSWORD);
@@ -88,6 +78,7 @@ public class AccountServiceImpl implements AccountService {
         Account findAccount = accountRepository.findById(accountId)
                 .orElseThrow(() -> new NotFoundException("Akun tidak ditemukan"));
 
+        updateValidation(accountId, accountRequestVm);
 
 //        If found update account
         findAccount.setUsername(accountRequestVm.getUsername());
@@ -144,5 +135,46 @@ public class AccountServiceImpl implements AccountService {
     public Account findAccountById(String accountId) {
         return accountRepository.findById(accountId)
                 .orElseThrow(() -> new NotFoundException("Akun tidak ditemukan!"));
+    }
+
+    private void createValidation(AccountRequestVm accountRequestVm) {
+        Map<String, Object> filtersByEmail = new HashMap<>();
+        filtersByEmail.put("email", accountRequestVm.getEmail());
+        var findAccountByEmail = accountRepository.findByOne(filtersByEmail, "AND")
+                .orElse(null);
+        if (findAccountByEmail != null) throw new WarningException("Email sudah digunakan, silahkan cari email lain!");
+
+        Map<String, Object> filtersByUsername = new HashMap<>();
+        filtersByUsername.put("username", accountRequestVm.getUsername());
+        var findAccountByUsername = accountRepository.findByOne(filtersByUsername,"AND" )
+                .orElse(null);
+        if (findAccountByUsername != null) throw new WarningException("Username sudah digunakan, silahkan cari username lain!");
+
+        Map<String, Object> filtersByEmployee = new HashMap<>();
+        filtersByUsername.put("employeeId", accountRequestVm.getEmployeeId());
+        var findByEmployee = accountRepository.findByOne(filtersByEmployee,"AND" )
+                .orElse(null);
+        if (findByEmployee != null) throw new WarningException("Karyawan tidak boleh memiliki duplikat akun !");
+    }
+
+    private void updateValidation(String accountId, AccountRequestVm accountRequestVm) {
+        Map<String, Object> filtersByEmail = new HashMap<>();
+        filtersByEmail.put("email", accountRequestVm.getEmail());
+        var findAccountByEmail = accountRepository.findByOne(filtersByEmail, "AND")
+                .orElse(null);
+        if (findAccountByEmail != null && !findAccountByEmail.getId().equals(accountId)) throw new WarningException("Email sudah digunakan, silahkan cari email lain!");
+
+        Map<String, Object> filtersByUsername = new HashMap<>();
+        filtersByUsername.put("username", accountRequestVm.getUsername());
+        var findAccountByUsername = accountRepository.findByOne(filtersByUsername,"AND" )
+                .orElse(null);
+        if (findAccountByUsername != null && !findAccountByUsername.getId().equals(accountId)) throw new WarningException("Username sudah digunakan, silahkan cari username lain!");
+
+        Map<String, Object> filtersByEmployee = new HashMap<>();
+        filtersByUsername.put("employeeId", accountRequestVm.getEmployeeId());
+        var findByEmployee = accountRepository.findByOne(filtersByEmployee,"AND" )
+                .orElse(null);
+        if (findByEmployee != null && !findByEmployee.getId().equals(accountId)) throw new WarningException("Karyawan tidak boleh memiliki duplikat akun !");
+
     }
 }
