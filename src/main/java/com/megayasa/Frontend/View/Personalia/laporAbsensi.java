@@ -41,7 +41,7 @@ public class laporAbsensi extends javax.swing.JFrame {
         this.absenceDetailResponseVm = absenceDetailResponseVm;
         initComponents();
         initializeData();
-        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
+        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
 
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {
@@ -58,7 +58,7 @@ public class laporAbsensi extends javax.swing.JFrame {
     public laporAbsensi() {
         initComponents();
         initializeData();
-        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
+        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
 
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {
@@ -109,14 +109,6 @@ public class laporAbsensi extends javax.swing.JFrame {
             new String[]{
                 "font:bold +10",
                 "font:bold +1",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
                 "",
                 ""
             }
@@ -171,7 +163,7 @@ public class laporAbsensi extends javax.swing.JFrame {
         keterangan.setText("Keterangan");
         crazyPanel1.add(keterangan);
 
-        Keterangan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Izin", "Cuti", "Sakit", "Alpa" }));
+        Keterangan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hadir", "Izin", "Sakit", "Cuti", "Alpa" }));
         crazyPanel1.add(Keterangan);
 
         Alamat.setText("Catatan");
@@ -195,11 +187,11 @@ public class laporAbsensi extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -214,7 +206,7 @@ public class laporAbsensi extends javax.swing.JFrame {
         // TODO add your handling code here:
         EmployeeResponseVm employeeResponseVm = (EmployeeResponseVm) karyawan.getSelectedItem();
         AbsenceRequestVm absenceRequestVm = new AbsenceRequestVm(employeeResponseVm.getId(),
-                ChangeDateFormat.stringToDateSql("dd-MM-yyyy", txDate.getText()), Keterangan.getSelectedItem().toString(), jtCatatan.getText());
+            ChangeDateFormat.stringToDateSql("dd-MM-yyyy", txDate.getText()), Keterangan.getSelectedItem().toString(), jtCatatan.getText());
         System.out.println(absenceRequestVm);
         if (absenceDetailResponseVm != null) {
             absenceController.createOrUpdateAbsence(absenceDetailResponseVm.getId(), absenceRequestVm);

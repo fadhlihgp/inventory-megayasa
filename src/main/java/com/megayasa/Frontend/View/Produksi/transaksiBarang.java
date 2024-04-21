@@ -40,7 +40,7 @@ public class transaksiBarang extends javax.swing.JFrame {
     public transaksiBarang(String transactionCode) {
         this.transactionCode = transactionCode;
         initComponents();
-        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
+        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
 
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {
@@ -56,7 +56,7 @@ public class transaksiBarang extends javax.swing.JFrame {
     }
     public transaksiBarang() {
         initComponents();
-        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
+        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
 
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {

@@ -56,7 +56,7 @@ public class editKaryawan extends javax.swing.JFrame {
     public editKaryawan() {
         initComponents();
         initializeData();
-        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
+        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
 
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {
@@ -117,7 +117,7 @@ public class editKaryawan extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(64, 67, 69));
-        setPreferredSize(new java.awt.Dimension(495, 462));
+        setPreferredSize(new java.awt.Dimension(500, 500));
         setResizable(false);
 
         crazyPanel1.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
@@ -211,11 +211,9 @@ public class editKaryawan extends javax.swing.JFrame {
         Status.setText("Status");
         crazyPanel1.add(Status);
 
-        status.add(jAktif);
         jAktif.setText("Aktif");
         crazyPanel1.add(jAktif);
 
-        status.add(jtidakAktif);
         jtidakAktif.setText("Tidak Aktif");
         crazyPanel1.add(jtidakAktif);
         crazyPanel1.add(jSeparator1);
@@ -247,11 +245,9 @@ public class editKaryawan extends javax.swing.JFrame {
         JenisKelamin.setText("Jenis Kelamin");
         crazyPanel1.add(JenisKelamin);
 
-        JK.add(jPria);
         jPria.setText("Pria");
         crazyPanel1.add(jPria);
 
-        JK.add(jWanita);
         jWanita.setText("Wanita");
         crazyPanel1.add(jWanita);
 
@@ -280,13 +276,13 @@ public class editKaryawan extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();
