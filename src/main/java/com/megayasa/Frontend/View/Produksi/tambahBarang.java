@@ -150,8 +150,9 @@ public class tambahBarang extends javax.swing.JFrame {
 
     private void btSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSimpanActionPerformed
         // TODO add your handling code here:
+        Integer stok = txstockBarang.getText().equals("") ? 0 : Integer.parseInt(txstockBarang.getText());
        InventoryRequestVm saveInventory =  new InventoryRequestVm(txkodeBarang.getText(), txnamaBarang.getText(),
-                Integer.parseInt(txstockBarang.getText()), txtipeBarang.getText());
+                stok, txtipeBarang.getText());
         if (inventoryCode != null) {
             inventoryController.updateInventoryByCode(inventoryCode, saveInventory);
         } else {
