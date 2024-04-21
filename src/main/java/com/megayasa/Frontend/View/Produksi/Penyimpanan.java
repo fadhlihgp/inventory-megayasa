@@ -2,11 +2,25 @@ package com.megayasa.Frontend.View.Produksi;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.InventoryController;
+import com.megayasa.Backend.Dialogs.ConfirmationDialog;
+import com.megayasa.Backend.Helpers.ChangeDateFormat;
+import com.megayasa.Backend.Models.Inventory;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Requests.EmployeeRequestVm;
+import com.megayasa.Backend.ViewModels.Responses.EmployeeResponseVm;
+import com.megayasa.Frontend.View.Asset.Table.TableActionCellEditor;
+import com.megayasa.Frontend.View.Asset.Table.TableActionCellRender;
+import com.megayasa.Frontend.View.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.View.Asset.components.SimpleForm;
+import com.megayasa.Frontend.View.Personalia.editKaryawan;
 import com.megayasa.Frontend.View.Personalia.laporAbsensi;
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.Date;
+import java.util.List;
 
 /**
  *
@@ -14,11 +28,16 @@ import javax.swing.JTable;
  */
 public class Penyimpanan extends SimpleForm {
 
+    private InventoryController inventoryController;
+    private List<Inventory> allInventories;
+    private List<Inventory> filteredInventories;
+
     public Penyimpanan() {
         initComponents();
         applyTableStyle(tableBarang);
+        initializeData();
     }
-   
+
     private void applyTableStyle(JTable table) {
 
         btAdd.setIcon(new FlatSVGIcon("iconSVG/add.svg", 0.35f));
@@ -118,6 +137,7 @@ public class Penyimpanan extends SimpleForm {
                 return canEdit [columnIndex];
             }
         });
+        tableBarang.setRowHeight(35);
         jScrollPane1.setViewportView(tableBarang);
 
         crazyPanel1.add(jScrollPane1);
@@ -143,6 +163,10 @@ public class Penyimpanan extends SimpleForm {
 
     private void txSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearchKeyTyped
         // TODO add your handling code here:
+        String search = txSearch.getText();
+        filteredInventories = allInventories.stream().filter(i -> i.getCode().toLowerCase().contains(search) ||
+                i.getName().toLowerCase().contains(search)).toList();
+        fetchAllInventories();
     }//GEN-LAST:event_txSearchKeyTyped
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
@@ -151,6 +175,50 @@ public class Penyimpanan extends SimpleForm {
         a.setVisible(true);
     }//GEN-LAST:event_btAddActionPerformed
 
+    private void initializeData() {
+        inventoryController = Guice.createInjector(new Injection()).getInstance(InventoryController.class);
+        allInventories = inventoryController.findAllInventories();
+        filteredInventories = allInventories;
+        fetchAllInventories();
+    }
+
+    private void fetchAllInventories() {
+        String[] headers = {"Kode", "Nama", "Stok", "Tipe", "Aksi"};
+        DefaultTableModel defaultTableModel = new DefaultTableModel(null, headers);
+        tableBarang.setModel(defaultTableModel);
+
+        for (Inventory inventory : filteredInventories) {
+            String[] values = { inventory.getCode(), inventory.getName(), inventory.getStock().toString(), inventory.getType() };
+            defaultTableModel.addRow(values);
+        }
+
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {
+                Inventory inventory = filteredInventories.get(row);
+                tambahBarang t = new tambahBarang(inventory.getCode());
+                t.setVisible(true);
+            }
+
+            @Override
+            public void onDelete(int row) {
+                if (tableBarang.isEditing()) {
+                    tableBarang.getCellEditor().stopCellEditing();
+                }
+                DefaultTableModel model = (DefaultTableModel) tableBarang.getModel();
+                Inventory empResponse = filteredInventories.get(row);
+                int confirmDelete = ConfirmationDialog.deleteConfirmation("Data yang dihapus tidak dapat dikembalikan. Anda yakin ? ", "Konfirmasi Hapus Data Barang");
+                if (confirmDelete == JOptionPane.YES_NO_OPTION) {
+                    model.removeRow(row);
+                    inventoryController.deleteInventoryByIdOrCode(empResponse.getId());
+                }
+            }
+
+        };
+
+        tableBarang.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
+        tableBarang.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor(event));
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
     private javax.swing.JButton btPrint;

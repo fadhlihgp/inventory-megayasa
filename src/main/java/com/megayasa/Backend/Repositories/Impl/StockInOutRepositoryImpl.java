@@ -24,7 +24,7 @@ public class StockInOutRepositoryImpl implements StockInOutRepository {
     @Override
     public int countStockInOutByStatusAndToday(Boolean status) {
         try {
-            String sql = "select count(s) from stock_in_out s where s.status = ? and s.date = CURRENT_DATE";
+            String sql = "select count(s.id) from stock_in_out s where s.status = ? and s.date = CURRENT_DATE";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setObject(1, status);
             ResultSet rs = preparedStatement.executeQuery();
@@ -46,7 +46,7 @@ public class StockInOutRepositoryImpl implements StockInOutRepository {
 
     @Override
     public void delete(StockInOut stockInOut) {
-        queryRepository.deleteByClass(stockInOut);
+        queryRepository.deleteById(stockInOut.getId());
     }
 
     @Override

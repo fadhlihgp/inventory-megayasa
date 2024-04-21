@@ -9,9 +9,7 @@ import com.megayasa.Backend.ViewModels.Responses.AbsenceResponseVm;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class AbsenceRepositoryImpl implements AbsenceRepository {
     private final Connection connection;
@@ -29,6 +27,14 @@ public class AbsenceRepositoryImpl implements AbsenceRepository {
     }
 
     @Override
+    public Optional<Absence> findByEmployeeAndDate(String employeeId, Date date) {
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("employeeId", employeeId);
+        filters.put("date", date);
+        return queryRepository.findOneByFilter(filters, "AND");
+    }
+
+    @Override
     public void create(Absence absence) {
         queryRepository.save(absence);
     }
@@ -40,7 +46,7 @@ public class AbsenceRepositoryImpl implements AbsenceRepository {
 
     @Override
     public void delete(Absence absence) {
-        queryRepository.deleteByClass(absence);
+        queryRepository.deleteById(absence.getId());
     }
 
     @Override

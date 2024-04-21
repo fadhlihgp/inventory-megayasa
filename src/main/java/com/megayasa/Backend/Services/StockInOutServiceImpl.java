@@ -63,9 +63,18 @@ public class StockInOutServiceImpl implements StockInOutService {
 
         StockInOut stockInOut = stockInOutRepository.findById(stockId).orElseThrow(() -> {throw new NotFoundException("Data stock tidak ditemukan");});
         stockInOut.setDate(stockInOutReqVm.getDate());
-        stockInOut.setStatus(stockInOutReqVm.getStatus());
+//        stockInOut.setStatus(stockInOutReqVm.getStatus());
         stockInOut.setInventoryId(stockInOutReqVm.getInventoryId());
         stockInOut.setNote(stockInOutReqVm.getNote());
+//        stockInOut.setAmount(stockInOutReqVm.getAmount());
+
+        if (stockInOut.getStatus()) {
+            findInventory.setStock(findInventory.getStock() - stockInOut.getAmount());
+        } else {
+            findInventory.setStock(findInventory.getStock() + stockInOut.getAmount());
+        }
+
+        stockInOut.setStatus(stockInOutReqVm.getStatus());
         stockInOut.setAmount(stockInOutReqVm.getAmount());
 
         if (stockInOutReqVm.getStatus()) {
@@ -78,7 +87,7 @@ public class StockInOutServiceImpl implements StockInOutService {
             InventoryRequestVm saveUpdate = new InventoryRequestVm(findInventory.getCode(), findInventory.getName(), findInventory.getStock(), findInventory.getType());
             inventoryService.updateInventoryById(findInventory.getId(), saveUpdate);
             stockInOutRepository.update(stockInOut);
-            String successMessage = stockInOutReqVm.getStatus() ? "Berhasil menambah data stok barang masuk" : "Berhasil menambah data stok barang keluar";
+            String successMessage = stockInOutReqVm.getStatus() ? "Berhasil memperbarui data stok barang masuk" : "Berhasil memperbarui data stok barang keluar";
             InformationDialog.successMessage(successMessage);
         });
     }
@@ -95,7 +104,7 @@ public class StockInOutServiceImpl implements StockInOutService {
     @Override
     public StockInOutResponseVm findStockInOutById(String id) {
         StockInOut findById = stockInOutRepository.findById(id).orElseThrow(() -> new NotFoundException("Data stok masuk/keluar tidak ditemukan"));
-        InventoryResponseVm resultInv = findAllInventories().stream().filter(i -> i.getId().equals(findById.getInventoryId())).findFirst().orElse(null);
+        Inventory resultInv = findAllInventories().stream().filter(i -> i.getId().equals(findById.getInventoryId())).findFirst().orElse(null);
         return new StockInOutResponseVm(findById.getId(), findById.getDate(), findById.getAmount(),
                 findById.getStatus(), findById.getNote(), findById.getInventoryId(), resultInv.getName(), resultInv.getCode());
     }
@@ -104,7 +113,7 @@ public class StockInOutServiceImpl implements StockInOutService {
     public List<StockInOutResponseVm> findStockInOuts() {
         List<StockInOut> stockInOuts = stockInOutRepository.findAll();
         return stockInOuts.stream().map(s -> {
-            InventoryResponseVm resultInv = findAllInventories().stream().filter(i -> i.getId().equals(s.getInventoryId())).findFirst().orElse(null);
+            Inventory resultInv = findAllInventories().stream().filter(i -> i.getId().equals(s.getInventoryId())).findFirst().orElse(null);
             return new StockInOutResponseVm(s.getId(), s.getDate(), s.getAmount(),
                     s.getStatus(), s.getNote(), s.getInventoryId(), resultInv.getName(), resultInv.getCode());
         }).toList();
@@ -115,7 +124,7 @@ public class StockInOutServiceImpl implements StockInOutService {
         StockInOut stockInOut = stockInOutRepository.findById(id).orElseThrow(() -> new NotFoundException("Data stok masuk/keluar tidak ditemukan"));
         Inventory findInventory = inventoryService.findInventoryById(stockInOut.getInventoryId());
 
-        if (!stockInOut.getStatus()) {
+        if (stockInOut.getStatus()) {
             findInventory.setStock(findInventory.getStock() - stockInOut.getAmount());
         } else {
             findInventory.setStock(findInventory.getStock() + stockInOut.getAmount());
@@ -130,7 +139,7 @@ public class StockInOutServiceImpl implements StockInOutService {
         });
     }
 
-    private List<InventoryResponseVm> findAllInventories() {
+    private List<Inventory> findAllInventories() {
         return inventoryService.findAllInventories();
     }
 }

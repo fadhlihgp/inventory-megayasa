@@ -3,6 +3,13 @@ package com.megayasa.Frontend.View.Produksi;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.InventoryController;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Requests.InventoryRequestVm;
+import com.megayasa.Backend.ViewModels.Responses.InventoryResponseVm;
+import com.megayasa.Frontend.View.Asset.menu.FormManager;
+
 import java.awt.Font;
 import javax.swing.*;
 
@@ -12,12 +19,21 @@ import javax.swing.*;
  */
 public class tambahBarang extends javax.swing.JFrame {
 
+    private InventoryController inventoryController;
+    private String inventoryCode;
 
     /**
      * Creates new form Test
      */
+    public tambahBarang(String code) {
+        inventoryCode = code;
+        initComponents();
+        initializeData();
+    }
+
     public tambahBarang() {
         initComponents();
+        initializeData();
     }
 
     /**
@@ -134,6 +150,15 @@ public class tambahBarang extends javax.swing.JFrame {
 
     private void btSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSimpanActionPerformed
         // TODO add your handling code here:
+       InventoryRequestVm saveInventory =  new InventoryRequestVm(txkodeBarang.getText(), txnamaBarang.getText(),
+                Integer.parseInt(txstockBarang.getText()), txtipeBarang.getText());
+        if (inventoryCode != null) {
+            inventoryController.updateInventoryByCode(inventoryCode, saveInventory);
+        } else {
+            inventoryController.createInventory(saveInventory);
+        }
+        this.setVisible(false);
+        FormManager.showForm(new Penyimpanan());
     }//GEN-LAST:event_btSimpanActionPerformed
 
 
@@ -150,6 +175,24 @@ public class tambahBarang extends javax.swing.JFrame {
         });
     }
 
+    private void initializeData() {
+        inventoryController = Guice.createInjector(new Injection()).getInstance(InventoryController.class);
+
+        if (inventoryCode != null) {
+            Title.setText("Perbarui Barang");
+            txkodeBarang.setEditable(false);
+            subTitle.setText("Perbarui Data Barang");
+            InventoryResponseVm inventorySearch = inventoryController.findInventoryByIdOrCode(inventoryCode);
+            if (inventorySearch != null) {
+                txkodeBarang.setText(inventorySearch.getCode());
+                txnamaBarang.setText(inventorySearch.getName());
+                txstockBarang.setText(inventorySearch.getStock().toString());
+                txtipeBarang.setText(inventorySearch.getType());
+            }
+        }
+
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel KodeBarang;
     private javax.swing.JLabel NamaBarang;

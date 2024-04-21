@@ -26,7 +26,7 @@ public class InventoryRepositoryImpl implements InventoryRepository {
 
     @Override
     public void delete(Inventory inventory) {
-        queryRepository.deleteByClass(inventory);
+        queryRepository.deleteById(inventory.getId());
     }
 
     @Override

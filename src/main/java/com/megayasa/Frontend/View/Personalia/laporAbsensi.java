@@ -4,11 +4,24 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.AbsenceController;
+import com.megayasa.Backend.Controllers.EmployeeController;
+import com.megayasa.Backend.Helpers.ChangeDateFormat;
+import com.megayasa.Backend.Models.Employee;
 import com.megayasa.Backend.Models.Position;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Requests.AbsenceRequestVm;
+import com.megayasa.Backend.ViewModels.Responses.AbsenceDetailResponseVm;
+import com.megayasa.Backend.ViewModels.Responses.EmployeeResponseVm;
+import com.megayasa.Frontend.Helpers.ComboBoxListCellRender;
+import com.megayasa.Frontend.View.Asset.menu.FormManager;
 import com.raven.datechooser.EventDateChooser;
 import com.raven.datechooser.SelectedAction;
 import com.raven.datechooser.SelectedDate;
 import java.awt.Font;
+import java.util.List;
+import java.util.Optional;
 import javax.swing.*;
 
 /**
@@ -16,15 +29,36 @@ import javax.swing.*;
  * @author Ridho Multazam
  */
 public class laporAbsensi extends javax.swing.JFrame {
-
+    private EmployeeController employeeController;
+    private AbsenceController absenceController;
+    private AbsenceDetailResponseVm absenceDetailResponseVm;
 
     /**
      * Creates new form Test
      */
+    public laporAbsensi(AbsenceDetailResponseVm absenceDetailResponseVm) {
+        this.absenceDetailResponseVm = absenceDetailResponseVm;
+        initComponents();
+        initializeData();
+        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
+
+        new JProgressBar().setIndeterminate(true);
+        dateChooser.addEventDateChooser(new EventDateChooser() {
+            @Override
+            public void dateSelected(SelectedAction action, SelectedDate date) {
+//                System.out.println(date.getDay() + "-" + date.getMonth() + "-" + date.getYear());
+                if (action.getAction() == SelectedAction.DAY_SELECTED) {
+                    dateChooser.hidePopup();
+                }
+            }
+        });
+    }
+
     public laporAbsensi() {
         initComponents();
+        initializeData();
         btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
-        
+
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {
             @Override
@@ -51,7 +85,7 @@ public class laporAbsensi extends javax.swing.JFrame {
         Title = new javax.swing.JLabel();
         subTitle = new javax.swing.JLabel();
         Karyawan = new javax.swing.JLabel();
-        karyawan = new javax.swing.JComboBox();
+        karyawan = new javax.swing.JComboBox<>();
         Tanggal = new javax.swing.JLabel();
         txDate = new javax.swing.JTextField();
         btCalendar = new javax.swing.JButton();
@@ -114,8 +148,6 @@ public class laporAbsensi extends javax.swing.JFrame {
 
         Karyawan.setText("Nama Karyawan");
         crazyPanel1.add(Karyawan);
-
-        karyawan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Karyawan" }));
         crazyPanel1.add(karyawan);
 
         Tanggal.setText("Tanggal");
@@ -179,8 +211,51 @@ public class laporAbsensi extends javax.swing.JFrame {
 
     private void btSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSimpanActionPerformed
         // TODO add your handling code here:
+        EmployeeResponseVm employeeResponseVm = (EmployeeResponseVm) karyawan.getSelectedItem();
+        AbsenceRequestVm absenceRequestVm = new AbsenceRequestVm(employeeResponseVm.getId(),
+                ChangeDateFormat.stringToDateSql("dd-MM-yyyy", txDate.getText()), Keterangan.getSelectedItem().toString(), jtCatatan.getText());
+        System.out.println(absenceRequestVm);
+        if (absenceDetailResponseVm != null) {
+            absenceController.createOrUpdateAbsence(absenceDetailResponseVm.getId(), absenceRequestVm);
+        } else {
+            absenceController.createOrUpdateAbsence(null, absenceRequestVm);
+        }
+        this.setVisible(false);
+        FormManager.showForm(new Absensi());
     }//GEN-LAST:event_btSimpanActionPerformed
 
+    private void initializeData() {
+        employeeController = Guice.createInjector(new Injection()).getInstance(EmployeeController.class);
+        absenceController = Guice.createInjector(new Injection()).getInstance(AbsenceController.class);
+        loadEmployeeData();
+        setFieldsValue();
+    }
+
+    private void loadEmployeeData() {
+        DefaultComboBoxModel<EmployeeResponseVm> defaultComboBoxModel = new DefaultComboBoxModel<>();
+        List<EmployeeResponseVm> allEmployees = employeeController.findAllEmployees();
+        defaultComboBoxModel.addElement(new EmployeeResponseVm(null, " ", "Pilih Karyawan", null, null, null, null, null, null, true));
+        for (EmployeeResponseVm allPosition : allEmployees) {
+            defaultComboBoxModel.addElement(allPosition);
+        }
+        karyawan.setModel(defaultComboBoxModel);
+        karyawan.setRenderer(new ComboBoxListCellRender());
+    }
+
+    private void setFieldsValue() {
+        if (absenceDetailResponseVm != null) {
+            Keterangan.setSelectedItem(absenceDetailResponseVm.getInformation());
+            jtCatatan.setText(absenceDetailResponseVm.getNote());
+            txDate.setText(ChangeDateFormat.dateToString("dd-MM-yyyy", absenceDetailResponseVm.getDate()));
+            Employee byId = employeeController.findById(absenceDetailResponseVm.getEmployeeId());
+            if (byId != null) {
+                List<EmployeeResponseVm> allEmployees = employeeController.findAllEmployees();
+                EmployeeResponseVm first = allEmployees.stream().filter(e -> e.getId()
+                        .equals(absenceDetailResponseVm.getEmployeeId())).findFirst().orElse(null);
+                karyawan.setSelectedItem(first);
+            }
+        }
+    }
 
     public static void main(String args[]) {
      FlatRobotoFont.install();
@@ -207,7 +282,7 @@ public class laporAbsensi extends javax.swing.JFrame {
     private com.raven.datechooser.DateChooser dateChooser;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jtCatatan;
-    private javax.swing.JComboBox karyawan;
+    private javax.swing.JComboBox<EmployeeResponseVm> karyawan;
     private javax.swing.JLabel keterangan;
     private javax.swing.JLabel subTitle;
     private javax.swing.JTextField txDate;

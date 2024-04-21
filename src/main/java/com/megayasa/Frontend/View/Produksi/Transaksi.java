@@ -2,11 +2,21 @@ package com.megayasa.Frontend.View.Produksi;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.StockInOutController;
+import com.megayasa.Backend.Dialogs.ConfirmationDialog;
+import com.megayasa.Backend.Models.Inventory;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Responses.StockInOutResponseVm;
+import com.megayasa.Frontend.View.Asset.Table.TableActionCellEditor;
+import com.megayasa.Frontend.View.Asset.Table.TableActionCellRender;
+import com.megayasa.Frontend.View.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.View.Asset.components.SimpleForm;
 import com.megayasa.Frontend.View.Personalia.laporAbsensi;
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 /**
  *
@@ -14,11 +24,16 @@ import javax.swing.JTable;
  */
 public class Transaksi extends SimpleForm {
 
+    private StockInOutController stockInOutController;
+    private List<StockInOutResponseVm> allTransactions;
+    private List<StockInOutResponseVm> filteredTransactions;
+
     public Transaksi() {
         initComponents();
         applyTableStyle(tableTransaksi);
+        initializeData();
     }
-   
+
     private void applyTableStyle(JTable table) {
 
         btPrint.setIcon(new FlatSVGIcon("iconSVG/print.svg", 0.35f));
@@ -118,6 +133,7 @@ public class Transaksi extends SimpleForm {
                 return canEdit [columnIndex];
             }
         });
+        tableTransaksi.setRowHeight(35);
         jScrollPane2.setViewportView(tableTransaksi);
 
         crazyPanel3.add(jScrollPane2);
@@ -143,6 +159,11 @@ public class Transaksi extends SimpleForm {
 
     private void txSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearchKeyTyped
         // TODO add your handling code here:
+        String search = txSearch.getText().toLowerCase();
+        filteredTransactions = allTransactions.stream().filter(t -> t.getInventoryName().toLowerCase().contains(search)
+                || t.getInventoryCode().toLowerCase().contains(search)
+        ).toList();
+        fetchAllTransactions();
     }//GEN-LAST:event_txSearchKeyTyped
 
     private void btTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTransaksiActionPerformed
@@ -151,6 +172,53 @@ public class Transaksi extends SimpleForm {
         a.setVisible(true);
     }//GEN-LAST:event_btTransaksiActionPerformed
 
+    private void initializeData() {
+        stockInOutController = Guice.createInjector(new Injection()).getInstance(StockInOutController.class);
+        allTransactions = stockInOutController.findStockInOuts();
+        filteredTransactions = allTransactions;
+        fetchAllTransactions();
+    }
+
+    private void fetchAllTransactions() {
+        String[] headers = { "Kode Barang", "Nama Barang", "Jumlah", "Keterangan", "Catatan", "Aksi" };
+        DefaultTableModel defaultTableModel = new DefaultTableModel(null, headers);
+        tableTransaksi.setModel(defaultTableModel);
+
+        for (StockInOutResponseVm filteredTransaction : filteredTransactions) {
+            String keterangan = filteredTransaction.getStatus() ? "Barang Masuk" : "Barang Keluar";
+            String[] values = { filteredTransaction.getInventoryCode(), filteredTransaction.getInventoryName(),
+                    filteredTransaction.getAmount().toString(), keterangan, filteredTransaction.getNote()
+            };
+            defaultTableModel.addRow(values);
+        }
+
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {
+                StockInOutResponseVm stock = filteredTransactions.get(row);
+                transaksiBarang t = new transaksiBarang(stock.getId());
+                t.setVisible(true);
+            }
+
+            @Override
+            public void onDelete(int row) {
+                if (tableTransaksi.isEditing()) {
+                    tableTransaksi.getCellEditor().stopCellEditing();
+                }
+                DefaultTableModel model = (DefaultTableModel) tableTransaksi.getModel();
+                StockInOutResponseVm stock = filteredTransactions.get(row);
+                int confirmDelete = ConfirmationDialog.deleteConfirmation("Data yang dihapus tidak dapat dikembalikan. Anda yakin ? ", "Konfirmasi Hapus Data Transaksi Barang");
+                if (confirmDelete == JOptionPane.YES_NO_OPTION) {
+                    model.removeRow(row);
+                    stockInOutController.deleteStockInOut(stock.getId());
+                }
+            }
+
+        };
+
+        tableTransaksi.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
+        tableTransaksi.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btPrint;
     private javax.swing.JButton btTransaksi;

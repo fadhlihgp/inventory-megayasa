@@ -1,6 +1,7 @@
 package com.megayasa;
 
 import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.AbsenceController;
 import com.megayasa.Backend.Controllers.AccountController;
 import com.megayasa.Backend.Controllers.EmployeeController;
 import com.megayasa.Backend.Controllers.LoginInformationController;
@@ -21,7 +22,8 @@ public class InventoryMegayasaApplication {
 //                .headless(false).run(args);
 //        testAccount();
 //        testEmployee();
-        loginInformation();
+//        loginInformation();
+        absenceTest();
     }
 
     private static void testAccount() {
@@ -63,5 +65,10 @@ public class InventoryMegayasaApplication {
 //        LoginInformation loginInformation1 = loginInformationController.currentLogin();
         final Boolean aBoolean = loginInformationController.deleteLoginInformation();
         System.out.println(aBoolean);
+    }
+
+    private static void absenceTest() {
+        AbsenceController absenceController = Guice.createInjector(new Injection()).getInstance(AbsenceController.class);
+        System.out.println(absenceController.absenceDetailList());
     }
 }

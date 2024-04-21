@@ -46,7 +46,7 @@ public class InventoryServiceImpl implements InventoryService {
 
         inventoryByCode.setName(inventoryRequestVm.getName());
         inventoryByCode.setCode(inventoryRequestVm.getCode());
-        inventoryByCode.setType(inventoryByCode.getType());
+        inventoryByCode.setType(inventoryRequestVm.getType());
         inventoryByCode.setStock(inventoryRequestVm.getStock());
 
         TransactionUtil.performTransaction(() -> {
@@ -63,12 +63,11 @@ public class InventoryServiceImpl implements InventoryService {
 
         inventoryByid.setName(inventoryRequestVm.getName());
         inventoryByid.setCode(inventoryRequestVm.getCode());
-        inventoryByid.setType(inventoryByid.getType());
+        inventoryByid.setType(inventoryRequestVm.getType());
         inventoryByid.setStock(inventoryRequestVm.getStock());
 
         TransactionUtil.performTransaction(() -> {
             inventoryRepository.update(inventoryByid);
-            InformationDialog.successMessage("Berhasil mengubah data barang");
         });
     }
 
@@ -84,18 +83,19 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public List<InventoryResponseVm> findAllInventories() {
-        List<Inventory> inventories = inventoryRepository.findAll();
+    public List<Inventory> findAllInventories() {
+        return inventoryRepository.findAll();
+//        List<Inventory> inventories = inventoryRepository.findAll();
 
-        return inventories.stream().map(i -> {
-            InventoryResponseVm responseVm = new InventoryResponseVm();
-            responseVm.setId(i.getId());
-            responseVm.setName(i.getName());
-            responseVm.setCode(i.getCode());
-            responseVm.setType(i.getType());
-            responseVm.setStock(i.getStock());
-            return responseVm;
-        }).toList();
+//        return inventories.stream().map(i -> {
+//            InventoryResponseVm responseVm = new InventoryResponseVm();
+//            responseVm.setId(i.getId());
+//            responseVm.setName(i.getName());
+//            responseVm.setCode(i.getCode());
+//            responseVm.setType(i.getType());
+//            responseVm.setStock(i.getStock());
+//            return responseVm;
+//        }).toList();
     }
 
     @Override

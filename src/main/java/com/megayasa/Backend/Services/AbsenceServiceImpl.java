@@ -5,6 +5,7 @@ import com.megayasa.Backend.Annotations.Util.ValidationUtils;
 import com.megayasa.Backend.Dialogs.InformationDialog;
 import com.megayasa.Backend.Exceptions.ErrorException;
 import com.megayasa.Backend.Exceptions.NotFoundException;
+import com.megayasa.Backend.Exceptions.WarningException;
 import com.megayasa.Backend.Models.Absence;
 import com.megayasa.Backend.Models.Employee;
 import com.megayasa.Backend.Repositories.AbsenceRepository;
@@ -33,9 +34,17 @@ public class AbsenceServiceImpl implements AbsenceService {
         ValidationUtils.validate(absenceRequestVm);
         Employee employee = employeeService.findById(absenceRequestVm.getEmployeeId());
         Absence absence = new Absence();
+        Absence findAbsence = absenceRepository.findByEmployeeAndDate(absenceRequestVm.getEmployeeId(), absenceRequestVm.getDate()).orElse(null);
         if (absenceId != null) {
+            if (findAbsence != null && !findAbsence.getId().equals(absenceId)) {
+                throw new WarningException("Karyawan sudah memiliki absen di tanggal yang sama !");
+            }
             absence = absenceRepository.findById(absenceId).orElseThrow(() -> new NotFoundException("Data absensi tidak ditemukan"));
+
         } else {
+            if (findAbsence != null) {
+                throw new WarningException("Karyawan sudah memiliki absen di tanggal yang sama !");
+            }
             absence.setId(UUID.randomUUID().toString());
         }
 
@@ -45,7 +54,11 @@ public class AbsenceServiceImpl implements AbsenceService {
         absence.setEmployeeId(employee.getId());
 
         try {
-            absenceRepository.create(absence);
+            if (absenceId != null) {
+                absenceRepository.update(absence);
+            } else {
+                absenceRepository.create(absence);
+            }
             String successMessage = absenceId == null ? "Berhasil menambah data absen karyawan" : "Berhasil memperbarui data asben karyawan";
             InformationDialog.successMessage(successMessage);
         } catch (Exception e) {
@@ -87,4 +100,5 @@ public class AbsenceServiceImpl implements AbsenceService {
                 employees.stream().filter(e -> e.getId().equals(absence.getEmployeeId())).findFirst().orElse(null).getFullName(),
                 absence.getInformation(), absence.getNote(), absence.getDate())).toList();
     }
+
 }

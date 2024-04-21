@@ -1,23 +1,46 @@
 package com.megayasa.Frontend.View.Personalia;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.AbsenceController;
+import com.megayasa.Backend.Dialogs.ConfirmationDialog;
+import com.megayasa.Backend.Helpers.ChangeDateFormat;
+import com.megayasa.Backend.Models.Absence;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Requests.EmployeeRequestVm;
+import com.megayasa.Backend.ViewModels.Responses.AbsenceDetailResponseVm;
+import com.megayasa.Backend.ViewModels.Responses.EmployeeResponseVm;
+import com.megayasa.Frontend.View.Asset.Table.TableActionCellEditor;
+import com.megayasa.Frontend.View.Asset.Table.TableActionCellRender;
+import com.megayasa.Frontend.View.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.View.Asset.components.SimpleForm;
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.sql.Date;
+import java.util.List;
 
 /**
  *
  * @author Ridho Multazam
  */
 public class Absensi extends SimpleForm {
+    private AbsenceController absenceController;
+    private List<AbsenceDetailResponseVm> allAbsences;
+    private List<AbsenceDetailResponseVm> filteredAbsences;
 
     /**
      * Creates new form ReadForm
      */
     public Absensi() {
         initComponents();
+        initializeData();
         applyTableStyle(tableAbsensi);
     }
 
@@ -38,7 +61,7 @@ public class Absensi extends SimpleForm {
         table.getTableHeader().putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
         table.putClientProperty(FlatClientProperties.STYLE_CLASS, "table_style");
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -126,6 +149,7 @@ public class Absensi extends SimpleForm {
                 return canEdit [columnIndex];
             }
         });
+        tableAbsensi.setRowHeight(35);
         jScrollPane1.setViewportView(tableAbsensi);
 
         crazyPanel1.add(jScrollPane1);
@@ -155,6 +179,9 @@ public class Absensi extends SimpleForm {
 
     private void txSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearchKeyTyped
         // TODO add your handling code here:
+        String search = txSearch.getText().toLowerCase();
+        filteredAbsences = allAbsences.stream().filter(a -> a.getEmployeeName().toLowerCase().contains(search)).toList();
+        fetchAllAbsences();
     }//GEN-LAST:event_txSearchKeyTyped
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
@@ -163,6 +190,52 @@ public class Absensi extends SimpleForm {
         a.setVisible(true);
     }//GEN-LAST:event_btAddActionPerformed
 
+    private void initializeData() {
+        absenceController = Guice.createInjector(new Injection()).getInstance(AbsenceController.class);
+        allAbsences = absenceController.absenceDetailList();
+        filteredAbsences = allAbsences;
+        fetchAllAbsences();
+    }
+
+    private void fetchAllAbsences() {
+        String[] headers = { "Karyawan", "Tanggal", "Alasan", "Catatan", "Aksi" };
+        DefaultTableModel defaultTableModel = new DefaultTableModel(null, headers);
+        tableAbsensi.setModel(defaultTableModel);
+
+        for (AbsenceDetailResponseVm filteredAbsence : filteredAbsences) {
+            String[] values = { filteredAbsence.getEmployeeName(), ChangeDateFormat.dateToString("dd MMM yyyy", filteredAbsence.getDate()),
+                    filteredAbsence.getInformation(), filteredAbsence.getNote()
+            };
+            defaultTableModel.addRow(values);
+        }
+
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {
+                AbsenceDetailResponseVm absenceDetailResponseVm = filteredAbsences.get(row);
+               laporAbsensi l = new laporAbsensi(absenceDetailResponseVm);
+               l.setVisible(true);
+            }
+
+            @Override
+            public void onDelete(int row) {
+                if (tableAbsensi.isEditing()) {
+                    tableAbsensi.getCellEditor().stopCellEditing();
+                }
+                DefaultTableModel model = (DefaultTableModel) tableAbsensi.getModel();
+                AbsenceDetailResponseVm absenceDet = filteredAbsences.get(row);
+                int confirmDelete = ConfirmationDialog.deleteConfirmation("Data yang dihapus tidak dapat dikembalikan. Anda yakin ?", "Konfirmasi Hapus Data Absensi");
+                if (confirmDelete == JOptionPane.YES_NO_OPTION) {
+                    model.removeRow(row);
+                    absenceController.deleteAbsence(absenceDet.getId());
+                }
+            }
+
+        };
+
+        tableAbsensi.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
+        tableAbsensi.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor(event));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;

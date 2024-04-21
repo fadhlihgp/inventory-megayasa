@@ -4,10 +4,24 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.InventoryController;
+import com.megayasa.Backend.Controllers.StockInOutController;
+import com.megayasa.Backend.Helpers.ChangeDateFormat;
+import com.megayasa.Backend.Models.Inventory;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Requests.StockInOutRequestVm;
+import com.megayasa.Backend.ViewModels.Responses.StockInOutResponseVm;
+import com.megayasa.Frontend.Helpers.ComboBoxListCellRender;
+import com.megayasa.Frontend.View.Asset.menu.FormManager;
 import com.raven.datechooser.EventDateChooser;
 import com.raven.datechooser.SelectedAction;
 import com.raven.datechooser.SelectedDate;
 import java.awt.Font;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 import javax.swing.*;
 
 /**
@@ -16,14 +30,18 @@ import javax.swing.*;
  */
 public class transaksiBarang extends javax.swing.JFrame {
 
-
+    private InventoryController inventoryController;
+    private StockInOutController stockInOutController;
+    private String transactionCode;
+    List<Inventory> allInventories;
     /**
      * Creates new form Test
      */
-    public transaksiBarang() {
+    public transaksiBarang(String transactionCode) {
+        this.transactionCode = transactionCode;
         initComponents();
         btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
-        
+
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {
             @Override
@@ -34,6 +52,23 @@ public class transaksiBarang extends javax.swing.JFrame {
                 }
             }
         });
+        initializeData();
+    }
+    public transaksiBarang() {
+        initComponents();
+        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.90f));
+
+        new JProgressBar().setIndeterminate(true);
+        dateChooser.addEventDateChooser(new EventDateChooser() {
+            @Override
+            public void dateSelected(SelectedAction action, SelectedDate date) {
+//                System.out.println(date.getDay() + "-" + date.getMonth() + "-" + date.getYear());
+                if (action.getAction() == SelectedAction.DAY_SELECTED) {
+                    dateChooser.hidePopup();
+                }
+            }
+        });
+        initializeData();
     }
 
     /**
@@ -50,7 +85,7 @@ public class transaksiBarang extends javax.swing.JFrame {
         Title = new javax.swing.JLabel();
         subTitle = new javax.swing.JLabel();
         NamaBarang = new javax.swing.JLabel();
-        Barang = new javax.swing.JComboBox();
+        Barang = new javax.swing.JComboBox<>();
         Jumlah = new javax.swing.JLabel();
         txJumlah = new javax.swing.JTextField();
         Tanggal = new javax.swing.JLabel();
@@ -117,8 +152,6 @@ public class transaksiBarang extends javax.swing.JFrame {
 
         NamaBarang.setText("Nama Barang");
         crazyPanel1.add(NamaBarang);
-
-        Barang.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Barang" }));
         crazyPanel1.add(Barang);
 
         Jumlah.setText("Jumlah");
@@ -169,7 +202,7 @@ public class transaksiBarang extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,9 +219,63 @@ public class transaksiBarang extends javax.swing.JFrame {
 
     private void btSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSimpanActionPerformed
         // TODO add your handling code here:
+        Inventory inventory = (Inventory) Barang.getSelectedItem();
+        String inventoryId = null;
+        if (inventory != null) {
+            inventoryId = inventory.getId();
+        }
+        Integer amount = Integer.parseInt(txJumlah.getText());
+        Date date = ChangeDateFormat.stringToDateSql("dd-MM-yyyy", txDate.getText());
+        Boolean status = Objects.requireNonNull(Keterangan.getSelectedItem()).toString().equalsIgnoreCase("Barang Masuk");
+        String note = jtCatatan.getText();
+        StockInOutRequestVm save = new StockInOutRequestVm(inventoryId, date, amount, status, note);
+        if (transactionCode != null) {
+            stockInOutController.createOrUpdateStockInOut(transactionCode, save);
+        } else {
+            stockInOutController.createOrUpdateStockInOut(null, save);
+        }
+        this.setVisible(false);
+        FormManager.showForm(new Transaksi());
     }//GEN-LAST:event_btSimpanActionPerformed
 
+    private void initializeData() {
+        stockInOutController = Guice.createInjector(new Injection()).getInstance(StockInOutController.class);
+        inventoryController = Guice.createInjector(new Injection()).getInstance(InventoryController.class);
 
+        if (transactionCode != null) {
+            subTitle.setText("Perbarui Barang Keluar / Masuk");
+        }
+
+        loadInventoryCombobox();
+        loadFields();
+    }
+
+    private void loadInventoryCombobox() {
+        DefaultComboBoxModel<Inventory> defaultComboBoxModel = new DefaultComboBoxModel<>();
+        allInventories = inventoryController.findAllInventories();
+        defaultComboBoxModel.addElement(new Inventory(null, "Pilih Barang", null, null, null));
+        for (Inventory allInventory : allInventories) {
+            defaultComboBoxModel.addElement(allInventory);
+        }
+        Barang.setModel(defaultComboBoxModel);
+        Barang.setRenderer(new ComboBoxListCellRender());
+    }
+
+    private void loadFields() {
+        if (transactionCode != null) {
+            StockInOutResponseVm stockInOutById = stockInOutController.findStockInOutById(transactionCode);
+            if (stockInOutById != null) {
+                Inventory inventoryStream = allInventories.stream().filter(i -> i.getId()
+                        .equals(stockInOutById.getInventoryId())).findFirst().orElse(null);
+                Barang.setSelectedItem(inventoryStream);
+                txJumlah.setText(stockInOutById.getAmount().toString());
+                txDate.setText(ChangeDateFormat.dateToString("dd-MM-yyyy", stockInOutById.getDate()));
+                String ket = stockInOutById.getStatus() ? "Barang Masuk" : "Barang Keluar";
+                Keterangan.setSelectedItem(ket);
+                jtCatatan.setText(stockInOutById.getNote());
+            }
+        }
+    }
     public static void main(String args[]) {
      FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("addThemes");
@@ -204,7 +291,7 @@ public class transaksiBarang extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Alamat;
-    private javax.swing.JComboBox Barang;
+    private javax.swing.JComboBox<Inventory> Barang;
     private javax.swing.JLabel Jumlah;
     private javax.swing.JComboBox Keterangan;
     private javax.swing.JLabel NamaBarang;

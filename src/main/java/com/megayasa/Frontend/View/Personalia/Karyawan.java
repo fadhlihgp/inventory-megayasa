@@ -224,16 +224,9 @@ public class Karyawan extends SimpleForm {
             }
 
         };
-        
+
         tableKaryawan.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
         tableKaryawan.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor(event));
-        tableKaryawan.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-                setHorizontalAlignment(SwingConstants.RIGHT);
-                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
-            }
-        });
     }
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
