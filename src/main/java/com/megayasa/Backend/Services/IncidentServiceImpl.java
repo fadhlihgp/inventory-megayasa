@@ -24,7 +24,7 @@ public class IncidentServiceImpl implements IncidentService {
     }
 
     private void createIncident(IncidentRequestVm incidentRequestVm) {
-        String formattedDate = new SimpleDateFormat("ddMMyy").format(new Date());
+        String formattedDate = new SimpleDateFormat("ddMMyyss").format(new Date());
         String id = "IN-" + formattedDate + String.format("%02d", incidentRepository.countIncidentToday() + 1);
         String imageUrl = uploadPhoto.UploadPhoto(incidentRequestVm.getPictureUrl());
 
@@ -52,6 +52,7 @@ public class IncidentServiceImpl implements IncidentService {
             findIncident.setDate(incidentRequestVm.getDate());
             findIncident.setTitle(incidentRequestVm.getTitle());
             findIncident.setDescription(incidentRequestVm.getDescription());
+            incidentRepository.update(findIncident);
             InformationDialog.successMessage("Berhasil memperbarui data insiden");
         });
     }

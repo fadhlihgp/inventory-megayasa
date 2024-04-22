@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *
@@ -191,6 +192,8 @@ public class Absensi extends SimpleForm {
     }//GEN-LAST:event_btAddActionPerformed
 
     private void initializeData() {
+        Locale local = new Locale("id", "ID");
+        Locale.setDefault(local);
         absenceController = Guice.createInjector(new Injection()).getInstance(AbsenceController.class);
         allAbsences = absenceController.absenceDetailList();
         filteredAbsences = allAbsences;

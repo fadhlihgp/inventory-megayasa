@@ -4,11 +4,20 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.IncidentController;
+import com.megayasa.Backend.Helpers.ChangeDateFormat;
+import com.megayasa.Backend.Models.Incident;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.Utils.PhotoService;
+import com.megayasa.Backend.ViewModels.Requests.IncidentRequestVm;
 import com.megayasa.Frontend.Asset.jnafilechooser.api.JnaFileChooser;
+import com.megayasa.Frontend.Asset.menu.FormManager;
 import com.raven.datechooser.EventDateChooser;
 import com.raven.datechooser.SelectedAction;
 import com.raven.datechooser.SelectedDate;
 import java.awt.Font;
+import java.io.File;
 import javax.swing.*;
 
 /**
@@ -17,15 +26,18 @@ import javax.swing.*;
  */
 public class tambahBerita extends javax.swing.JFrame {
 
+    private String incidentId;
+    private IncidentController incidentController;
 
     /**
      * Creates new form Test
      */
-    public tambahBerita() {
+    public tambahBerita(String incidentId) {
+        this.incidentId = incidentId;
         initComponents();
         btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
         btUpload.setIcon(new FlatSVGIcon("iconSVG/upload.svg", 0.28f));
-        
+
         new JProgressBar().setIndeterminate(true);
         dateChooser.addEventDateChooser(new EventDateChooser() {
             @Override
@@ -36,6 +48,24 @@ public class tambahBerita extends javax.swing.JFrame {
                 }
             }
         });
+        initializeCode();
+    }
+    public tambahBerita() {
+        initComponents();
+        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
+        btUpload.setIcon(new FlatSVGIcon("iconSVG/upload.svg", 0.28f));
+
+        new JProgressBar().setIndeterminate(true);
+        dateChooser.addEventDateChooser(new EventDateChooser() {
+            @Override
+            public void dateSelected(SelectedAction action, SelectedDate date) {
+//                System.out.println(date.getDay() + "-" + date.getMonth() + "-" + date.getYear());
+                if (action.getAction() == SelectedAction.DAY_SELECTED) {
+                    dateChooser.hidePopup();
+                }
+            }
+        });
+        initializeCode();
     }
 
     /**
@@ -188,17 +218,41 @@ public class tambahBerita extends javax.swing.JFrame {
 
     private void btUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btUploadActionPerformed
         JnaFileChooser jnaCh = new JnaFileChooser();
-        jnaCh.setDefaultFileName("Upload.txt");
+//        jnaCh.setDefaultFileName("Upload.txt");
         boolean save = jnaCh.showSaveDialog(this);
         if (save) {
-            System.out.println(jnaCh.getSelectedFile());
+            txUpload.setText(jnaCh.getSelectedFile().toString());
         }
     }//GEN-LAST:event_btUploadActionPerformed
 
     private void btSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSimpanActionPerformed
         // TODO add your handling code here:
+        IncidentRequestVm incidentRequestVm = new IncidentRequestVm(txJudul.getText(), jtCatatan.getText(),
+                ChangeDateFormat.stringToDateSql("dd-MM-yyyy", txDate.getText()), txUpload.getText());
+        if (incidentId != null) {
+            incidentController.createOrUpdateIncident(incidentId, incidentRequestVm);
+        } else {
+            incidentController.createOrUpdateIncident(null, incidentRequestVm);
+        }
+        this.setVisible(false);
+        FormManager.showForm(new Berita());
     }//GEN-LAST:event_btSimpanActionPerformed
 
+    private void initializeCode() {
+        incidentController = Guice.createInjector(new Injection()).getInstance(IncidentController.class);
+        fillFields();
+    }
+
+    private void fillFields() {
+        if (incidentId != null) {
+            Title.setText("Perbarui Berita Acara");
+            Incident incidentById = incidentController.findIncidentById(incidentId);
+            txJudul.setText(incidentById.getTitle());
+            txDate.setText(ChangeDateFormat.dateToString("dd-MM-yyyy", incidentById.getDate()));
+            jtCatatan.setText(incidentById.getDescription());
+            txUpload.setText(incidentById.getPictureUrl());
+        }
+    }
 
     public static void main(String args[]) {
      FlatRobotoFont.install();

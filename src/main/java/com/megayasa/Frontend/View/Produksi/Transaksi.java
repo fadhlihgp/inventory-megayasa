@@ -5,6 +5,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.google.inject.Guice;
 import com.megayasa.Backend.Controllers.StockInOutController;
 import com.megayasa.Backend.Dialogs.ConfirmationDialog;
+import com.megayasa.Backend.Helpers.ChangeDateFormat;
 import com.megayasa.Backend.Models.Inventory;
 import com.megayasa.Backend.Utils.Injection;
 import com.megayasa.Backend.ViewModels.Responses.StockInOutResponseVm;
@@ -180,14 +181,14 @@ public class Transaksi extends SimpleForm {
     }
 
     private void fetchAllTransactions() {
-        String[] headers = { "Kode Barang", "Nama Barang", "Jumlah", "Keterangan", "Catatan", "Aksi" };
+        String[] headers = { "Kode Barang", "Nama Barang", "Jumlah", "Keterangan", "Tanggal", "Catatan", "Aksi" };
         DefaultTableModel defaultTableModel = new DefaultTableModel(null, headers);
         tableTransaksi.setModel(defaultTableModel);
 
         for (StockInOutResponseVm filteredTransaction : filteredTransactions) {
             String keterangan = filteredTransaction.getStatus() ? "Barang Masuk" : "Barang Keluar";
             String[] values = { filteredTransaction.getInventoryCode(), filteredTransaction.getInventoryName(),
-                    filteredTransaction.getAmount().toString(), keterangan, filteredTransaction.getNote()
+                    filteredTransaction.getAmount().toString(), keterangan, ChangeDateFormat.dateToString("dd-MMM-yyyy", filteredTransaction.getDate()), filteredTransaction.getNote()
             };
             defaultTableModel.addRow(values);
         }
@@ -216,8 +217,8 @@ public class Transaksi extends SimpleForm {
 
         };
 
-        tableTransaksi.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
-        tableTransaksi.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
+        tableTransaksi.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender());
+        tableTransaksi.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor(event));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btPrint;

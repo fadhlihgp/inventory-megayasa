@@ -15,6 +15,7 @@ import com.megayasa.Frontend.Asset.components.SimpleForm;
 import java.awt.Component;
 import java.sql.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -184,6 +185,8 @@ public class Akun extends SimpleForm {
     }//GEN-LAST:event_btAddActionPerformed
 
     private void initializeData() {
+        Locale local = new Locale("id", "ID");
+        Locale.setDefault(local);
         accountController = Guice.createInjector(new Injection()).getInstance(AccountController.class);
         allAccounts = accountController.getAllAccounts();
         filteredAccounts = allAccounts;

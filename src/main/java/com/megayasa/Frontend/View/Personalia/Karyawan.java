@@ -20,6 +20,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.sql.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -178,6 +179,8 @@ public class Karyawan extends SimpleForm {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initializeData() {
+        Locale local = new Locale("id", "ID");
+        Locale.setDefault(local);
         employeeController = Guice.createInjector(new Injection()).getInstance(EmployeeController.class);
         allEmployees = employeeController.findAllEmployees();
         employeeFilters = allEmployees;

@@ -2,10 +2,23 @@ package com.megayasa.Frontend.View.Produksi;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.IncidentController;
+import com.megayasa.Backend.Dialogs.ConfirmationDialog;
+import com.megayasa.Backend.Helpers.ChangeDateFormat;
+import com.megayasa.Backend.Models.Incident;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Responses.StockInOutResponseVm;
+import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
+import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
+import com.megayasa.Frontend.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.Asset.components.SimpleForm;
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import com.megayasa.Frontend.Helpers.ImageRender;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import java.util.Locale;
 
 /**
  *
@@ -13,11 +26,15 @@ import javax.swing.JTable;
  */
 public class Berita extends SimpleForm {
 
+    private IncidentController incidentController;
+    private List<Incident> allIncidents;
+    private List<Incident> filteredIncidents;
     public Berita() {
         initComponents();
         applyTableStyle(tableBerita);
+        initializeData();
     }
-   
+
     private void applyTableStyle(JTable table) {
 
         btAdd.setIcon(new FlatSVGIcon("iconSVG/add.svg", 0.35f));
@@ -146,6 +163,9 @@ public class Berita extends SimpleForm {
 
     private void txSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearchKeyTyped
         // TODO add your handling code here:
+        String search = txSearch.getText().toLowerCase();
+        filteredIncidents = allIncidents.stream().filter(s -> s.getTitle().toLowerCase().contains(search)).toList();
+        fetchAllIncidents();
     }//GEN-LAST:event_txSearchKeyTyped
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
@@ -153,6 +173,66 @@ public class Berita extends SimpleForm {
         tambahBerita a = new tambahBerita();
         a.setVisible(true);
     }//GEN-LAST:event_btAddActionPerformed
+
+    private void initializeData() {
+        Locale local = new Locale("id", "ID");
+        Locale.setDefault(local);
+        incidentController = Guice.createInjector(new Injection()).getInstance(IncidentController.class);
+        allIncidents = incidentController.findAllIncidents();
+        filteredIncidents = allIncidents;
+        fetchAllIncidents();
+    }
+    private void fetchAllIncidents() {
+        String[] headers = { "Tanggal", "Judul", "Catatan", "Foto", "Aksi" };
+        DefaultTableModel defaultTableModel = new DefaultTableModel(null, headers) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 4) { // Kolom "Foto"
+                    return ImageIcon.class; // Mengembalikan tipe ImageIcon untuk kolom "Foto"
+                }
+                return super.getColumnClass(columnIndex);
+            }
+        };
+        tableBerita.setModel(defaultTableModel);
+        tableBerita.setRowHeight(50);
+
+        for (Incident filteredIncident : filteredIncidents) {
+            Object[] values = {
+                    ChangeDateFormat.dateToString("dd-MM-yyyy", filteredIncident.getDate()),
+                    filteredIncident.getTitle(),
+                    filteredIncident.getDescription(),
+                    filteredIncident.getPictureUrl()
+            };
+            defaultTableModel.addRow(values);
+        }
+
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {
+                Incident incident = filteredIncidents.get(row);
+                tambahBerita t = new tambahBerita(incident.getId());
+                t.setVisible(true);
+            }
+
+            @Override
+            public void onDelete(int row) {
+                if (tableBerita.isEditing()) {
+                    tableBerita.getCellEditor().stopCellEditing();
+                }
+                DefaultTableModel model = (DefaultTableModel) tableBerita.getModel();
+                Incident incident = filteredIncidents.get(row);
+                int confirmDelete = ConfirmationDialog.deleteConfirmation("Data yang dihapus tidak dapat dikembalikan. Anda yakin ? ", "Konfirmasi Hapus Data Berita / Insiden");
+                if (confirmDelete == JOptionPane.YES_NO_OPTION) {
+                    model.removeRow(row);
+                    incidentController.deleteIncident(incident.getId());
+                }
+            }
+        };
+
+        tableBerita.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
+        tableBerita.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor(event));
+        tableBerita.getColumnModel().getColumn(3).setCellRenderer(new ImageRender());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
