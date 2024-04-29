@@ -8,6 +8,7 @@ import com.megayasa.Backend.Dialogs.ConfirmationDialog;
 import com.megayasa.Backend.Helpers.ChangeDateFormat;
 import com.megayasa.Backend.Models.Inventory;
 import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.Utils.PrintReport;
 import com.megayasa.Backend.ViewModels.Responses.StockInOutResponseVm;
 import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
 import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
@@ -114,6 +115,11 @@ public class Transaksi extends SimpleForm {
         crazyPanel4.add(btTransaksi);
 
         btPrint.setText("Print");
+        btPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPrintActionPerformed(evt);
+            }
+        });
         crazyPanel4.add(btPrint);
 
         crazyPanel3.add(crazyPanel4);
@@ -172,6 +178,11 @@ public class Transaksi extends SimpleForm {
         transaksiBarang a = new transaksiBarang();
         a.setVisible(true);
     }//GEN-LAST:event_btTransaksiActionPerformed
+
+    private void btPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPrintActionPerformed
+        // TODO add your handling code here:
+        new PrintReport().print("InventoryTransaction.jasper");
+    }//GEN-LAST:event_btPrintActionPerformed
 
     private void initializeData() {
         stockInOutController = Guice.createInjector(new Injection()).getInstance(StockInOutController.class);

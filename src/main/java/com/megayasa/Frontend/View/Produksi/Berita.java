@@ -8,6 +8,7 @@ import com.megayasa.Backend.Dialogs.ConfirmationDialog;
 import com.megayasa.Backend.Helpers.ChangeDateFormat;
 import com.megayasa.Backend.Models.Incident;
 import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.Utils.PrintReport;
 import com.megayasa.Backend.ViewModels.Responses.StockInOutResponseVm;
 import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
 import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
@@ -114,6 +115,11 @@ public class Berita extends SimpleForm {
         crazyPanel4.add(btAdd);
 
         btPrint.setText("Print");
+        btPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPrintActionPerformed(evt);
+            }
+        });
         crazyPanel4.add(btPrint);
 
         crazyPanel3.add(crazyPanel4);
@@ -173,6 +179,11 @@ public class Berita extends SimpleForm {
         tambahBerita a = new tambahBerita();
         a.setVisible(true);
     }//GEN-LAST:event_btAddActionPerformed
+
+    private void btPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPrintActionPerformed
+        // TODO add your handling code here:
+        new PrintReport().print("Incident.jasper");
+    }//GEN-LAST:event_btPrintActionPerformed
 
     private void initializeData() {
         Locale local = new Locale("id", "ID");

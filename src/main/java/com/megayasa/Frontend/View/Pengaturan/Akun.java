@@ -7,6 +7,7 @@ import com.megayasa.Backend.Controllers.AccountController;
 import com.megayasa.Backend.Dialogs.ConfirmationDialog;
 import com.megayasa.Backend.Helpers.ChangeDateFormat;
 import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.Utils.PrintReport;
 import com.megayasa.Backend.ViewModels.Responses.AccountResponseVm;
 import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
 import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
@@ -116,6 +117,11 @@ public class Akun extends SimpleForm {
         crazyPanel2.add(btAdd);
 
         btPrint.setText("Print");
+        btPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPrintActionPerformed(evt);
+            }
+        });
         crazyPanel2.add(btPrint);
 
         crazyPanel1.add(crazyPanel2);
@@ -183,6 +189,11 @@ public class Akun extends SimpleForm {
         tambahAkun a = new tambahAkun();
         a.setVisible(true);
     }//GEN-LAST:event_btAddActionPerformed
+
+    private void btPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPrintActionPerformed
+        // TODO add your handling code here:
+        new PrintReport().print("Account.jasper");
+    }//GEN-LAST:event_btPrintActionPerformed
 
     private void initializeData() {
         Locale local = new Locale("id", "ID");

@@ -11,6 +11,7 @@ import com.megayasa.Backend.Dialogs.ConfirmationDialog;
 import com.megayasa.Backend.Helpers.ChangeDateFormat;
 import com.megayasa.Backend.Models.Absence;
 import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.Utils.PrintReport;
 import com.megayasa.Backend.ViewModels.Requests.EmployeeRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.AbsenceDetailResponseVm;
 import com.megayasa.Backend.ViewModels.Responses.EmployeeResponseVm;
@@ -130,6 +131,11 @@ public class Absensi extends SimpleForm {
         crazyPanel2.add(btAdd);
 
         btPrint.setText("Print");
+        btPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPrintActionPerformed(evt);
+            }
+        });
         crazyPanel2.add(btPrint);
 
         crazyPanel1.add(crazyPanel2);
@@ -190,6 +196,11 @@ public class Absensi extends SimpleForm {
         laporAbsensi a = new laporAbsensi();
         a.setVisible(true);
     }//GEN-LAST:event_btAddActionPerformed
+
+    private void btPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPrintActionPerformed
+        // TODO add your handling code here:
+        new PrintReport().print("Absence.jasper");
+    }//GEN-LAST:event_btPrintActionPerformed
 
     private void initializeData() {
         Locale local = new Locale("id", "ID");
