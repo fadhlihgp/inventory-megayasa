@@ -10,6 +10,7 @@ import com.megayasa.Backend.Controllers.EmployeeController;
 import com.megayasa.Backend.Dialogs.ConfirmationDialog;
 import com.megayasa.Backend.Helpers.ChangeDateFormat;
 import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.Utils.PrintReport;
 import com.megayasa.Backend.ViewModels.Requests.EmployeeRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.EmployeeResponseVm;
 import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
@@ -18,6 +19,7 @@ import com.megayasa.Frontend.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.Asset.components.SimpleForm;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.sql.Date;
 import java.util.List;
 import java.util.Locale;
@@ -122,6 +124,12 @@ public class Karyawan extends SimpleForm {
         crazyPanel2.add(btAdd);
 
         btPrint.setText("Print");
+        btPrint.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btPrintActionPerformed(e);
+            }
+        });
         crazyPanel2.add(btPrint);
 
         crazyPanel1.add(crazyPanel2);
@@ -236,6 +244,11 @@ public class Karyawan extends SimpleForm {
         // TODO add your handling code here:
         tambahKaryawan a = new tambahKaryawan();
         a.setVisible(true);
+    }//GEN-LAST:event_btAddActionPerformed
+
+    private void btPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
+        // TODO add your handling code here:
+        new PrintReport().print("Employee.jasper");
     }//GEN-LAST:event_btAddActionPerformed
 
     private void txSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txSearchKeyTyped
