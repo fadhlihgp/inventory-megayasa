@@ -151,7 +151,7 @@ public class AccountServiceImpl implements AccountService {
         if (findAccountByUsername != null) throw new WarningException("Username sudah digunakan, silahkan cari username lain!");
 
         Map<String, Object> filtersByEmployee = new HashMap<>();
-        filtersByUsername.put("employeeId", accountRequestVm.getEmployeeId());
+        filtersByEmployee.put("employeeId", accountRequestVm.getEmployeeId());
         var findByEmployee = accountRepository.findByOne(filtersByEmployee,"AND" )
                 .orElse(null);
         if (findByEmployee != null) throw new WarningException("Karyawan tidak boleh memiliki duplikat akun !");
@@ -171,7 +171,7 @@ public class AccountServiceImpl implements AccountService {
         if (findAccountByUsername != null && !findAccountByUsername.getId().equals(accountId)) throw new WarningException("Username sudah digunakan, silahkan cari username lain!");
 
         Map<String, Object> filtersByEmployee = new HashMap<>();
-        filtersByUsername.put("employeeId", accountRequestVm.getEmployeeId());
+        filtersByEmployee.put("employeeId", accountRequestVm.getEmployeeId());
         var findByEmployee = accountRepository.findByOne(filtersByEmployee,"AND" )
                 .orElse(null);
         if (findByEmployee != null && !findByEmployee.getId().equals(accountId)) throw new WarningException("Karyawan tidak boleh memiliki duplikat akun !");

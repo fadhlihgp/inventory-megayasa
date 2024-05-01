@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 import com.google.inject.Guice;
@@ -91,24 +92,75 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     public SimpleMenuOption getSimpleMenuOption() {
 
         // management Menu
-        MenuItem items[] = new MenuItem[]{
-            new Item.Label("MAIN"),
-            new Item("Dashboard", "dashboard.svg"),
-            //
-            new Item.Label("PERSONALIA"),
-            new Item("Karyawan", "employee.svg"),
-            new Item("Absensi", "presence.svg"),
-            //
-            new Item.Label("PRODUKSI"),
-            new Item("Barang", "warehouse.svg")
-            .subMenu("Penyimpanan")
-            .subMenu("Transaksi"),
-            new Item("Berita", "alert.svg"),
-            //
-            new Item.Label("Pengaturan"),
-            new Item("Akun", "userSetting.svg"),
-            new Item("Keluar", "logout.svg"),
-        };
+//        MenuItem items[] = new MenuItem[]{
+//            new Item.Label("MAIN"),
+//            new Item("Dashboard", "dashboard.svg"),
+//            //
+//            new Item.Label("PERSONALIA"),
+//            new Item("Karyawan", "employee.svg"),
+//            new Item("Absensi", "presence.svg"),
+//            //
+//            new Item.Label("PRODUKSI"),
+//            new Item("Barang", "warehouse.svg")
+//            .subMenu("Penyimpanan")
+//            .subMenu("Transaksi"),
+//            new Item("Berita", "alert.svg"),
+//            //
+//            new Item.Label("Pengaturan"),
+//            new Item("Akun", "userSetting.svg"),
+//            new Item("Keluar", "logout.svg"),
+//        };
+
+        MenuItem[] items;
+
+        if (loginInformation.getRole().equalsIgnoreCase("superadmin")) {
+            // Menu untuk superadmin
+            items = new MenuItem[]{
+                    new Item.Label("MAIN"),
+                    new Item("Dashboard", "dashboard.svg"),
+
+//                    new Item.Label("Pengaturan"),
+                    new Item("Akun", "userSetting.svg"),
+                    new Item("Keluar", "logout.svg"),
+            };
+        } else if (loginInformation.getRole().equalsIgnoreCase("staff")) {
+            // Menu untuk staff
+            items = new MenuItem[]{
+                    new Item.Label("MAIN"),
+                    new Item("Dashboard", "dashboard.svg"),
+                    //
+                    new Item.Label("PRODUKSI"),
+                    new Item("Barang", "warehouse.svg")
+                            .subMenu("Penyimpanan")
+                            .subMenu("Transaksi"),
+                    new Item("Berita", "alert.svg"),
+                    //
+                    new Item("Keluar", "logout.svg"),
+            };
+        } else if (loginInformation.getRole().equalsIgnoreCase("personalia")) {
+            // Menu untuk personalia
+            items = new MenuItem[]{
+                    new Item.Label("MAIN"),
+                    new Item("Dashboard", "dashboard.svg"),
+                    //
+                    new Item.Label("PERSONALIA"),
+                    new Item("Karyawan", "employee.svg"),
+                    new Item("Absensi", "presence.svg"),
+                    //
+
+                    new Item("Keluar", "logout.svg"),
+            };
+        } else {
+            // Default menu
+            items = new MenuItem[]{
+                    new Item.Label("MAIN"),
+                    new Item("Dashboard", "dashboard.svg"),
+                    //
+                    new Item.Label("Pengaturan"),
+                    new Item("Akun", "userSetting.svg"),
+                    new Item("Keluar", "logout.svg"),
+            };
+        }
 
         SimpleMenuOption simpleMenuOption = new SimpleMenuOption() {
             @Override
@@ -145,53 +197,120 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
         // Action Menu
         simpleMenuOption.addMenuEvent(new MenuEvent() {
-    @Override
-        public void selected(MenuAction action, int[] index) {
-            if (index.length == 1) {
-                switch (index[0]) {
-                    case 0:
-                        FormManager.showForm(new Dashboard());
-                        break;
-                    case 1:
-                        FormManager.showForm(new Karyawan());
-                        break;
-                    case 2:
-                        FormManager.showForm(new Absensi());
-                        break;
-                    case 4:
-                        FormManager.showForm(new Berita());
-                        break;
-                    case 5:
-                        FormManager.showForm(new Akun());
-                        break;
-                    case 6:
-                        logout();
-                        break;
-                    default:
-                        // Do nothing
-                }
-            } else if (index.length == 2) {
-                // Memeriksa jika submenu dipilih
-                switch (index[0]) {
-                    case 3:
-                        // Submenu dipilih
-                        switch (index[1]) {
+//    @Override
+//        public void selected(MenuAction action, int[] index) {
+//            if (index.length == 1) {
+//                switch (index[0]) {
+//                    case 0:
+//                        FormManager.showForm(new Dashboard());
+//                        break;
+//                    case 1:
+//                        FormManager.showForm(new Karyawan());
+//                        break;
+//                    case 2:
+//                        FormManager.showForm(new Absensi());
+//                        break;
+//                    case 4:
+//                        FormManager.showForm(new Berita());
+//                        break;
+//                    case 5:
+//                        FormManager.showForm(new Akun());
+//                        break;
+//                    case 6:
+//                        logout();
+//                        break;
+//                    default:
+//                        // Do nothing
+//                }
+//            } else if (index.length == 2) {
+//                // Memeriksa jika submenu dipilih
+//                switch (index[0]) {
+//                    case 3:
+//                        // Submenu dipilih
+//                        switch (index[1]) {
+//                            case 0:
+//                                FormManager.showForm(new Penyimpanan());
+//                                break;
+//                            case 1:
+//                                FormManager.showForm(new Transaksi());
+//                                break;
+//                            default:
+//                                // Do nothing
+//                        }
+//                        break;
+//                    default:
+//                        // Do nothing
+//                }
+//            }
+//        }
+
+            @Override
+            public void selected(MenuAction action, int[] index) {
+                if (index.length == 1) {
+                    if (loginInformation.getRole().equalsIgnoreCase("superadmin")) {
+                        switch (index[0]) {
                             case 0:
-                                FormManager.showForm(new Penyimpanan());
+                                FormManager.showForm(new Dashboard());
                                 break;
                             case 1:
-                                FormManager.showForm(new Transaksi());
+                                FormManager.showForm(new Akun());
+                                break;
+                            case 2:
+                                logout();
                                 break;
                             default:
-                                // Do nothing
+
                         }
-                        break;
-                    default:
-                        // Do nothing
+                    } else if (loginInformation.getRole().equalsIgnoreCase("staff")) {
+                        switch (index[0]) {
+                            case 0:
+                                FormManager.showForm(new Dashboard());
+                                break;
+                            case 2:
+                                FormManager.showForm(new Berita());
+                                break;
+                            case 3:
+                                logout();
+                                break;
+                        }
+                    } else if (loginInformation.getRole().equalsIgnoreCase("personalia")) {
+                        switch (index[0]) {
+                            case 0:
+                                FormManager.showForm(new Dashboard());
+                                break;
+                            case 1:
+                                FormManager.showForm(new Karyawan());
+                                break;
+                            case 2:
+                                FormManager.showForm(new Absensi());
+                                break;
+                            case 3:
+                                logout();
+                                break;
+                            default:
+                        }
+                    }
+                } else if (index.length == 2 && loginInformation.getRole().equalsIgnoreCase("staff")) {
+                    // Memeriksa jika submenu dipilih
+                    switch (index[0]) {
+                        case 1:
+                            // Submenu dipilih
+                            switch (index[1]) {
+                                case 0:
+                                    FormManager.showForm(new Penyimpanan());
+                                    break;
+                                case 1:
+                                    FormManager.showForm(new Transaksi());
+                                    break;
+                                default:
+                                    // Do nothing
+                            }
+                            break;
+                        default:
+                            // Do nothing
+                    }
                 }
             }
-        }
-
         });
 
         simpleMenuOption.setMenus(items)
