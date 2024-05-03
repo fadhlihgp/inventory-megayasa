@@ -41,7 +41,7 @@ public class IncidentServiceImpl implements IncidentService {
         Incident findIncident = findIncidentById(incidentId);
 
         TransactionUtil.performTransaction(() -> {
-            if (incidentRequestVm.getPictureUrl() != null) {
+            if (incidentRequestVm.getPictureUrl() != null && !incidentRequestVm.getPictureUrl().equals("")) {
                 if (findIncident.getPictureUrl() != null) {
                     uploadPhoto.deletePhoto(findIncident.getPictureUrl());
                 }

@@ -240,6 +240,7 @@ public class tambahBerita extends javax.swing.JFrame {
 
     private void initializeCode() {
         incidentController = Guice.createInjector(new Injection()).getInstance(IncidentController.class);
+        txUpload.setEditable(false);
         fillFields();
     }
 
@@ -250,7 +251,6 @@ public class tambahBerita extends javax.swing.JFrame {
             txJudul.setText(incidentById.getTitle());
             txDate.setText(ChangeDateFormat.dateToString("dd-MM-yyyy", incidentById.getDate()));
             jtCatatan.setText(incidentById.getDescription());
-            txUpload.setText(incidentById.getPictureUrl());
         }
     }
 

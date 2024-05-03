@@ -44,6 +44,6 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 
     @Override
     public void delete(Incident incident) {
-        queryRepository.deleteByClass(incident);
+        queryRepository.deleteById(incident.getId());
     }
 }
