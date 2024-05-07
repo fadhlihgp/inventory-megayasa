@@ -32,6 +32,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     }
 
     @Override
+    public int countAllEmployee() {
+        return queryRepository.count();
+    }
+
+    @Override
     public void delete(Employee employee) {
         queryRepository.deleteById(employee.getId());
     }

@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.megayasa.Backend.Models.Absence;
 import com.megayasa.Backend.Repositories.AbsenceRepository;
 import com.megayasa.Backend.Repositories.QueryRepository;
+import com.megayasa.Backend.ViewModels.Responses.AbsenceDashboardResponseVm;
 import com.megayasa.Backend.ViewModels.Responses.AbsenceResponseVm;
 
 import java.sql.Connection;
@@ -19,6 +20,44 @@ public class AbsenceRepositoryImpl implements AbsenceRepository {
     public AbsenceRepositoryImpl(Connection connection1, Connection connection) {
         this.connection = connection1;
         queryRepository = new QueryRepositoryImpl<>(Absence.class, connection);
+    }
+
+    @Override
+    public List<AbsenceDashboardResponseVm> absenceDashboard() {
+        List<AbsenceDashboardResponseVm> response = new ArrayList<>();
+        try {
+            String query = "WITH recursive dates AS (" +
+                    "    SELECT CURDATE() - INTERVAL 30 DAY AS date" +
+                    "    UNION ALL" +
+                    "    SELECT date + INTERVAL 1 DAY" +
+                    "    FROM dates" +
+                    "    WHERE date < CURDATE()" +
+                    ")" +
+                    "select d.date," +
+                    "       SUM(CASE WHEN absence.information = 'Sakit' THEN 1 ELSE 0 END ) as Sakit," +
+                    "       SUM(CASE WHEN absence.information = 'Hadir' THEN 1 ELSE 0 END ) as Hadir," +
+                    "       SUM(CASE WHEN absence.information = 'Izin' THEN 1 ELSE 0 END ) as Izin," +
+                    "       SUM(CASE WHEN absence.information = 'Cuti' THEN 1 ELSE 0 END ) as Cuti," +
+                    "       SUM(CASE WHEN absence.information = 'Alpa' THEN 1 ELSE 0 END ) as Alpa " +
+                    "from dates d " +
+                    "left join absence on d.date = absence.date " +
+                    "GROUP BY d.date";
+
+            ResultSet resultSet = connection.prepareStatement(query).executeQuery();
+            while (resultSet.next()) {
+                response.add(new AbsenceDashboardResponseVm(
+                        resultSet.getDate(1),
+                        resultSet.getInt(2),
+                        resultSet.getInt(3),
+                        resultSet.getInt(4),
+                        resultSet.getInt(5),
+                        resultSet.getInt(6)
+                ));
+            }
+            return response;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

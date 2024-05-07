@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface EmployeeRepository {
     Optional<Employee> findById(String employeeId);
     Optional<Employee> findByIdentity(String identity);
+    int countAllEmployee();
     void delete(Employee employee);
     List<Employee> findAll();
     void create(Employee employee);

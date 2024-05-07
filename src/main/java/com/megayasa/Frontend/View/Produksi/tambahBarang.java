@@ -178,7 +178,7 @@ public class tambahBarang extends javax.swing.JFrame {
 
     private void initializeData() {
         inventoryController = Guice.createInjector(new Injection()).getInstance(InventoryController.class);
-
+        txstockBarang.setEnabled(false);
         if (inventoryCode != null) {
             Title.setText("Perbarui Barang");
             txkodeBarang.setEditable(false);
@@ -190,8 +190,9 @@ public class tambahBarang extends javax.swing.JFrame {
                 txstockBarang.setText(inventorySearch.getStock().toString());
                 txtipeBarang.setText(inventorySearch.getType());
             }
+        } else {
+            txstockBarang.setText("0");
         }
-
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

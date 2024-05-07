@@ -14,6 +14,7 @@ import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
 import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
 import com.megayasa.Frontend.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.Asset.components.SimpleForm;
+import com.megayasa.Frontend.Asset.menu.FormManager;
 import com.megayasa.Frontend.Helpers.ImageRender;
 
 import javax.swing.*;
@@ -236,6 +237,7 @@ public class Berita extends SimpleForm {
                 if (confirmDelete == JOptionPane.YES_NO_OPTION) {
                     model.removeRow(row);
                     incidentController.deleteIncident(incident.getId());
+                    FormManager.showForm(new Berita());
                 }
             }
         };

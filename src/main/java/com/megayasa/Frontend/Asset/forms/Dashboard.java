@@ -11,6 +11,13 @@ import java.util.Date;
 import java.util.Random;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.DashboardController;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Responses.AbsenceDashboardResponseVm;
+import com.megayasa.Backend.ViewModels.Responses.DashboardResponseVm;
+import com.megayasa.Backend.ViewModels.Responses.StockInOutDashboardResponseVm;
 import net.miginfocom.swing.MigLayout;
 import raven.chart.ChartLegendRenderer;
 import raven.chart.bar.HorizontalBarChart;
@@ -26,8 +33,11 @@ import com.megayasa.Frontend.Asset.utils.DateCalculator;
  * @author Ridho Multazam
  */
 public class Dashboard extends SimpleForm {
+    private final DashboardResponseVm dashboardResponseVm;
 
     public Dashboard() {
+        DashboardController dashboardController = Guice.createInjector(new Injection()).getInstance(DashboardController.class);
+        dashboardResponseVm = dashboardController.getDashboard();
         init();
     }
 
@@ -106,13 +116,13 @@ public class Dashboard extends SimpleForm {
     private void createBarChart() {
         // BarChart 1
         barChart1 = new HorizontalBarChart();
-        JLabel header1 = new JLabel("Monthly Income");
+        JLabel header1 = new JLabel("Transaksi Barang Masuk");
         header1.putClientProperty(FlatClientProperties.STYLE, ""
                 + "font:+1;"
                 + "border:0,0,5,0");
         barChart1.setHeader(header1);
-        barChart1.setBarColor(Color.decode("#f97316"));
-        barChart1.setDataset(createData());
+        barChart1.setBarColor(Color.decode("#10b981"));
+        barChart1.setDataset(createDataStockIn());
         JPanel panel1 = new JPanel(new BorderLayout());
         panel1.putClientProperty(FlatClientProperties.STYLE, ""
                 + "border:5,5,5,5,$Component.borderColor,,20");
@@ -121,18 +131,38 @@ public class Dashboard extends SimpleForm {
 
         // BarChart 2
         barChart2 = new HorizontalBarChart();
-        JLabel header2 = new JLabel("Monthly Expense");
+        JLabel header2 = new JLabel("Transaksi Barang Keluar");
         header2.putClientProperty(FlatClientProperties.STYLE, ""
                 + "font:+1;"
                 + "border:0,0,5,0");
         barChart2.setHeader(header2);
-        barChart2.setBarColor(Color.decode("#10b981"));
-        barChart2.setDataset(createData());
+        barChart2.setBarColor(Color.decode("#C40C0C"));
+        barChart2.setDataset(createDataStockOut());
         JPanel panel2 = new JPanel(new BorderLayout());
         panel2.putClientProperty(FlatClientProperties.STYLE, ""
                 + "border:5,5,5,5,$Component.borderColor,,20");
         panel2.add(barChart2);
         add(panel2);
+    }
+
+    private DefaultPieDataset createDataStockIn() {
+        DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
+        Random random = new Random();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy");
+        for (StockInOutDashboardResponseVm transaction : dashboardResponseVm.getTransactions()) {
+            dataset.addValue(sdf.format(transaction.getDate()), transaction.getStockIn());
+        }
+        return dataset;
+    }
+
+    private DefaultPieDataset createDataStockOut() {
+        DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
+        Random random = new Random();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy");
+        for (StockInOutDashboardResponseVm transaction : dashboardResponseVm.getTransactions()) {
+            dataset.addValue(sdf.format(transaction.getDate()), transaction.getStockOut());
+        }
+        return dataset;
     }
 
     private DefaultPieDataset createData() {
@@ -164,14 +194,22 @@ public class Dashboard extends SimpleForm {
         SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy");
         Random ran = new Random();
         int randomDate = 30;
-        for (int i = 1; i <= randomDate; i++) {
-            String date = df.format(cal.getTime());
-            categoryDataset.addValue(ran.nextInt(700) + 5, "Income", date);
-            categoryDataset.addValue(ran.nextInt(700) + 5, "Expense", date);
-            categoryDataset.addValue(ran.nextInt(700) + 5, "Profit", date);
-
-            cal.add(Calendar.DATE, 1);
+        for (AbsenceDashboardResponseVm absence : dashboardResponseVm.getAbsences()) {
+            String date = df.format(absence.getDate());
+            categoryDataset.addValue(absence.getPresent(), "Hadir", date);
+            categoryDataset.addValue(absence.getPermission(), "Izin", date);
+            categoryDataset.addValue(absence.getSick(), "Sakit", date);
+            categoryDataset.addValue(absence.getLeave(), "Cuti", date);
+            categoryDataset.addValue(absence.getAlpa(), "Alpa", date);
         }
+//        for (int i = 1; i <= randomDate; i++) {
+//            String date = df.format(cal.getTime());
+//            categoryDataset.addValue(ran.nextInt(700) + 5, "Income", date);
+//            categoryDataset.addValue(ran.nextInt(700) + 5, "Expense", date);
+//            categoryDataset.addValue(ran.nextInt(700) + 5, "Profit", date);
+//
+//            cal.add(Calendar.DATE, 1);
+//        }
 
         /**
          * Control the legend we do not show all legend
@@ -200,7 +238,7 @@ public class Dashboard extends SimpleForm {
 
         lineChart.setCategoryDataset(categoryDataset);
         lineChart.getChartColor().addColor(Color.decode("#38bdf8"), Color.decode("#fb7185"), Color.decode("#34d399"));
-        JLabel header = new JLabel("Income Data");
+        JLabel header = new JLabel("Data Presensi");
         header.putClientProperty(FlatClientProperties.STYLE, ""
                 + "font:+1;"
                 + "border:0,0,5,0");
