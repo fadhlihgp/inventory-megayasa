@@ -211,9 +211,11 @@ public class editKaryawan extends javax.swing.JFrame {
         Status.setText("Status");
         crazyPanel1.add(Status);
 
+        status.add(jAktif);
         jAktif.setText("Aktif");
         crazyPanel1.add(jAktif);
 
+        status.add(jtidakAktif);
         jtidakAktif.setText("Tidak Aktif");
         crazyPanel1.add(jtidakAktif);
         crazyPanel1.add(jSeparator1);
