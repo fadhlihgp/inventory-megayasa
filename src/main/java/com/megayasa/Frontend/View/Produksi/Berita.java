@@ -21,6 +21,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import java.util.Locale;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -245,6 +246,13 @@ public class Berita extends SimpleForm {
         tableBerita.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
         tableBerita.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor(event));
         tableBerita.getColumnModel().getColumn(3).setCellRenderer(new ImageRender());
+        
+        // Set horizontal alignment for columns
+        for (int i = 0; i < tableBerita.getColumnCount() - 1; i++) {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tableBerita.getColumnModel().getColumn(i).setCellRenderer(renderer);
+    }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

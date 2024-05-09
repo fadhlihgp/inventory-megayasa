@@ -106,7 +106,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             .subMenu("Transaksi"),
             new Item("Berita", "alert.svg"),
             //
-            new Item.Label("Pengaturan"),
+            new Item.Label("PENGATURAN"),
             new Item("Akun", "userSetting.svg"),
             new Item("Keluar", "logout.svg"),
         };

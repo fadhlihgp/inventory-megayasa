@@ -9,9 +9,13 @@ import com.megayasa.Backend.Helpers.ChangeDateFormat;
 import com.megayasa.Backend.Models.Inventory;
 import com.megayasa.Backend.Utils.Injection;
 import com.megayasa.Backend.Utils.PrintReport;
+import com.megayasa.Backend.ViewModels.Responses.AbsenceDetailResponseVm;
 import com.megayasa.Backend.ViewModels.Responses.StockInOutResponseVm;
 import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
+import com.megayasa.Frontend.Asset.Table.TableActionCellEditorDelete;
 import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
+import com.megayasa.Frontend.Asset.Table.TableActionCellRenderDelete;
+import com.megayasa.Frontend.Asset.Table.TableActionDelete;
 import com.megayasa.Frontend.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.Asset.components.SimpleForm;
 import com.megayasa.Frontend.View.Personalia.laporAbsensi;
@@ -19,6 +23,7 @@ import com.megayasa.Frontend.View.Personalia.laporAbsensi;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -58,8 +63,8 @@ public class Transaksi extends SimpleForm {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        crazyPanel3 = new raven.crazypanel.CrazyPanel();
-        crazyPanel4 = new raven.crazypanel.CrazyPanel();
+        crazyPanel1 = new raven.crazypanel.CrazyPanel();
+        crazyPanel2 = new raven.crazypanel.CrazyPanel();
         txSearch = new javax.swing.JTextField();
         btTransaksi = new javax.swing.JButton();
         btPrint = new javax.swing.JButton();
@@ -69,18 +74,18 @@ public class Transaksi extends SimpleForm {
         jLabel2.setFont(new java.awt.Font("Monospaced", 0, 36)); // NOI18N
         jLabel2.setText("Riwayat Transaksi");
 
-        crazyPanel3.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+        crazyPanel1.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "background:$Table.background;[light]border:0,0,0,0,shade(@background,5%),,20;[dark]border:0,0,0,0,tint(@background,5%),,20",
             null
         ));
-        crazyPanel3.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+        crazyPanel1.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
             "wrap,fill,insets 15",
             "[fill]",
             "[grow 0][fill]",
             null
         ));
 
-        crazyPanel4.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+        crazyPanel2.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "background:$Table.background",
             new String[]{
                 "JTextField.placeholderText=Search;background:@background",
@@ -89,7 +94,7 @@ public class Transaksi extends SimpleForm {
                 "background:lighten(@background,8%);borderWidth:1"
             }
         ));
-        crazyPanel4.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+        crazyPanel2.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
             "",
             "[]push[][]",
             "",
@@ -104,7 +109,7 @@ public class Transaksi extends SimpleForm {
                 txSearchKeyTyped(evt);
             }
         });
-        crazyPanel4.add(txSearch);
+        crazyPanel2.add(txSearch);
 
         btTransaksi.setText("Transaksi");
         btTransaksi.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +117,7 @@ public class Transaksi extends SimpleForm {
                 btTransaksiActionPerformed(evt);
             }
         });
-        crazyPanel4.add(btTransaksi);
+        crazyPanel2.add(btTransaksi);
 
         btPrint.setText("Print");
         btPrint.addActionListener(new java.awt.event.ActionListener() {
@@ -120,21 +125,28 @@ public class Transaksi extends SimpleForm {
                 btPrintActionPerformed(evt);
             }
         });
-        crazyPanel4.add(btPrint);
+        crazyPanel2.add(btPrint);
 
-        crazyPanel3.add(crazyPanel4);
+        crazyPanel1.add(crazyPanel2);
 
         tableTransaksi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nama Barang", "Jumlah", "Tanggal", "Keterangan", "Catatan"
+                "Nama Barang", "Jumlah", "Tanggal", "Keterangan", "Catatan", "Action"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -143,7 +155,7 @@ public class Transaksi extends SimpleForm {
         tableTransaksi.setRowHeight(35);
         jScrollPane2.setViewportView(tableTransaksi);
 
-        crazyPanel3.add(jScrollPane2);
+        crazyPanel1.add(jScrollPane2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -151,16 +163,23 @@ public class Transaksi extends SimpleForm {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(crazyPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
+                .addGap(0, 383, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(crazyPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(648, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(50, Short.MAX_VALUE)
+                    .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -203,15 +222,8 @@ public class Transaksi extends SimpleForm {
             };
             defaultTableModel.addRow(values);
         }
-
-        TableActionEvent event = new TableActionEvent() {
-            @Override
-            public void onEdit(int row) {
-                StockInOutResponseVm stock = filteredTransactions.get(row);
-                transaksiBarang t = new transaksiBarang(stock.getId());
-                t.setVisible(true);
-            }
-
+        
+        TableActionDelete event = new TableActionDelete() {
             @Override
             public void onDelete(int row) {
                 if (tableTransaksi.isEditing()) {
@@ -228,14 +240,21 @@ public class Transaksi extends SimpleForm {
 
         };
 
-        tableTransaksi.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender());
-        tableTransaksi.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor(event));
+        tableTransaksi.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderDelete());
+        tableTransaksi.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorDelete(event));
+        
+        // Set horizontal alignment for columns 0 to 3
+        for (int i = 0; i < tableTransaksi.getColumnCount() - 1; i++) {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tableTransaksi.getColumnModel().getColumn(i).setCellRenderer(renderer);
+    }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btPrint;
     private javax.swing.JButton btTransaksi;
-    private raven.crazypanel.CrazyPanel crazyPanel3;
-    private raven.crazypanel.CrazyPanel crazyPanel4;
+    private raven.crazypanel.CrazyPanel crazyPanel1;
+    private raven.crazypanel.CrazyPanel crazyPanel2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tableTransaksi;

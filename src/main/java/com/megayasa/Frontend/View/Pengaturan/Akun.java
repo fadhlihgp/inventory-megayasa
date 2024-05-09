@@ -244,6 +244,13 @@ public class Akun extends SimpleForm {
 
         tableAkun.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRender());
         tableAkun.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditor(event));
+        
+        // Set horizontal alignment for columns
+        for (int i = 0; i < tableAkun.getColumnCount() - 1; i++) {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tableAkun.getColumnModel().getColumn(i).setCellRenderer(renderer);
+    }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
