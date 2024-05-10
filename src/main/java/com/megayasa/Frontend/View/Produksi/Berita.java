@@ -246,13 +246,17 @@ public class Berita extends SimpleForm {
         tableBerita.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
         tableBerita.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor(event));
         tableBerita.getColumnModel().getColumn(3).setCellRenderer(new ImageRender());
-        
-        // Set horizontal alignment for columns
-        for (int i = 0; i < tableBerita.getColumnCount() - 1; i++) {
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-        renderer.setHorizontalAlignment(SwingConstants.CENTER);
-        tableBerita.getColumnModel().getColumn(i).setCellRenderer(renderer);
-    }
+
+//             Set horizontal alignment for columns
+            for (int i = 0; i < tableBerita.getColumnCount() - 1; i++) {
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+            renderer.setHorizontalAlignment(SwingConstants.CENTER);
+            if (i == 3) {
+                continue;
+            } else {
+                tableBerita.getColumnModel().getColumn(i).setCellRenderer(renderer);
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
