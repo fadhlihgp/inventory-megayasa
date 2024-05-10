@@ -16,7 +16,10 @@ import com.megayasa.Backend.ViewModels.Requests.EmployeeRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.AbsenceDetailResponseVm;
 import com.megayasa.Backend.ViewModels.Responses.EmployeeResponseVm;
 import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
+import com.megayasa.Frontend.Asset.Table.TableActionCellEditorDelete;
 import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
+import com.megayasa.Frontend.Asset.Table.TableActionCellRenderDelete;
+import com.megayasa.Frontend.Asset.Table.TableActionDelete;
 import com.megayasa.Frontend.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.Asset.components.SimpleForm;
 
@@ -145,12 +148,19 @@ public class Absensi extends SimpleForm {
 
             },
             new String [] {
-                "Karyawan", "Tanggal", "Alasan", "Catatan"
+                "Karyawan", "Tanggal", "Alasan", "Catatan", "Action"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -178,9 +188,8 @@ public class Absensi extends SimpleForm {
                 .addGap(0, 632, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(59, Short.MAX_VALUE)
-                    .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+                    .addGap(0, 50, Short.MAX_VALUE)
+                    .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -223,14 +232,7 @@ public class Absensi extends SimpleForm {
             defaultTableModel.addRow(values);
         }
 
-        TableActionEvent event = new TableActionEvent() {
-            @Override
-            public void onEdit(int row) {
-                AbsenceDetailResponseVm absenceDetailResponseVm = filteredAbsences.get(row);
-               laporAbsensi l = new laporAbsensi(absenceDetailResponseVm);
-               l.setVisible(true);
-            }
-
+        TableActionDelete event = new TableActionDelete() {
             @Override
             public void onDelete(int row) {
                 if (tableAbsensi.isEditing()) {
@@ -247,8 +249,16 @@ public class Absensi extends SimpleForm {
 
         };
 
-        tableAbsensi.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
-        tableAbsensi.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor(event));
+        tableAbsensi.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRenderDelete());
+        tableAbsensi.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditorDelete(event));
+        
+       // Set horizontal alignment for columns 0 to 3
+        for (int i = 0; i < tableAbsensi.getColumnCount() - 1; i++) {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tableAbsensi.getColumnModel().getColumn(i).setCellRenderer(renderer);
+    }
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

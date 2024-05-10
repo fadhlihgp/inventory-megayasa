@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface IncidentRepository {
     Long countIncidentToday();
+    int countIncidentMonthNow();
     void save(Incident incident);
     void update(Incident incident);
     Optional<Incident> findById(String id);

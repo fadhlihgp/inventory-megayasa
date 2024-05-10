@@ -273,6 +273,36 @@ public class QueryRepositoryImpl<T, ID> implements QueryRepository<T, ID> {
     }
 
     @Override
+    public int count() {
+        try {
+            String tableName = ReflectionUtil.getTableName(tClass);
+            String query = String.format("Select Count(*) from %s as total", tableName);
+            ResultSet resultSet = connection.prepareStatement(query).executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int countWithCustomQuery(String query) {
+        try {
+            ResultSet resultSet = connection.prepareStatement(query).executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public T update(T entity) {
         try {
             String annotationId = ReflectionUtil.getAnnotationId(entity.getClass());

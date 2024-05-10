@@ -23,6 +23,12 @@ public class IncidentRepositoryImpl implements IncidentRepository {
     }
 
     @Override
+    public int countIncidentMonthNow() {
+        String sql = "Select count(*) from incident where MONTH(date) = MONTH(NOW()) and YEAR(date) = YEAR(NOW())";
+        return queryRepository.countWithCustomQuery(sql);
+    }
+
+    @Override
     public void save(Incident incident) {
         queryRepository.save(incident);
     }

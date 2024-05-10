@@ -238,13 +238,20 @@ public class Karyawan extends SimpleForm {
 
         tableKaryawan.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
         tableKaryawan.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor(event));
+        
+        // Set horizontal alignment
+        for (int i = 0; i < tableKaryawan.getColumnCount() - 1; i++) {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tableKaryawan.getColumnModel().getColumn(i).setCellRenderer(renderer);
+    }
     }
 
-    private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
+    private void btAddActionPerformed(java.awt.event.ActionEvent evt) {                                      
         // TODO add your handling code here:
         tambahKaryawan a = new tambahKaryawan();
         a.setVisible(true);
-    }//GEN-LAST:event_btAddActionPerformed
+    }                                     
 
     private void btPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         // TODO add your handling code here:

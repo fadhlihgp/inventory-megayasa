@@ -22,6 +22,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Date;
 import java.util.List;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -229,6 +230,13 @@ public class Penyimpanan extends SimpleForm {
 
         tableBarang.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
         tableBarang.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor(event));
+        
+        // Set horizontal alignment
+        for (int i = 0; i < tableBarang.getColumnCount() - 1; i++) {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tableBarang.getColumnModel().getColumn(i).setCellRenderer(renderer);
+    }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
