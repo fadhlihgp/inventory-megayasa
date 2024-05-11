@@ -49,6 +49,7 @@ public class Application extends JFrame {
         GlassPanePopup.install(this);
         FormManager.install(this);
         FormManager.showForm(new Dashboard());
+        
         // applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
     }
 

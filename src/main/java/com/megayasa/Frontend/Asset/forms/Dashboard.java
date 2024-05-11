@@ -1,6 +1,15 @@
 package com.megayasa.Frontend.Asset.forms;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.DashboardController;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Responses.AbsenceDashboardResponseVm;
+import com.megayasa.Backend.ViewModels.Responses.DashboardResponseVm;
+import com.megayasa.Backend.ViewModels.Responses.StockInOutDashboardResponseVm;
+import com.megayasa.Frontend.Asset.components.SimpleForm;
+import com.megayasa.Frontend.Asset.utils.DateCalculator;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -11,22 +20,12 @@ import java.util.Date;
 import java.util.Random;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import com.google.inject.Guice;
-import com.megayasa.Backend.Controllers.DashboardController;
-import com.megayasa.Backend.Utils.Injection;
-import com.megayasa.Backend.ViewModels.Responses.AbsenceDashboardResponseVm;
-import com.megayasa.Backend.ViewModels.Responses.DashboardResponseVm;
-import com.megayasa.Backend.ViewModels.Responses.StockInOutDashboardResponseVm;
 import net.miginfocom.swing.MigLayout;
 import raven.chart.ChartLegendRenderer;
 import raven.chart.bar.HorizontalBarChart;
 import raven.chart.data.category.DefaultCategoryDataset;
 import raven.chart.data.pie.DefaultPieDataset;
 import raven.chart.line.LineChart;
-import raven.chart.pie.PieChart;
-import com.megayasa.Frontend.Asset.components.SimpleForm;
-import com.megayasa.Frontend.Asset.utils.DateCalculator;
 
 /**
  *
@@ -38,19 +37,24 @@ public class Dashboard extends SimpleForm {
     public Dashboard() {
         DashboardController dashboardController = Guice.createInjector(new Injection()).getInstance(DashboardController.class);
         dashboardResponseVm = dashboardController.getDashboard();
+        initComponents();
+        dsKaryawan.setIcon(new FlatSVGIcon("iconSVG/employee.svg", 0.90f));
+        dsTransaksi.setIcon(new FlatSVGIcon("iconSVG/right-left.svg", 0.90f));
+        dsBerita.setIcon(new FlatSVGIcon("iconSVG/alert.svg", 0.90f));
+        dsAbsensi.setIcon(new FlatSVGIcon("iconSVG/presence.svg", 0.90f));
+        crazyPanel7.putClientProperty(FlatClientProperties.STYLE, ""
+                + "border:5,5,5,5,$Component.borderColor,,20");
         init();
     }
-
+    
     @Override
     public void formRefresh() {
         lineChart.startAnimation();
-        pieChart1.startAnimation();
-        pieChart2.startAnimation();
-        pieChart3.startAnimation();
         barChart1.startAnimation();
         barChart2.startAnimation();
     }
-
+    
+    
     @Override
     public void formInitAndOpen() {
         System.out.println("init and open");
@@ -60,50 +64,13 @@ public class Dashboard extends SimpleForm {
     public void formOpen() {
         System.out.println("Open");
     }
-
+    
     private void init() {
         setLayout(new MigLayout("wrap,fill,gap 10", "fill"));
-        createPieChart();
         createLineChart();
         createBarChart();
     }
-
-    private void createPieChart() {
-        pieChart1 = new PieChart();
-        JLabel header1 = new JLabel("Product Income");
-        header1.putClientProperty(FlatClientProperties.STYLE, ""
-                + "font:+1");
-        pieChart1.setHeader(header1);
-        pieChart1.getChartColor().addColor(Color.decode("#f87171"), Color.decode("#fb923c"), Color.decode("#fbbf24"), Color.decode("#a3e635"), Color.decode("#34d399"), Color.decode("#22d3ee"), Color.decode("#818cf8"), Color.decode("#c084fc"));
-        pieChart1.putClientProperty(FlatClientProperties.STYLE, ""
-                + "border:5,5,5,5,$Component.borderColor,,20");
-        pieChart1.setDataset(createPieData());
-        add(pieChart1, "split 3,height 290");
-
-        pieChart2 = new PieChart();
-        JLabel header2 = new JLabel("Product Cost");
-        header2.putClientProperty(FlatClientProperties.STYLE, ""
-                + "font:+1");
-        pieChart2.setHeader(header2);
-        pieChart2.getChartColor().addColor(Color.decode("#f87171"), Color.decode("#fb923c"), Color.decode("#fbbf24"), Color.decode("#a3e635"), Color.decode("#34d399"), Color.decode("#22d3ee"), Color.decode("#818cf8"), Color.decode("#c084fc"));
-        pieChart2.putClientProperty(FlatClientProperties.STYLE, ""
-                + "border:5,5,5,5,$Component.borderColor,,20");
-        pieChart2.setDataset(createPieData());
-        add(pieChart2, "height 290");
-
-        pieChart3 = new PieChart();
-        JLabel header3 = new JLabel("Product Profit");
-        header3.putClientProperty(FlatClientProperties.STYLE, ""
-                + "font:+1");
-        pieChart3.setHeader(header3);
-        pieChart3.getChartColor().addColor(Color.decode("#f87171"), Color.decode("#fb923c"), Color.decode("#fbbf24"), Color.decode("#a3e635"), Color.decode("#34d399"), Color.decode("#22d3ee"), Color.decode("#818cf8"), Color.decode("#c084fc"));
-        pieChart3.setChartType(PieChart.ChartType.DONUT_CHART);
-        pieChart3.putClientProperty(FlatClientProperties.STYLE, ""
-                + "border:5,5,5,5,$Component.borderColor,,20");
-        pieChart3.setDataset(createPieData());
-        add(pieChart3, "height 290");
-    }
-
+    
     private void createLineChart() {
         lineChart = new LineChart();
         lineChart.setChartType(LineChart.ChartType.CURVE);
@@ -144,7 +111,7 @@ public class Dashboard extends SimpleForm {
         panel2.add(barChart2);
         add(panel2);
     }
-
+    
     private DefaultPieDataset createDataStockIn() {
         DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
         Random random = new Random();
@@ -164,30 +131,7 @@ public class Dashboard extends SimpleForm {
         }
         return dataset;
     }
-
-    private DefaultPieDataset createData() {
-        DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
-        Random random = new Random();
-        dataset.addValue("July (ongoing)", random.nextInt(100));
-        dataset.addValue("June", random.nextInt(100));
-        dataset.addValue("May", random.nextInt(100));
-        dataset.addValue("April", random.nextInt(100));
-        dataset.addValue("March", random.nextInt(100));
-        dataset.addValue("February", random.nextInt(100));
-        return dataset;
-    }
-
-    private DefaultPieDataset createPieData() {
-        DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
-        Random random = new Random();
-        dataset.addValue("Bags", random.nextInt(100) + 50);
-        dataset.addValue("Hats", random.nextInt(100) + 50);
-        dataset.addValue("Glasses", random.nextInt(100) + 50);
-        dataset.addValue("Watches", random.nextInt(100) + 50);
-        dataset.addValue("Jewelry", random.nextInt(100) + 50);
-        return dataset;
-    }
-
+    
     private void createLineChartData() {
         DefaultCategoryDataset<String, String> categoryDataset = new DefaultCategoryDataset<>();
         Calendar cal = Calendar.getInstance();
@@ -235,7 +179,7 @@ public class Dashboard extends SimpleForm {
         } catch (ParseException e) {
             System.err.println(e);
         }
-
+        
         lineChart.setCategoryDataset(categoryDataset);
         lineChart.getChartColor().addColor(Color.decode("#38bdf8"), Color.decode("#fb7185"), Color.decode("#34d399"));
         JLabel header = new JLabel("Data Presensi");
@@ -244,11 +188,187 @@ public class Dashboard extends SimpleForm {
                 + "border:0,0,5,0");
         lineChart.setHeader(header);
     }
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        crazyPanel7 = new raven.crazypanel.CrazyPanel();
+        crazyPanel2 = new raven.crazypanel.CrazyPanel();
+        dsKaryawan = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        crazyPanel9 = new raven.crazypanel.CrazyPanel();
+        dsAbsensi = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        crazyPanel4 = new raven.crazypanel.CrazyPanel();
+        dsTransaksi = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        crazyPanel6 = new raven.crazypanel.CrazyPanel();
+        dsBerita = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+
+        crazyPanel7.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+            "arc:20;[light]background:shade(@background,2%);[dark]background:tint(@background,2%);[light]border:0,0,0,0,shade(@background,5%),,20;[dark]border:0,0,0,0,tint(@background,5%),,20",
+            null
+        ));
+        crazyPanel7.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+            "fill",
+            "[fill,200]",
+            "[fill]",
+            null
+        ));
+
+        crazyPanel2.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+            "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,3%)",
+            new String[]{
+                "",
+                "[light]foreground:tint(@foreground,50%);[dark]foreground:shade(@foreground,50%)",
+                "font:bold +3"
+            }
+        ));
+        crazyPanel2.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+            "inset s 10 10 10 15",
+            "[]20 push[trail]",
+            "[]0[]",
+            new String[]{
+                "span 1 2",
+                "wrap",
+                "ay top"
+            }
+        ));
+        crazyPanel2.add(dsKaryawan);
+
+        jLabel2.setText("Junlah Karyawan");
+        crazyPanel2.add(jLabel2);
+
+        jLabel3.setText("900");
+        crazyPanel2.add(jLabel3);
+
+        crazyPanel7.add(crazyPanel2);
+
+        crazyPanel9.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+            "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,3%)",
+            new String[]{
+                "",
+                "[light]foreground:tint(@foreground,50%);[dark]foreground:shade(@foreground,50%)",
+                "font:bold +3"
+            }
+        ));
+        crazyPanel9.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+            "inset s 10 10 10 15",
+            "[]20 push[trail]",
+            "[]0[]",
+            new String[]{
+                "span 1 2",
+                "wrap",
+                "ay top"
+            }
+        ));
+        crazyPanel9.add(dsAbsensi);
+
+        jLabel4.setText("Kehadiran");
+        crazyPanel9.add(jLabel4);
+
+        jLabel7.setText("900");
+        crazyPanel9.add(jLabel7);
+
+        crazyPanel7.add(crazyPanel9);
+
+        crazyPanel4.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+            "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,3%)",
+            new String[]{
+                "",
+                "[light]foreground:tint(@foreground,50%);[dark]foreground:shade(@foreground,50%)",
+                "font:bold +3"
+            }
+        ));
+        crazyPanel4.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+            "inset s 10 10 10 15",
+            "[]20 push[trail]",
+            "[]0[]",
+            new String[]{
+                "span 1 2",
+                "wrap",
+                "ay top"
+            }
+        ));
+        crazyPanel4.add(dsTransaksi);
+
+        jLabel5.setText("Transaksi Bulan Ini");
+        crazyPanel4.add(jLabel5);
+
+        jLabel6.setText("900");
+        crazyPanel4.add(jLabel6);
+
+        crazyPanel7.add(crazyPanel4);
+
+        crazyPanel6.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+            "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,3%)",
+            new String[]{
+                "",
+                "[light]foreground:tint(@foreground,50%);[dark]foreground:shade(@foreground,50%)",
+                "font:bold +3"
+            }
+        ));
+        crazyPanel6.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+            "inset s 10 10 10 15",
+            "[]20 push[trail]",
+            "[]0[]",
+            new String[]{
+                "span 1 2",
+                "wrap",
+                "ay top"
+            }
+        ));
+        crazyPanel6.add(dsBerita);
+
+        jLabel8.setText("Berita Acara");
+        crazyPanel6.add(jLabel8);
+
+        jLabel9.setText("900");
+        crazyPanel6.add(jLabel9);
+
+        crazyPanel7.add(crazyPanel6);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(crazyPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(crazyPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(599, Short.MAX_VALUE))
+        );
+    }// </editor-fold>//GEN-END:initComponents
 
     private LineChart lineChart;
     private HorizontalBarChart barChart1;
     private HorizontalBarChart barChart2;
-    private PieChart pieChart1;
-    private PieChart pieChart2;
-    private PieChart pieChart3;
+    
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private raven.crazypanel.CrazyPanel crazyPanel2;
+    private raven.crazypanel.CrazyPanel crazyPanel4;
+    private raven.crazypanel.CrazyPanel crazyPanel6;
+    private raven.crazypanel.CrazyPanel crazyPanel7;
+    private raven.crazypanel.CrazyPanel crazyPanel9;
+    private javax.swing.JLabel dsAbsensi;
+    private javax.swing.JLabel dsBerita;
+    private javax.swing.JLabel dsKaryawan;
+    private javax.swing.JLabel dsTransaksi;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    // End of variables declaration//GEN-END:variables
 }

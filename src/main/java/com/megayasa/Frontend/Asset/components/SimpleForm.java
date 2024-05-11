@@ -24,7 +24,7 @@ public class SimpleForm extends JPanel {
     }
 
     public void formOpen() {
-
+        
     }
 
     public void formRefresh() {

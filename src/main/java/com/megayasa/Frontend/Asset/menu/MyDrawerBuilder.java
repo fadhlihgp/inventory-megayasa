@@ -4,7 +4,6 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import java.awt.*;
-import java.util.ArrayList;
 import javax.swing.*;
 
 import com.google.inject.Guice;
@@ -12,7 +11,6 @@ import com.megayasa.Backend.Controllers.LoginInformationController;
 import com.megayasa.Backend.Dialogs.ConfirmationDialog;
 import com.megayasa.Backend.Models.LoginInformation;
 import com.megayasa.Backend.Utils.Injection;
-import com.megayasa.Frontend.Asset.application.Application;
 import com.megayasa.Frontend.View.Main.Main;
 import raven.drawer.component.DrawerPanel;
 import raven.drawer.component.SimpleDrawerBuilder;
@@ -117,7 +115,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //            // Menu untuk superadmin
 //            items = new MenuItem[]{
 //                    new Item.Label("MAIN"),
-//                    new Item("Dashboard", "dashboard.svg"),
+//                    new Item("Dashboard3", "dashboard.svg"),
 //
 //                    new Item.Label("Pengaturan"),
 //                    new Item("Akun", "userSetting.svg"),
@@ -127,7 +125,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //            // Menu untuk staff
 //            items = new MenuItem[]{
 //                    new Item.Label("MAIN"),
-//                    new Item("Dashboard", "dashboard.svg"),
+//                    new Item("Dashboard3", "dashboard.svg"),
 //                    //
 //                    new Item.Label("PRODUKSI"),
 //                    new Item("Barang", "warehouse.svg")
@@ -141,7 +139,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //            // Menu untuk personalia
 //            items = new MenuItem[]{
 //                    new Item.Label("MAIN"),
-//                    new Item("Dashboard", "dashboard.svg"),
+//                    new Item("Dashboard3", "dashboard.svg"),
 //                    //
 //                    new Item.Label("PERSONALIA"),
 //                    new Item("Karyawan", "employee.svg"),
@@ -154,7 +152,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //            // Default menu
 //            items = new MenuItem[]{
 //                    new Item.Label("MAIN"),
-//                    new Item("Dashboard", "dashboard.svg"),
+//                    new Item("Dashboard3", "dashboard.svg"),
 //                    //
 //                    new Item.Label("Pengaturan"),
 //                    new Item("Akun", "userSetting.svg"),
@@ -250,7 +248,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //                    if (loginInformation.getRole().equalsIgnoreCase("superadmin")) {
 //                        switch (index[0]) {
 //                            case 0:
-//                                FormManager.showForm(new Dashboard());
+//                                FormManager.showForm(new Dashboard3());
 //                                break;
 //                            case 1:
 //                                FormManager.showForm(new Akun());
@@ -264,7 +262,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //                    } else if (loginInformation.getRole().equalsIgnoreCase("staff")) {
 //                        switch (index[0]) {
 //                            case 0:
-//                                FormManager.showForm(new Dashboard());
+//                                FormManager.showForm(new Dashboard3());
 //                                break;
 //                            case 2:
 //                                FormManager.showForm(new Berita());
@@ -276,7 +274,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //                    } else if (loginInformation.getRole().equalsIgnoreCase("personalia")) {
 //                        switch (index[0]) {
 //                            case 0:
-//                                FormManager.showForm(new Dashboard());
+//                                FormManager.showForm(new Dashboard3());
 //                                break;
 //                            case 1:
 //                                FormManager.showForm(new Karyawan());
