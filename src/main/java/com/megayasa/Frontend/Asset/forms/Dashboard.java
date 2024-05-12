@@ -38,6 +38,9 @@ public class Dashboard extends SimpleForm {
         DashboardController dashboardController = Guice.createInjector(new Injection()).getInstance(DashboardController.class);
         dashboardResponseVm = dashboardController.getDashboard();
         initComponents();
+        jLabel3.setText(Integer.toString(dashboardResponseVm.getEmployeeTotal()));
+        jLabel6.setText(Integer.toString(dashboardResponseVm.getTransactionTotal()));
+        jLabel9.setText(Integer.toString(dashboardResponseVm.getIncidentTotal()));
         dsKaryawan.setIcon(new FlatSVGIcon("iconSVG/employee.svg", 0.90f));
         dsTransaksi.setIcon(new FlatSVGIcon("iconSVG/right-left.svg", 0.90f));
         dsBerita.setIcon(new FlatSVGIcon("iconSVG/alert.svg", 0.90f));
@@ -46,15 +49,15 @@ public class Dashboard extends SimpleForm {
                 + "border:5,5,5,5,$Component.borderColor,,20");
         init();
     }
-    
+
     @Override
     public void formRefresh() {
         lineChart.startAnimation();
         barChart1.startAnimation();
         barChart2.startAnimation();
     }
-    
-    
+
+
     @Override
     public void formInitAndOpen() {
         System.out.println("init and open");
@@ -64,13 +67,13 @@ public class Dashboard extends SimpleForm {
     public void formOpen() {
         System.out.println("Open");
     }
-    
+
     private void init() {
         setLayout(new MigLayout("wrap,fill,gap 10", "fill"));
         createLineChart();
         createBarChart();
     }
-    
+
     private void createLineChart() {
         lineChart = new LineChart();
         lineChart.setChartType(LineChart.ChartType.CURVE);
@@ -111,7 +114,7 @@ public class Dashboard extends SimpleForm {
         panel2.add(barChart2);
         add(panel2);
     }
-    
+
     private DefaultPieDataset createDataStockIn() {
         DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
         Random random = new Random();
@@ -131,7 +134,7 @@ public class Dashboard extends SimpleForm {
         }
         return dataset;
     }
-    
+
     private void createLineChartData() {
         DefaultCategoryDataset<String, String> categoryDataset = new DefaultCategoryDataset<>();
         Calendar cal = Calendar.getInstance();
@@ -179,7 +182,7 @@ public class Dashboard extends SimpleForm {
         } catch (ParseException e) {
             System.err.println(e);
         }
-        
+
         lineChart.setCategoryDataset(categoryDataset);
         lineChart.getChartColor().addColor(Color.decode("#38bdf8"), Color.decode("#fb7185"), Color.decode("#34d399"));
         JLabel header = new JLabel("Data Presensi");
@@ -351,7 +354,7 @@ public class Dashboard extends SimpleForm {
     private LineChart lineChart;
     private HorizontalBarChart barChart1;
     private HorizontalBarChart barChart2;
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private raven.crazypanel.CrazyPanel crazyPanel2;
     private raven.crazypanel.CrazyPanel crazyPanel4;
