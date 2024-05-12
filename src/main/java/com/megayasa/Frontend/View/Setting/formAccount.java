@@ -1,4 +1,4 @@
-package com.megayasa.Frontend.View.Pengaturan;
+package com.megayasa.Frontend.View.Setting;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -25,13 +25,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Ridho Multazam
  */
-public class Akun extends SimpleForm {
+public class formAccount extends SimpleForm {
 
     private AccountController accountController;
     private List<AccountResponseVm> allAccounts;
     private List<AccountResponseVm> filteredAccounts;
 
-    public Akun() {
+    public formAccount() {
         initComponents();
         applyTableStyle(tableAkun);
         initializeData();
@@ -162,7 +162,9 @@ public class Akun extends SimpleForm {
                 .addComponent(jLabel1)
                 .addGap(0, 501, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,8 +173,9 @@ public class Akun extends SimpleForm {
                 .addGap(0, 632, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(0, 50, Short.MAX_VALUE)
-                    .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(52, 52, 52)
+                    .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -186,7 +189,7 @@ public class Akun extends SimpleForm {
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         // TODO add your handling code here:
-        tambahAkun a = new tambahAkun();
+        addAccount a = new addAccount();
         a.setVisible(true);
     }//GEN-LAST:event_btAddActionPerformed
 
@@ -223,7 +226,7 @@ public class Akun extends SimpleForm {
             @Override
             public void onEdit(int row) {
                 AccountResponseVm accountResponseVm = filteredAccounts.get(row);
-                tambahAkun a = new tambahAkun(accountResponseVm.getId());
+                addAccount a = new addAccount(accountResponseVm.getId());
                 a.setVisible(true);
             }
 

@@ -74,21 +74,21 @@
 			<staticText>
 				<reportElement style="Column header" x="0" y="7" width="138" height="18" forecolor="#000000" uuid="57c55e1e-508d-4c37-bf43-5eb05cc64baf"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Tanggal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="138" y="7" width="138" height="18" forecolor="#000000" uuid="ca84de71-6e43-4d02-9ff2-e3ac8470cac2"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Judul]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="276" y="7" width="277" height="18" forecolor="#000000" uuid="ea853033-146b-44d8-8e33-e85e10a713db"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="false"/>
 				</textElement>
 				<text><![CDATA[Catatan]]></text>
 			</staticText>

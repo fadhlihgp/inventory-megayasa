@@ -1,50 +1,23 @@
-package com.megayasa.Frontend.View.Pengaturan;
+package com.megayasa.Frontend.View.Setting;
 
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import com.google.inject.Guice;
-import com.megayasa.Backend.Controllers.AccountController;
-import com.megayasa.Backend.Controllers.EmployeeController;
-import com.megayasa.Backend.Controllers.RoleController;
-import com.megayasa.Backend.Models.Account;
-import com.megayasa.Backend.Models.Employee;
-import com.megayasa.Backend.Models.Role;
-import com.megayasa.Backend.Utils.Injection;
-import com.megayasa.Backend.ViewModels.Requests.AccountRequestVm;
-import com.megayasa.Backend.ViewModels.Responses.EmployeeResponseVm;
-import com.megayasa.Frontend.Asset.menu.FormManager;
-import com.megayasa.Frontend.Helpers.ComboBoxListCellRender;
-
 import java.awt.Font;
-import java.util.List;
 import javax.swing.*;
 
 /**
  *
  * @author Ridho Multazam
  */
-public class tambahAkun extends javax.swing.JFrame {
+public class editAccount extends javax.swing.JFrame {
 
 
     /**
      * Creates new form Test
      */
-    private AccountController accountController;
-    private EmployeeController employeeController;
-    private RoleController roleController;
-    private String accountId;
-    private List<EmployeeResponseVm> allEmployees;
-    private List<Role> allRoles;
-    public tambahAkun(String accountId) {
-        this.accountId = accountId;
+    public editAccount() {
         initComponents();
-        initializeData();
-    }
-
-    public tambahAkun() {
-        initComponents();
-        initializeData();
     }
 
     /**
@@ -68,7 +41,7 @@ public class tambahAkun extends javax.swing.JFrame {
         Telepon = new javax.swing.JLabel();
         txNumber = new javax.swing.JTextField();
         Karyawan = new javax.swing.JLabel();
-        jcKaryawan = new javax.swing.JComboBox<>();
+        jcKaryawan = new javax.swing.JComboBox();
         Status = new javax.swing.JLabel();
         jAktif = new javax.swing.JRadioButton();
         jtidakAktif = new javax.swing.JRadioButton();
@@ -79,7 +52,7 @@ public class tambahAkun extends javax.swing.JFrame {
         Password = new javax.swing.JLabel();
         jPassword = new javax.swing.JPasswordField();
         Karyawan1 = new javax.swing.JLabel();
-        jcRole = new javax.swing.JComboBox<>();
+        jcRole = new javax.swing.JComboBox();
         btSimpan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -108,7 +81,10 @@ public class tambahAkun extends javax.swing.JFrame {
                 "",
                 "showClearButton:true",
                 "",
-                "showClearButton:true"
+                "showClearButton:true",
+                "",
+                "",
+                ""
             }
         ));
         crazyPanel1.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
@@ -142,7 +118,7 @@ public class tambahAkun extends javax.swing.JFrame {
             }
         ));
 
-        Title.setText("Tambah Akun");
+        Title.setText("Ubah Akun");
         crazyPanel1.add(Title);
 
         subTitle.setText("Personal");
@@ -163,6 +139,8 @@ public class tambahAkun extends javax.swing.JFrame {
 
         Karyawan.setText("Karyawan");
         crazyPanel1.add(Karyawan);
+
+        jcKaryawan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Karyawan" }));
         crazyPanel1.add(jcKaryawan);
 
         Status.setText("Status");
@@ -192,6 +170,8 @@ public class tambahAkun extends javax.swing.JFrame {
 
         Karyawan1.setText("Role");
         crazyPanel1.add(Karyawan1);
+
+        jcRole.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Role" }));
         crazyPanel1.add(jcRole);
 
         btSimpan.setText("Simpan");
@@ -206,11 +186,17 @@ public class tambahAkun extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(459, 459, 459)
+                .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+                .addGap(460, 460, 460))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(7, 7, 7))
         );
 
         pack();
@@ -219,87 +205,8 @@ public class tambahAkun extends javax.swing.JFrame {
 
     private void btSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSimpanActionPerformed
         // TODO add your handling code here:
-        String fullName = txFirst.getText() + " " + txLast.getText();
-        String email = txEmail.getText();
-        String userName = txUsername.getText();
-        String password = jPassword.getText();
-        String phoneNumber = txNumber.getText();
-        Boolean isActive = jAktif.isSelected();
-        Role role = (Role) jcRole.getSelectedItem();
-        String roleId = role.getId() != null ? role.getId() : null;
-        EmployeeResponseVm employee = (EmployeeResponseVm) jcKaryawan.getSelectedItem();
-        String employeeId = employee.getId() != null ? employee.getId() : null;
-        AccountRequestVm accountRequestVm = new AccountRequestVm(fullName, userName, email, password, phoneNumber, isActive, roleId, employeeId);
-
-        if (accountId != null) {
-            accountController.updateAccount(accountId, accountRequestVm);
-        } else {
-            accountController.createAccount(accountRequestVm);
-        }
-
-        this.setVisible(false);
-        FormManager.showForm(new Akun());
-
     }//GEN-LAST:event_btSimpanActionPerformed
 
-    private void initializeData() {
-        accountController = Guice.createInjector(new Injection()).getInstance(AccountController.class);
-        employeeController = Guice.createInjector(new Injection()).getInstance(EmployeeController.class);
-        roleController = Guice.createInjector(new Injection()).getInstance(RoleController.class);
-        loadComboBoxEmployeeValues();
-        loadComboBoxRoleValues();
-        fillValues();
-    }
-
-    private void fillValues() {
-        if (accountId != null) {
-            Title.setText("Perbarui Akun");
-            Account accountById = accountController.findAccountById(accountId);
-            String[] partsFullName = accountById.getFullName().split(" ", 2);
-            txFirst.setText(partsFullName[0]);
-            txLast.setText(partsFullName[1]);
-            txEmail.setText(accountById.getEmail());
-            txNumber.setText(accountById.getPhoneNumber());
-
-            if (accountById.getEmployeeId() != null) {
-                EmployeeResponseVm employeeResponseVm = allEmployees.stream().filter(e -> e.getId().equals(accountById.getEmployeeId())).findFirst().orElse(null);
-                jcKaryawan.setSelectedItem(employeeResponseVm);
-            }
-
-            if (accountById.getIsActive()) {
-                jAktif.setSelected(true);
-            } else {
-                jtidakAktif.setSelected(true);
-            }
-
-            txUsername.setText(accountById.getUsername());
-            Role role = allRoles.stream().filter(r -> r.getId().equals(accountById.getRoleId())).findFirst().orElse(null);
-            jcRole.setSelectedItem(role);
-            jPassword.setText("");
-        }
-    }
-
-    private void loadComboBoxEmployeeValues() {
-        DefaultComboBoxModel<EmployeeResponseVm> defaultComboBoxModel = new DefaultComboBoxModel<>();
-        allEmployees = employeeController.findAllEmployees();
-        defaultComboBoxModel.addElement(new EmployeeResponseVm(null, " ", "Pilih Karyawan", null, null, null, null, null, null, true));
-        for (EmployeeResponseVm allPosition : allEmployees) {
-            defaultComboBoxModel.addElement(allPosition);
-        }
-        jcKaryawan.setModel(defaultComboBoxModel);
-        jcKaryawan.setRenderer(new ComboBoxListCellRender());
-    }
-
-    private void loadComboBoxRoleValues() {
-        DefaultComboBoxModel<Role> defaultComboBoxModel = new DefaultComboBoxModel<>();
-        allRoles = roleController.findAllRoles();
-        defaultComboBoxModel.addElement(new Role(null, "Pilih Role"));
-        for (Role role : allRoles) {
-            defaultComboBoxModel.addElement(role);
-        }
-        jcRole.setModel(defaultComboBoxModel);
-        jcRole.setRenderer(new ComboBoxListCellRender());
-    }
 
     public static void main(String args[]) {
      FlatRobotoFont.install();
@@ -309,7 +216,7 @@ public class tambahAkun extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new tambahAkun().setVisible(true);
+                new editAccount().setVisible(true);
             }
         });
     }
@@ -329,8 +236,8 @@ public class tambahAkun extends javax.swing.JFrame {
     private javax.swing.JRadioButton jAktif;
     private javax.swing.JPasswordField jPassword;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JComboBox<EmployeeResponseVm> jcKaryawan;
-    private javax.swing.JComboBox<Role> jcRole;
+    private javax.swing.JComboBox jcKaryawan;
+    private javax.swing.JComboBox jcRole;
     private javax.swing.JRadioButton jtidakAktif;
     private javax.swing.ButtonGroup status;
     private javax.swing.JLabel subTitle;

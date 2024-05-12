@@ -45,7 +45,7 @@ public class Dashboard extends SimpleForm {
         dsTransaksi.setIcon(new FlatSVGIcon("iconSVG/right-left.svg", 0.90f));
         dsBerita.setIcon(new FlatSVGIcon("iconSVG/alert.svg", 0.90f));
         dsAbsensi.setIcon(new FlatSVGIcon("iconSVG/presence.svg", 0.90f));
-        crazyPanel7.putClientProperty(FlatClientProperties.STYLE, ""
+        crazyPanel1.putClientProperty(FlatClientProperties.STYLE, ""
                 + "border:5,5,5,5,$Component.borderColor,,20");
         init();
     }
@@ -195,12 +195,12 @@ public class Dashboard extends SimpleForm {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        crazyPanel7 = new raven.crazypanel.CrazyPanel();
+        crazyPanel1 = new raven.crazypanel.CrazyPanel();
         crazyPanel2 = new raven.crazypanel.CrazyPanel();
         dsKaryawan = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        crazyPanel9 = new raven.crazypanel.CrazyPanel();
+        crazyPanel3 = new raven.crazypanel.CrazyPanel();
         dsAbsensi = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -208,16 +208,16 @@ public class Dashboard extends SimpleForm {
         dsTransaksi = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        crazyPanel6 = new raven.crazypanel.CrazyPanel();
+        crazyPanel5 = new raven.crazypanel.CrazyPanel();
         dsBerita = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
 
-        crazyPanel7.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+        crazyPanel1.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "arc:20;[light]background:shade(@background,2%);[dark]background:tint(@background,2%);[light]border:0,0,0,0,shade(@background,5%),,20;[dark]border:0,0,0,0,tint(@background,5%),,20",
             null
         ));
-        crazyPanel7.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+        crazyPanel1.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
             "fill",
             "[fill,200]",
             "[fill]",
@@ -244,15 +244,15 @@ public class Dashboard extends SimpleForm {
         ));
         crazyPanel2.add(dsKaryawan);
 
-        jLabel2.setText("Junlah Karyawan");
+        jLabel2.setText("Jumlah Karyawan");
         crazyPanel2.add(jLabel2);
 
         jLabel3.setText("900");
         crazyPanel2.add(jLabel3);
 
-        crazyPanel7.add(crazyPanel2);
+        crazyPanel1.add(crazyPanel2);
 
-        crazyPanel9.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+        crazyPanel3.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,3%)",
             new String[]{
                 "",
@@ -260,7 +260,7 @@ public class Dashboard extends SimpleForm {
                 "font:bold +3"
             }
         ));
-        crazyPanel9.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+        crazyPanel3.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
             "inset s 10 10 10 15",
             "[]20 push[trail]",
             "[]0[]",
@@ -270,15 +270,15 @@ public class Dashboard extends SimpleForm {
                 "ay top"
             }
         ));
-        crazyPanel9.add(dsAbsensi);
+        crazyPanel3.add(dsAbsensi);
 
         jLabel4.setText("Kehadiran");
-        crazyPanel9.add(jLabel4);
+        crazyPanel3.add(jLabel4);
 
         jLabel7.setText("900");
-        crazyPanel9.add(jLabel7);
+        crazyPanel3.add(jLabel7);
 
-        crazyPanel7.add(crazyPanel9);
+        crazyPanel1.add(crazyPanel3);
 
         crazyPanel4.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,3%)",
@@ -306,9 +306,9 @@ public class Dashboard extends SimpleForm {
         jLabel6.setText("900");
         crazyPanel4.add(jLabel6);
 
-        crazyPanel7.add(crazyPanel4);
+        crazyPanel1.add(crazyPanel4);
 
-        crazyPanel6.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+        crazyPanel5.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,3%)",
             new String[]{
                 "",
@@ -316,7 +316,7 @@ public class Dashboard extends SimpleForm {
                 "font:bold +3"
             }
         ));
-        crazyPanel6.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+        crazyPanel5.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
             "inset s 10 10 10 15",
             "[]20 push[trail]",
             "[]0[]",
@@ -326,28 +326,28 @@ public class Dashboard extends SimpleForm {
                 "ay top"
             }
         ));
-        crazyPanel6.add(dsBerita);
+        crazyPanel5.add(dsBerita);
 
         jLabel8.setText("Berita Acara");
-        crazyPanel6.add(jLabel8);
+        crazyPanel5.add(jLabel8);
 
         jLabel9.setText("900");
-        crazyPanel6.add(jLabel9);
+        crazyPanel5.add(jLabel9);
 
-        crazyPanel7.add(crazyPanel6);
+        crazyPanel1.add(crazyPanel5);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(crazyPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(599, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(576, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -356,11 +356,11 @@ public class Dashboard extends SimpleForm {
     private HorizontalBarChart barChart2;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private raven.crazypanel.CrazyPanel crazyPanel1;
     private raven.crazypanel.CrazyPanel crazyPanel2;
+    private raven.crazypanel.CrazyPanel crazyPanel3;
     private raven.crazypanel.CrazyPanel crazyPanel4;
-    private raven.crazypanel.CrazyPanel crazyPanel6;
-    private raven.crazypanel.CrazyPanel crazyPanel7;
-    private raven.crazypanel.CrazyPanel crazyPanel9;
+    private raven.crazypanel.CrazyPanel crazyPanel5;
     private javax.swing.JLabel dsAbsensi;
     private javax.swing.JLabel dsBerita;
     private javax.swing.JLabel dsKaryawan;
