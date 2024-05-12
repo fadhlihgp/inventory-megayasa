@@ -20,6 +20,11 @@ public class InventoryRepositoryImpl implements InventoryRepository {
     }
 
     @Override
+    public int inventoryTotal() {
+        return queryRepository.count();
+    }
+
+    @Override
     public Optional<Inventory> findById(String id) {
         return queryRepository.findById(id);
     }

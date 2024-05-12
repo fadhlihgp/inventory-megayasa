@@ -41,6 +41,8 @@ public class Dashboard extends SimpleForm {
         jLabel3.setText(Integer.toString(dashboardResponseVm.getEmployeeTotal()));
         jLabel6.setText(Integer.toString(dashboardResponseVm.getTransactionTotal()));
         jLabel9.setText(Integer.toString(dashboardResponseVm.getIncidentTotal()));
+        jLabel7.setText(Integer.toString(dashboardResponseVm.getInventoryTotal()));
+        jLabel4.setText("Jumlah Jenis Barang");
         dsKaryawan.setIcon(new FlatSVGIcon("iconSVG/employee.svg", 0.90f));
         dsTransaksi.setIcon(new FlatSVGIcon("iconSVG/right-left.svg", 0.90f));
         dsBerita.setIcon(new FlatSVGIcon("iconSVG/alert.svg", 0.90f));

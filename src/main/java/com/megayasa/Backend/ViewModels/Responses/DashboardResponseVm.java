@@ -3,17 +3,18 @@ package com.megayasa.Backend.ViewModels.Responses;
 import java.util.List;
 
 public class DashboardResponseVm {
-    private int employeeTotal, transactionTotal, incidentTotal;
+    private int employeeTotal, transactionTotal, incidentTotal, inventoryTotal;
     private List<AbsenceDashboardResponseVm> absences;
     private List<StockInOutDashboardResponseVm> transactions;
 
     public DashboardResponseVm() {
     }
 
-    public DashboardResponseVm(int employeeTotal, int transactionTotal, int incidentTotal, List<AbsenceDashboardResponseVm> absences, List<StockInOutDashboardResponseVm> transactions) {
+    public DashboardResponseVm(int employeeTotal, int transactionTotal, int incidentTotal, int inventoryTotal, List<AbsenceDashboardResponseVm> absences, List<StockInOutDashboardResponseVm> transactions) {
         this.employeeTotal = employeeTotal;
         this.transactionTotal = transactionTotal;
         this.incidentTotal = incidentTotal;
+        this.inventoryTotal = inventoryTotal;
         this.absences = absences;
         this.transactions = transactions;
     }
@@ -67,5 +68,13 @@ public class DashboardResponseVm {
                 ", absences=" + absences +
                 ", transactions=" + transactions +
                 '}';
+    }
+
+    public int getInventoryTotal() {
+        return inventoryTotal;
+    }
+
+    public void setInventoryTotal(int inventoryTotal) {
+        this.inventoryTotal = inventoryTotal;
     }
 }
