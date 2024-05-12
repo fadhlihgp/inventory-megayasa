@@ -24,7 +24,7 @@ import raven.drawer.component.menu.SimpleMenuStyle;
 import raven.drawer.component.menu.data.Item;
 import raven.drawer.component.menu.data.MenuItem;
 import com.megayasa.Frontend.Asset.forms.Dashboard;
-import com.megayasa.Frontend.View.Pengaturan.Akun;
+import com.megayasa.Frontend.View.Setting.formAccount;
 import com.megayasa.Frontend.View.Personalia.Karyawan;
 import com.megayasa.Frontend.View.Personalia.Absensi;
 import com.megayasa.Frontend.View.Produksi.Berita;
@@ -118,7 +118,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //                    new Item("Dashboard3", "dashboard.svg"),
 //
 //                    new Item.Label("Pengaturan"),
-//                    new Item("Akun", "userSetting.svg"),
+//                    new Item("formAccount", "userSetting.svg"),
 //                    new Item("Keluar", "logout.svg"),
 //            };
 //        } else if (loginInformation.getRole().equalsIgnoreCase("staff")) {
@@ -155,7 +155,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //                    new Item("Dashboard3", "dashboard.svg"),
 //                    //
 //                    new Item.Label("Pengaturan"),
-//                    new Item("Akun", "userSetting.svg"),
+//                    new Item("formAccount", "userSetting.svg"),
 //                    new Item("Keluar", "logout.svg"),
 //            };
 //        }
@@ -212,7 +212,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         FormManager.showForm(new Berita());
                         break;
                     case 5:
-                        FormManager.showForm(new Akun());
+                        FormManager.showForm(new formAccount());
                         break;
                     case 6:
                         logout();
@@ -251,7 +251,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //                                FormManager.showForm(new Dashboard3());
 //                                break;
 //                            case 1:
-//                                FormManager.showForm(new Akun());
+//                                FormManager.showForm(new formAccount());
 //                                break;
 //                            case 2:
 //                                logout();
