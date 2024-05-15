@@ -34,13 +34,13 @@ public class AbsenceRepositoryImpl implements AbsenceRepository {
                     "    WHERE date < CURDATE()" +
                     ")" +
                     "select d.date," +
-                    "       SUM(CASE WHEN absence.information = 'Sakit' THEN 1 ELSE 0 END ) as Sakit," +
-                    "       SUM(CASE WHEN absence.information = 'Hadir' THEN 1 ELSE 0 END ) as Hadir," +
-                    "       SUM(CASE WHEN absence.information = 'Izin' THEN 1 ELSE 0 END ) as Izin," +
-                    "       SUM(CASE WHEN absence.information = 'Cuti' THEN 1 ELSE 0 END ) as Cuti," +
-                    "       SUM(CASE WHEN absence.information = 'Alpa' THEN 1 ELSE 0 END ) as Alpa " +
+                    "       SUM(CASE WHEN presence.information = 'Sakit' THEN 1 ELSE 0 END ) as Sakit," +
+                    "       SUM(CASE WHEN presence.information = 'Hadir' THEN 1 ELSE 0 END ) as Hadir," +
+                    "       SUM(CASE WHEN presence.information = 'Izin' THEN 1 ELSE 0 END ) as Izin," +
+                    "       SUM(CASE WHEN presence.information = 'Cuti' THEN 1 ELSE 0 END ) as Cuti," +
+                    "       SUM(CASE WHEN presence.information = 'Alpa' THEN 1 ELSE 0 END ) as Alpa " +
                     "from dates d " +
-                    "left join absence on d.date = absence.date " +
+                    "left join presence on d.date = presence.date " +
                     "GROUP BY d.date";
 
             ResultSet resultSet = connection.prepareStatement(query).executeQuery();

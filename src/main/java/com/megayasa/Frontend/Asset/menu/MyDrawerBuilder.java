@@ -133,6 +133,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //                            .subMenu("Transaksi"),
 //                    new Item("Berita", "alert.svg"),
 //                    //
+//                    new Item.Label("PENGATURAN");
 //                    new Item("Keluar", "logout.svg"),
 //            };
 //        } else if (loginInformation.getRole().equalsIgnoreCase("personalia")) {
@@ -145,7 +146,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //                    new Item("Karyawan", "employee.svg"),
 //                    new Item("Absensi", "presence.svg"),
 //                    //
-//
+//                    new Item.Label("PENGATURAN");
 //                    new Item("Keluar", "logout.svg"),
 //            };
 //        } else {
