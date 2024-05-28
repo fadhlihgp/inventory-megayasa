@@ -14,4 +14,5 @@ public interface EmployeeRepository {
     void create(Employee employee);
     void update(Employee employee);
     void deletePresenceWhereEmployee(String employeeId);
+    void deleteAccountWhereEmployee(String employeeId);
 }

@@ -14,7 +14,7 @@ import com.megayasa.Backend.Repositories.AccountRepository;
 import com.megayasa.Backend.Repositories.EmployeeRepository;
 import com.megayasa.Backend.Services.Interfaces.AccountService;
 import com.megayasa.Backend.Services.Interfaces.RoleService;
-import com.megayasa.Backend.Utils.DataProperties;
+import com.megayasa.Backend.Helpers.DataProperties;
 import com.megayasa.Backend.ViewModels.Requests.AccountRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.AccountResponseVm;
 import org.mindrot.jbcrypt.BCrypt;

@@ -77,6 +77,7 @@ public class InventoryServiceImpl implements InventoryService {
                 .orElseThrow(() -> new NotFoundException("Barang tidak ditemukan"));
 
         TransactionUtil.performTransaction(() -> {
+            inventoryRepository.deleteStockInOutWhereInventory(idOrCode);
             inventoryRepository.delete(inventory);
             InformationDialog.deleteSuccess("Berhasil menghapus data barang");
         });

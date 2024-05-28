@@ -1,4 +1,4 @@
-package com.megayasa.Backend.Utils;
+package com.megayasa.Backend.Annotations.Util;
 
 import com.megayasa.Backend.Annotations.Db.Column;
 import com.megayasa.Backend.Annotations.Db.Id;

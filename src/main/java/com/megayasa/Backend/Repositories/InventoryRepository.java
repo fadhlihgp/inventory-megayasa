@@ -14,4 +14,5 @@ public interface InventoryRepository {
     void update(Inventory inventory);
     Optional<Inventory> findInventoryByIdOrCode(String idOrCode);
     Inventory findInventoryByCode(String code);
+    void deleteStockInOutWhereInventory(String inventoryId);
 }

@@ -70,4 +70,16 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void deleteAccountWhereEmployee(String employeeId) {
+        String sql = "DELETE FROM account where employee_id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, employeeId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

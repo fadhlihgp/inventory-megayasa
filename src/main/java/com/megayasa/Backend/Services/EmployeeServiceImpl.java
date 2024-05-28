@@ -76,6 +76,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         TransactionUtil.performTransaction(() -> {
             employeeRepository.deletePresenceWhereEmployee(employeeId);
+            employeeRepository.deleteAccountWhereEmployee(employeeId);
             employeeRepository.delete(employee);
             InformationDialog.deleteSuccess("Berhasil menghapus data karyawan");
         });

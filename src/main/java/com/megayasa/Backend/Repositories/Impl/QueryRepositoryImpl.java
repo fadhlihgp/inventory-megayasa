@@ -3,7 +3,7 @@ package com.megayasa.Backend.Repositories.Impl;
 import com.megayasa.Backend.Annotations.Db.Column;
 import com.megayasa.Backend.Annotations.Db.Id;
 import com.megayasa.Backend.Repositories.QueryRepository;
-import com.megayasa.Backend.Utils.ReflectionUtil;
+import com.megayasa.Backend.Annotations.Util.ReflectionUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

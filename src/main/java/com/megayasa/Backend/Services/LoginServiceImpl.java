@@ -11,13 +11,12 @@ import com.megayasa.Backend.Repositories.AccountRepository;
 import com.megayasa.Backend.Services.Interfaces.LoginInformationService;
 import com.megayasa.Backend.Services.Interfaces.LoginService;
 import com.megayasa.Backend.Services.Interfaces.RoleService;
-import com.megayasa.Backend.Utils.DataProperties;
+import com.megayasa.Backend.Helpers.DataProperties;
 import com.megayasa.Backend.ViewModels.Requests.LoginRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.LoginResponseVm;
 import org.mindrot.jbcrypt.BCrypt;
 
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;

@@ -1,7 +1,7 @@
 package com.megayasa.Backend.Context;
 
 
-import com.megayasa.Backend.Utils.DataProperties;
+import com.megayasa.Backend.Helpers.DataProperties;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

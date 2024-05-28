@@ -1,8 +1,8 @@
 package com.megayasa.Backend.Utils;
 
-import com.google.inject.Inject;
 import com.megayasa.Backend.Context.AppDbContext;
 import com.megayasa.Backend.Exceptions.ErrorException;
+import com.megayasa.Backend.Helpers.DataProperties;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;

@@ -2,6 +2,7 @@ package com.megayasa.Backend.Utils;
 
 import com.megayasa.Backend.Exceptions.ErrorException;
 import com.megayasa.Backend.Exceptions.NotFoundException;
+import com.megayasa.Backend.Helpers.DataProperties;
 
 import java.io.File;
 import java.io.IOException;
