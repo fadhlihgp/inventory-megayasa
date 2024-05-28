@@ -13,4 +13,5 @@ public interface EmployeeRepository {
     List<Employee> findAll();
     void create(Employee employee);
     void update(Employee employee);
+    void deletePresenceWhereEmployee(String employeeId);
 }
