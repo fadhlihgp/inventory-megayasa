@@ -61,7 +61,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="Title">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Absensi Karyawan"/>
+            <Property name="text" type="java.lang.String" value="Presensi Karyawan"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="subTitle">

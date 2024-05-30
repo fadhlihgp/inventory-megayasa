@@ -1,4 +1,4 @@
-package com.megayasa.Frontend.View.Produksi;
+package com.megayasa.Frontend.View.Production;
 
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -9,7 +9,6 @@ import com.megayasa.Backend.Controllers.IncidentController;
 import com.megayasa.Backend.Helpers.ChangeDateFormat;
 import com.megayasa.Backend.Models.Incident;
 import com.megayasa.Backend.Utils.Injection;
-import com.megayasa.Backend.Utils.PhotoService;
 import com.megayasa.Backend.ViewModels.Requests.IncidentRequestVm;
 import com.megayasa.Frontend.Asset.jnafilechooser.api.JnaFileChooser;
 import com.megayasa.Frontend.Asset.menu.FormManager;
@@ -17,7 +16,6 @@ import com.raven.datechooser.EventDateChooser;
 import com.raven.datechooser.SelectedAction;
 import com.raven.datechooser.SelectedDate;
 import java.awt.Font;
-import java.io.File;
 import javax.swing.*;
 
 /**
@@ -235,7 +233,7 @@ public class tambahBerita extends javax.swing.JFrame {
             incidentController.createOrUpdateIncident(null, incidentRequestVm);
         }
         this.setVisible(false);
-        FormManager.showForm(new Berita());
+        FormManager.showForm(new formIncident());
     }//GEN-LAST:event_btSimpanActionPerformed
 
     private void initializeCode() {

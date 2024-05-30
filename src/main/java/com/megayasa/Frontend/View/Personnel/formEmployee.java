@@ -1,4 +1,4 @@
-package com.megayasa.Frontend.View.Personalia;
+package com.megayasa.Frontend.View.Personnel;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLaf;
@@ -17,7 +17,7 @@ import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
 import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
 import com.megayasa.Frontend.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.Asset.components.SimpleForm;
-import java.awt.Component;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.sql.Date;
@@ -31,13 +31,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Ridho Multazam
  */
-public class Karyawan extends SimpleForm {
+public class formEmployee extends SimpleForm {
 
     private EmployeeController employeeController;
     private List<EmployeeResponseVm> allEmployees;
     private List<EmployeeResponseVm> employeeFilters;
 
-    public Karyawan() {
+    public formEmployee() {
         initComponents();
         initializeData();
         applyTableStyle(tableKaryawan);
@@ -216,7 +216,7 @@ public class Karyawan extends SimpleForm {
                         empResponse.getFullName(), new Date(empResponse.getBirthDate().getTime()), empResponse.getAddress(), empResponse.getGender(),
                         empResponse.getPhoneNumber(), empResponse.getPositionId(), empResponse.isActive());
 
-                editKaryawan a = new editKaryawan(employeeRequestVm);
+                editEmployee a = new editEmployee(employeeRequestVm);
                 a.setVisible(true);
             }
 
@@ -249,7 +249,7 @@ public class Karyawan extends SimpleForm {
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {                                      
         // TODO add your handling code here:
-        tambahKaryawan a = new tambahKaryawan();
+        addEmployee a = new addEmployee();
         a.setVisible(true);
     }                                     
 
@@ -272,7 +272,7 @@ public class Karyawan extends SimpleForm {
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
         java.awt.EventQueue.invokeLater(() -> {
-            new Karyawan().setVisible(true);
+            new formEmployee().setVisible(true);
         });
     }
 

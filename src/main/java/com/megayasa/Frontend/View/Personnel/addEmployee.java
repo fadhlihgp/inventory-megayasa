@@ -1,4 +1,4 @@
-package com.megayasa.Frontend.View.Personalia;
+package com.megayasa.Frontend.View.Personnel;
 
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -25,37 +25,19 @@ import javax.swing.*;
  *
  * @author Ridho Multazam
  */
-public class editKaryawan extends javax.swing.JFrame {
+public class addEmployee extends javax.swing.JFrame {
+
+    private EmployeeController employeeController;
+    private PositionController positionController;
 
     /**
      * Creates new form Test
      */
-
-    private EmployeeController employeeController;
-    private PositionController positionController;
-    private EmployeeRequestVm employeeRequestVm;
-
-    public editKaryawan(EmployeeRequestVm employeeRequestVm) {
-        this.employeeRequestVm = employeeRequestVm;
+    public addEmployee() {
+        employeeController = Guice.createInjector(new Injection()).getInstance(EmployeeController.class);
+        positionController = Guice.createInjector(new Injection()).getInstance(PositionController.class);
         initComponents();
-        initializeData();
-        btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
-
-        new JProgressBar().setIndeterminate(true);
-        dateChooser.addEventDateChooser(new EventDateChooser() {
-            @Override
-            public void dateSelected(SelectedAction action, SelectedDate date) {
-                System.out.println(date.getDay() + "-" + date.getMonth() + "-" + date.getYear());
-                if (action.getAction() == SelectedAction.DAY_SELECTED) {
-                    dateChooser.hidePopup();
-                }
-            }
-        });
-    }
-
-    public editKaryawan() {
-        initComponents();
-        initializeData();
+        loadPositionData();
         btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
 
         new JProgressBar().setIndeterminate(true);
@@ -117,7 +99,6 @@ public class editKaryawan extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(64, 67, 69));
-        setPreferredSize(new java.awt.Dimension(500, 500));
         setResizable(false);
 
         crazyPanel1.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
@@ -187,7 +168,7 @@ public class editKaryawan extends javax.swing.JFrame {
             }
         ));
 
-        Title.setText("Ubah Karyawan");
+        Title.setText("Tambah Karyawan");
         crazyPanel1.add(Title);
 
         subTitle.setText("Publik");
@@ -195,8 +176,6 @@ public class editKaryawan extends javax.swing.JFrame {
 
         idKaryawan.setText("ID Karyawan");
         crazyPanel1.add(idKaryawan);
-
-        txIdkaryawan.setEditable(false);
         crazyPanel1.add(txIdkaryawan);
 
         Nama.setText("Nama Lengkap");
@@ -247,9 +226,11 @@ public class editKaryawan extends javax.swing.JFrame {
         JenisKelamin.setText("Jenis Kelamin");
         crazyPanel1.add(JenisKelamin);
 
+        JK.add(jPria);
         jPria.setText("Pria");
         crazyPanel1.add(jPria);
 
+        JK.add(jWanita);
         jWanita.setText("Wanita");
         crazyPanel1.add(jWanita);
 
@@ -278,22 +259,16 @@ public class editKaryawan extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(crazyPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalendarActionPerformed
-        dateChooser.showPopup();
-    }//GEN-LAST:event_btCalendarActionPerformed
 
     private void btSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSimpanActionPerformed
         // TODO add your handling code here:
@@ -309,10 +284,14 @@ public class editKaryawan extends javax.swing.JFrame {
         String phone = txNumber.getText();
 
         EmployeeRequestVm employeeSave = new EmployeeRequestVm(employeeId, identity, fullName, birthDate, address, gender, phone, position, status);
-        employeeController.createOrUpdateEmployee(employeeId, employeeSave);
+        employeeController.createOrUpdateEmployee(null, employeeSave);
         this.setVisible(false);
-        FormManager.showForm(new Karyawan());
+        FormManager.showForm(new formEmployee());
     }//GEN-LAST:event_btSimpanActionPerformed
+
+    private void btCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalendarActionPerformed
+        dateChooser.showPopup();
+    }//GEN-LAST:event_btCalendarActionPerformed
 
     private void loadPositionData() {
         DefaultComboBoxModel<Position> defaultComboBoxModel = new DefaultComboBoxModel<>();
@@ -325,51 +304,6 @@ public class editKaryawan extends javax.swing.JFrame {
         Jabatan.setRenderer(new ComboBoxListCellRender());
     }
 
-    private void setFieldsValue() {
-        if (employeeRequestVm != null) {
-            String[] partsFullName = employeeRequestVm.getFullName().split(" ", 2);
-
-            txIdkaryawan.setText(employeeRequestVm.getEmployeeId());
-            txFirst.setText(partsFullName[0]);
-            if (partsFullName.length > 1) {
-                txLast.setText(partsFullName[1]);
-            } else {
-                txLast.setText("");
-            }
-
-            Position position = positionController.findPositionById(employeeRequestVm.getPositionId());
-            if (position != null) {
-                Jabatan.setSelectedItem(position);
-            }
-
-            if (employeeRequestVm.getIsActive()) {
-                jAktif.setSelected(true);
-            } else {
-                jtidakAktif.setSelected(true);
-            }
-
-            txIdentity.setText(employeeRequestVm.getIdentityNumber());
-            txBirthday.setText(ChangeDateFormat.dateToString("dd-MM-yyyy", employeeRequestVm.getBirthDate()));
-
-            if (employeeRequestVm.getGender().equals("Pria")) {
-                jPria.setSelected(true);
-            } else {
-                jWanita.setSelected(true);
-            }
-
-            jtAlamat.setText(employeeRequestVm.getAddress());
-            txNumber.setText(employeeRequestVm.getPhoneNumber());
-        }
-    }
-
-    private void initializeData() {
-        employeeController = Guice.createInjector(new Injection()).getInstance(EmployeeController.class);
-        positionController = Guice.createInjector(new Injection()).getInstance(PositionController.class);
-        loadPositionData();
-        setFieldsValue();
-    }
-
-
     public static void main(String args[]) {
      FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("addThemes");
@@ -378,7 +312,7 @@ public class editKaryawan extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new editKaryawan().setVisible(true);
+                new addEmployee().setVisible(true);
             }
         });
     }

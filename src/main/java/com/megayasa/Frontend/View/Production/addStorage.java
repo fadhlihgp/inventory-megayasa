@@ -1,4 +1,4 @@
-package com.megayasa.Frontend.View.Produksi;
+package com.megayasa.Frontend.View.Production;
 
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
@@ -159,7 +159,7 @@ public class tambahBarang extends javax.swing.JFrame {
             inventoryController.createInventory(saveInventory);
         }
         this.setVisible(false);
-        FormManager.showForm(new Penyimpanan());
+        FormManager.showForm(new formStorage());
     }//GEN-LAST:event_btSimpanActionPerformed
 
 

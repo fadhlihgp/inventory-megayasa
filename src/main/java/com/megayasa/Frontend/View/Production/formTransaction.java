@@ -1,4 +1,4 @@
-package com.megayasa.Frontend.View.Produksi;
+package com.megayasa.Frontend.View.Production;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -6,19 +6,13 @@ import com.google.inject.Guice;
 import com.megayasa.Backend.Controllers.StockInOutController;
 import com.megayasa.Backend.Dialogs.ConfirmationDialog;
 import com.megayasa.Backend.Helpers.ChangeDateFormat;
-import com.megayasa.Backend.Models.Inventory;
 import com.megayasa.Backend.Utils.Injection;
 import com.megayasa.Backend.Utils.PrintReport;
-import com.megayasa.Backend.ViewModels.Responses.AbsenceDetailResponseVm;
 import com.megayasa.Backend.ViewModels.Responses.StockInOutResponseVm;
-import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
 import com.megayasa.Frontend.Asset.Table.TableActionCellEditorDelete;
-import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
 import com.megayasa.Frontend.Asset.Table.TableActionCellRenderDelete;
 import com.megayasa.Frontend.Asset.Table.TableActionDelete;
-import com.megayasa.Frontend.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.Asset.components.SimpleForm;
-import com.megayasa.Frontend.View.Personalia.laporAbsensi;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
