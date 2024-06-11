@@ -90,76 +90,76 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
     public SimpleMenuOption getSimpleMenuOption() {
 
 //         management Menu
-        MenuItem items[] = new MenuItem[]{
-            new Item.Label("MAIN"),
-            new Item("Dashboard", "dashboard.svg"),
-            //
-            new Item.Label("PERSONALIA"),
-            new Item("Karyawan", "employee.svg"),
-            new Item("Presensi", "presence.svg"),
-            //
-            new Item.Label("PRODUKSI"),
-            new Item("Barang", "warehouse.svg")
-            .subMenu("Penyimpanan")
-            .subMenu("Transaksi"),
-            new Item("Berita", "alert.svg"),
-            //
-            new Item.Label("PENGATURAN"),
-            new Item("Akun", "userSetting.svg"),
-            new Item("Keluar", "logout.svg"),
-        };
+//        MenuItem items[] = new MenuItem[]{
+//            new Item.Label("MAIN"),
+//            new Item("Dashboard", "dashboard.svg"),
+//            //
+//            new Item.Label("PERSONALIA"),
+//            new Item("Karyawan", "employee.svg"),
+//            new Item("Presensi", "presence.svg"),
+//            //
+//            new Item.Label("PRODUKSI"),
+//            new Item("Barang", "warehouse.svg")
+//            .subMenu("Penyimpanan")
+//            .subMenu("Transaksi"),
+//            new Item("Berita", "alert.svg"),
+//            //
+//            new Item.Label("PENGATURAN"),
+//            new Item("Akun", "userSetting.svg"),
+//            new Item("Keluar", "logout.svg"),
+//        };
 
-//        MenuItem[] items;
-//
-//        if (loginInformation.getRole().equalsIgnoreCase("superadmin")) {
-//            // Menu untuk superadmin
-//            items = new MenuItem[]{
-//                    new Item.Label("MAIN"),
-//                    new Item("Dashboard3", "dashboard.svg"),
-//
-//                    new Item.Label("Pengaturan"),
-//                    new Item("formAccount", "userSetting.svg"),
-//                    new Item("Keluar", "logout.svg"),
-//            };
-//        } else if (loginInformation.getRole().equalsIgnoreCase("staff")) {
-//            // Menu untuk staff
-//            items = new MenuItem[]{
-//                    new Item.Label("MAIN"),
-//                    new Item("Dashboard3", "dashboard.svg"),
-//                    //
-//                    new Item.Label("PRODUKSI"),
-//                    new Item("Barang", "warehouse.svg")
-//                            .subMenu("Penyimpanan")
-//                            .subMenu("Transaksi"),
-//                    new Item("formIncident", "alert.svg"),
-//                    //
-//                    new Item.Label("PENGATURAN");
-//                    new Item("Keluar", "logout.svg"),
-//            };
-//        } else if (loginInformation.getRole().equalsIgnoreCase("personalia")) {
-//            // Menu untuk personalia
-//            items = new MenuItem[]{
-//                    new Item.Label("MAIN"),
-//                    new Item("Dashboard3", "dashboard.svg"),
-//                    //
-//                    new Item.Label("PERSONALIA"),
-//                    new Item("Karyawan", "employee.svg"),
-//                    new Item("Presence", "presence.svg"),
-//                    //
-//                    new Item.Label("PENGATURAN");
-//                    new Item("Keluar", "logout.svg"),
-//            };
-//        } else {
-//            // Default menu
-//            items = new MenuItem[]{
-//                    new Item.Label("MAIN"),
-//                    new Item("Dashboard3", "dashboard.svg"),
-//                    //
-//                    new Item.Label("Pengaturan"),
-//                    new Item("formAccount", "userSetting.svg"),
-//                    new Item("Keluar", "logout.svg"),
-//            };
-//        }
+        MenuItem[] items;
+
+        if (loginInformation.getRole().equalsIgnoreCase("superadmin")) {
+            // Menu untuk superadmin
+            items = new MenuItem[]{
+                    new Item.Label("MAIN"),
+                    new Item("Dashboard", "dashboard.svg"),
+
+                    new Item.Label("Pengaturan"),
+                    new Item("formAccount", "userSetting.svg"),
+                    new Item("Keluar", "logout.svg"),
+            };
+        } else if (loginInformation.getRole().equalsIgnoreCase("staff")) {
+            // Menu untuk staff
+            items = new MenuItem[]{
+                    new Item.Label("MAIN"),
+                    new Item("Dashboard", "dashboard.svg"),
+                    //
+                    new Item.Label("PRODUKSI"),
+                    new Item("Barang", "warehouse.svg")
+                            .subMenu("Penyimpanan")
+                            .subMenu("Transaksi"),
+                    new Item("Berita", "alert.svg"),
+                    //
+                    new Item.Label("PENGATURAN"),
+                    new Item("Keluar", "logout.svg"),
+            };
+        } else if (loginInformation.getRole().equalsIgnoreCase("personalia")) {
+            // Menu untuk personalia
+            items = new MenuItem[]{
+                    new Item.Label("MAIN"),
+                    new Item("Dashboard", "dashboard.svg"),
+                    //
+                    new Item.Label("PERSONALIA"),
+                    new Item("Karyawan", "employee.svg"),
+                    new Item("Presensi", "presence.svg"),
+                    //
+                    new Item.Label("PENGATURAN"),
+                    new Item("Keluar", "logout.svg"),
+            };
+        } else {
+            // Default menu
+            items = new MenuItem[]{
+                    new Item.Label("MAIN"),
+                    new Item("Dashboard", "dashboard.svg"),
+                    //
+                    new Item.Label("Pengaturan"),
+                    new Item("Akun", "userSetting.svg"),
+                    new Item("Keluar", "logout.svg"),
+            };
+        }
 
         SimpleMenuOption simpleMenuOption = new SimpleMenuOption() {
             @Override
@@ -196,120 +196,120 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
         // Action Menu
         simpleMenuOption.addMenuEvent(new MenuEvent() {
-    @Override
-        public void selected(MenuAction action, int[] index) {
-            if (index.length == 1) {
-                switch (index[0]) {
-                    case 0:
-                        FormManager.showForm(new Dashboard());
-                        break;
-                    case 1:
-                        FormManager.showForm(new formEmployee());
-                        break;
-                    case 2:
-                        FormManager.showForm(new formPresence());
-                        break;
-                    case 4:
-                        FormManager.showForm(new formIncident());
-                        break;
-                    case 5:
-                        FormManager.showForm(new formAccount());
-                        break;
-                    case 6:
-                        logout();
-                        break;
-                    default:
-                        // Do nothing
-                }
-            } else if (index.length == 2) {
-                // Memeriksa jika submenu dipilih
-                switch (index[0]) {
-                    case 3:
-                        // Submenu dipilih
-                        switch (index[1]) {
-                            case 0:
-                                FormManager.showForm(new formStorage());
-                                break;
-                            case 1:
-                                FormManager.showForm(new formTransaction());
-                                break;
-                            default:
-                                // Do nothing
-                        }
-                        break;
-                    default:
-                        // Do nothing
-                }
-            }
-        }
-
-//            @Override
-//            public void selected(MenuAction action, int[] index) {
-//                if (index.length == 1) {
-//                    if (loginInformation.getRole().equalsIgnoreCase("superadmin")) {
-//                        switch (index[0]) {
+//    @Override
+//        public void selected(MenuAction action, int[] index) {
+//            if (index.length == 1) {
+//                switch (index[0]) {
+//                    case 0:
+//                        FormManager.showForm(new Dashboard());
+//                        break;
+//                    case 1:
+//                        FormManager.showForm(new formEmployee());
+//                        break;
+//                    case 2:
+//                        FormManager.showForm(new formPresence());
+//                        break;
+//                    case 4:
+//                        FormManager.showForm(new formIncident());
+//                        break;
+//                    case 5:
+//                        FormManager.showForm(new formAccount());
+//                        break;
+//                    case 6:
+//                        logout();
+//                        break;
+//                    default:
+//                        // Do nothing
+//                }
+//            } else if (index.length == 2) {
+//                // Memeriksa jika submenu dipilih
+//                switch (index[0]) {
+//                    case 3:
+//                        // Submenu dipilih
+//                        switch (index[1]) {
 //                            case 0:
-//                                FormManager.showForm(new Dashboard3());
+//                                FormManager.showForm(new formStorage());
 //                                break;
 //                            case 1:
-//                                FormManager.showForm(new formAccount());
-//                                break;
-//                            case 2:
-//                                logout();
+//                                FormManager.showForm(new formTransaction());
 //                                break;
 //                            default:
-//
+//                                // Do nothing
 //                        }
-//                    } else if (loginInformation.getRole().equalsIgnoreCase("staff")) {
-//                        switch (index[0]) {
-//                            case 0:
-//                                FormManager.showForm(new Dashboard3());
-//                                break;
-//                            case 2:
-//                                FormManager.showForm(new formIncident());
-//                                break;
-//                            case 3:
-//                                logout();
-//                                break;
-//                        }
-//                    } else if (loginInformation.getRole().equalsIgnoreCase("personalia")) {
-//                        switch (index[0]) {
-//                            case 0:
-//                                FormManager.showForm(new Dashboard3());
-//                                break;
-//                            case 1:
-//                                FormManager.showForm(new Karyawan());
-//                                break;
-//                            case 2:
-//                                FormManager.showForm(new Presence());
-//                                break;
-//                            case 3:
-//                                logout();
-//                                break;
-//                            default:
-//                        }
-//                    }
-//                } else if (index.length == 2 && loginInformation.getRole().equalsIgnoreCase("staff")) {
-//                    // Memeriksa jika submenu dipilih
-//                    switch (index[0]) {
-//                        case 1:
-//                            // Submenu dipilih
-//                            switch (index[1]) {
-//                                case 0:
-//                                    FormManager.showForm(new Penyimpanan());
-//                                    break;
-//                                case 1:
-//                                    FormManager.showForm(new Transaksi());
-//                                    break;
-//                                default:
-//                                    // Do nothing
-//                            }
-//                            break;
-//                        default:
-//                            // Do nothing
-//                    }
+//                        break;
+//                    default:
+//                        // Do nothing
 //                }
 //            }
+//        }
+
+            @Override
+            public void selected(MenuAction action, int[] index) {
+                if (index.length == 1) {
+                    if (loginInformation.getRole().equalsIgnoreCase("superadmin")) {
+                        switch (index[0]) {
+                            case 0:
+                                FormManager.showForm(new Dashboard());
+                                break;
+                            case 1:
+                                FormManager.showForm(new formAccount());
+                                break;
+                            case 2:
+                                logout();
+                                break;
+                            default:
+
+                        }
+                    } else if (loginInformation.getRole().equalsIgnoreCase("staff")) {
+                        switch (index[0]) {
+                            case 0:
+                                FormManager.showForm(new Dashboard());
+                                break;
+                            case 2:
+                                FormManager.showForm(new formIncident());
+                                break;
+                            case 3:
+                                logout();
+                                break;
+                        }
+                    } else if (loginInformation.getRole().equalsIgnoreCase("personalia")) {
+                        switch (index[0]) {
+                            case 0:
+                                FormManager.showForm(new Dashboard());
+                                break;
+                            case 1:
+                                FormManager.showForm(new formEmployee());
+                                break;
+                            case 2:
+                                FormManager.showForm(new formPresence());
+                                break;
+                            case 3:
+                                logout();
+                                break;
+                            default:
+                        }
+                    }
+                } else if (index.length == 2 && loginInformation.getRole().equalsIgnoreCase("staff")) {
+                    // Memeriksa jika submenu dipilih
+                    switch (index[0]) {
+                        case 1:
+                            // Submenu dipilih
+                            switch (index[1]) {
+                                case 0:
+                                    FormManager.showForm(new formStorage());
+                                    break;
+                                case 1:
+                                    FormManager.showForm(new formTransaction());
+                                    break;
+                                default:
+                                    // Do nothing
+                            }
+                            break;
+                        default:
+                            // Do nothing
+                    }
+                }
+            }
         });
 
         simpleMenuOption.setMenus(items)

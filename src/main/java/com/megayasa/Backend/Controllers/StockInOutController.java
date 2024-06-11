@@ -5,6 +5,8 @@ import com.megayasa.Backend.Services.Interfaces.StockInOutService;
 import com.megayasa.Backend.ViewModels.Requests.StockInOutRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.StockInOutResponseVm;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class StockInOutController {
@@ -28,7 +30,9 @@ public class StockInOutController {
     }
 
     public List<StockInOutResponseVm> findStockInOuts(){
-        return stockInOutService.findStockInOuts();
+        List<StockInOutResponseVm> stocks = new ArrayList<>(stockInOutService.findStockInOuts());
+        stocks.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        return stocks;
     }
 
     public void deleteStockInOut(String id){

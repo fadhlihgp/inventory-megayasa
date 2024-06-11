@@ -13,10 +13,11 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[select e.name, a.date, a.information, a.note
 from presence a
-join employee e on e.id = a.employee_id]]>
+join employee e on e.id = a.employee_id
+order by a.date desc]]>
 	</queryString>
 	<field name="name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>

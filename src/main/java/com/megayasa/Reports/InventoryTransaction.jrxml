@@ -13,7 +13,7 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[select i.code, i.name, s.amount, 
 CASE 
         WHEN s.status = 1 THEN 'masuk'
@@ -21,7 +21,8 @@ CASE
     END AS status, 
 s.date, s.note
 from stock_in_out s
-join inventory i on i.id = s.inventory_id]]>
+join inventory i on i.id = s.inventory_id
+order by s.date desc]]>
 	</queryString>
 	<field name="code" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>

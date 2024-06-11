@@ -90,7 +90,25 @@ public class AbsenceRepositoryImpl implements AbsenceRepository {
 
     @Override
     public List<Absence> findAll() {
-        return queryRepository.findAll();
+        String query = "select * from presence order by date desc";
+        ResultSet resultSet = null;
+        List<Absence> results = new ArrayList<>();
+        try {
+            resultSet = connection.createStatement().executeQuery(query);
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                Date date = resultSet.getDate("date");
+                String information = resultSet.getString("information");
+                String note = resultSet.getString("note");
+                String employeeId = resultSet.getString("employee_id");
+                results.add(new Absence(id, date, information, note, employeeId));
+            }
+//            connection.close();
+            return results;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+//        return queryRepository.findAll();
     }
 
     @Override

@@ -42,7 +42,8 @@
 		<![CDATA[select e.id, p.name as position, e.name, e.birthdate, e.address, e.gender,
 e.phone_number, e.identity_number
 from employee e
-join position p on p.id = e.position_id]]>
+join position p on p.id = e.position_id
+ORDER BY e.id]]>
 	</queryString>
 	<field name="id" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>

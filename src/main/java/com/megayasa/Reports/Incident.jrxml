@@ -13,8 +13,9 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
-	<queryString language="SQL">
-		<![CDATA[select * from incident]]>
+	<queryString>
+		<![CDATA[select * from incident order by date desc
+]]>
 	</queryString>
 	<field name="date" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
