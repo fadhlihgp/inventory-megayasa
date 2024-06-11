@@ -118,7 +118,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     new Item("Dashboard", "dashboard.svg"),
 
                     new Item.Label("Pengaturan"),
-                    new Item("formAccount", "userSetting.svg"),
+                    new Item("Akun", "userSetting.svg"),
                     new Item("Keluar", "logout.svg"),
             };
         } else if (loginInformation.getRole().equalsIgnoreCase("staff")) {
