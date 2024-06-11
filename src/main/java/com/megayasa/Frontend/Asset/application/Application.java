@@ -20,6 +20,9 @@ import com.megayasa.Frontend.Asset.components.Background;
 import com.megayasa.Frontend.Asset.forms.Dashboard;
 import com.megayasa.Frontend.Asset.menu.FormManager;
 import com.megayasa.Frontend.View.Main.Main;
+import java.awt.Image;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import raven.popup.GlassPanePopup;
 
 /**
@@ -49,6 +52,7 @@ public class Application extends JFrame {
         GlassPanePopup.install(this);
         FormManager.install(this);
         FormManager.showForm(new Dashboard());
+        setApplicationIcon();
         
         // applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
     }
@@ -60,6 +64,16 @@ public class Application extends JFrame {
 //        FlatMacLightLaf.setup();
 //        EventQueue.invokeLater(() -> new Application().setVisible(true));
 //    }
+
+    private void setApplicationIcon() {
+        try {
+            Image icon = ImageIO.read(getClass().getResourceAsStream("/image/logoME.png"));
+            setIconImage(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void open() {
         FlatRobotoFont.install();

@@ -22,13 +22,13 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author Ridho Multazam
  */
-public class Penyimpanan extends SimpleForm {
+public class formStorage extends SimpleForm {
 
     private InventoryController inventoryController;
     private List<Inventory> allInventories;
     private List<Inventory> filteredInventories;
 
-    public Penyimpanan() {
+    public formStorage() {
         initComponents();
         applyTableStyle(tableBarang);
         initializeData();
@@ -172,7 +172,7 @@ public class Penyimpanan extends SimpleForm {
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         // TODO add your handling code here:
-        tambahBarang a = new tambahBarang();
+        addStorage a = new addStorage();
         a.setVisible(true);
     }//GEN-LAST:event_btAddActionPerformed
 
@@ -202,7 +202,7 @@ public class Penyimpanan extends SimpleForm {
             @Override
             public void onEdit(int row) {
                 Inventory inventory = filteredInventories.get(row);
-                tambahBarang t = new tambahBarang(inventory.getCode());
+                addStorage t = new addStorage(inventory.getCode());
                 t.setVisible(true);
             }
 

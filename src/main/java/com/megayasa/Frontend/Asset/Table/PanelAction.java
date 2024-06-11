@@ -1,7 +1,7 @@
 package com.megayasa.Frontend.Asset.Table;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.megayasa.Frontend.View.Personalia.editKaryawan;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

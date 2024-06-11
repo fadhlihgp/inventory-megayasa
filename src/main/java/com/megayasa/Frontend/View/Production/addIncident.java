@@ -22,7 +22,7 @@ import javax.swing.*;
  *
  * @author Ridho Multazam
  */
-public class tambahBerita extends javax.swing.JFrame {
+public class addIncident extends javax.swing.JFrame {
 
     private String incidentId;
     private IncidentController incidentController;
@@ -30,7 +30,7 @@ public class tambahBerita extends javax.swing.JFrame {
     /**
      * Creates new form Test
      */
-    public tambahBerita(String incidentId) {
+    public addIncident(String incidentId) {
         this.incidentId = incidentId;
         initComponents();
         btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
@@ -48,7 +48,7 @@ public class tambahBerita extends javax.swing.JFrame {
         });
         initializeCode();
     }
-    public tambahBerita() {
+    public addIncident() {
         initComponents();
         btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
         btUpload.setIcon(new FlatSVGIcon("iconSVG/upload.svg", 0.28f));
@@ -260,7 +260,7 @@ public class tambahBerita extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new tambahBerita().setVisible(true);
+                new addIncident().setVisible(true);
             }
         });
     }

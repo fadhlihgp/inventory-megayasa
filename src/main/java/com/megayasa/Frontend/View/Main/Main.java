@@ -1,6 +1,7 @@
 package com.megayasa.Frontend.View.Main;
 
 import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.google.inject.Guice;
@@ -14,7 +15,9 @@ import com.megayasa.Frontend.Asset.application.Application;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.time.LocalDateTime;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -32,11 +35,13 @@ public class Main extends javax.swing.JFrame {
         loginInformationController = Guice.createInjector(new Injection()).getInstance(LoginInformationController.class);
         checkLogin();
         initComponents();
+        setApplicationIcon();
         txUsername.setBackground(new java.awt.Color(0,0,0,1));
         txPassword.setBackground(new java.awt.Color(0,0,0,1));
 
         txUsername.setText("USERNAME");
         txPassword.setText("PASSWORD");
+//        logo.setIcon(new FlatSVGIcon("iconSVG/worker.svg", 0.90f));
 
 //        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -60,6 +65,15 @@ public class Main extends javax.swing.JFrame {
             } else {
                 loginInformationController.deleteLoginInformation();
             }
+        }
+    }
+    
+    private void setApplicationIcon() {
+        try {
+            Image icon = ImageIO.read(getClass().getResourceAsStream("/image/logoME.png"));
+            setIconImage(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     /**

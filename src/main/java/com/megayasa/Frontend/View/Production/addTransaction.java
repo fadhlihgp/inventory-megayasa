@@ -27,7 +27,7 @@ import javax.swing.*;
  *
  * @author Ridho Multazam
  */
-public class transaksiBarang extends javax.swing.JFrame {
+public class addTransaction extends javax.swing.JFrame {
 
     private InventoryController inventoryController;
     private StockInOutController stockInOutController;
@@ -36,7 +36,7 @@ public class transaksiBarang extends javax.swing.JFrame {
     /**
      * Creates new form Test
      */
-    public transaksiBarang(String transactionCode) {
+    public addTransaction(String transactionCode) {
         this.transactionCode = transactionCode;
         initComponents();
         btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
@@ -53,7 +53,7 @@ public class transaksiBarang extends javax.swing.JFrame {
         });
         initializeData();
     }
-    public transaksiBarang() {
+    public addTransaction() {
         initComponents();
         btCalendar.setIcon(new FlatSVGIcon("iconSVG/btCalendar.svg", 0.35f));
 
@@ -283,7 +283,7 @@ public class transaksiBarang extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new transaksiBarang().setVisible(true);
+                new addTransaction().setVisible(true);
             }
         });
     }

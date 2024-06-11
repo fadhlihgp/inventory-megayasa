@@ -13,6 +13,8 @@ import com.megayasa.Frontend.Asset.Table.TableActionCellEditorDelete;
 import com.megayasa.Frontend.Asset.Table.TableActionCellRenderDelete;
 import com.megayasa.Frontend.Asset.Table.TableActionDelete;
 import com.megayasa.Frontend.Asset.components.SimpleForm;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -213,7 +215,7 @@ public class formPresence extends SimpleForm {
         String[] headers = { "Karyawan", "Tanggal", "Alasan", "Catatan", "Aksi" };
         DefaultTableModel defaultTableModel = new DefaultTableModel(null, headers);
         tableAbsensi.setModel(defaultTableModel);
-
+        
         for (AbsenceDetailResponseVm filteredAbsence : filteredAbsences) {
             String[] values = { filteredAbsence.getEmployeeName(), ChangeDateFormat.dateToString("dd MMM yyyy", filteredAbsence.getDate()),
                     filteredAbsence.getInformation(), filteredAbsence.getNote()
@@ -241,7 +243,7 @@ public class formPresence extends SimpleForm {
         tableAbsensi.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRenderDelete());
         tableAbsensi.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditorDelete(event));
         
-       // Set horizontal alignment for columns 0 to 3
+        // Mengatur perataan teks di kolom
         for (int i = 0; i < tableAbsensi.getColumnCount() - 1; i++) {
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setHorizontalAlignment(SwingConstants.CENTER);

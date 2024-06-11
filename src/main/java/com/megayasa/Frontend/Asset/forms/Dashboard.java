@@ -43,10 +43,10 @@ public class Dashboard extends SimpleForm {
         jLabel9.setText(Integer.toString(dashboardResponseVm.getIncidentTotal()));
         jLabel7.setText(Integer.toString(dashboardResponseVm.getInventoryTotal()));
         jLabel4.setText("Jumlah Jenis Barang");
-        dsKaryawan.setIcon(new FlatSVGIcon("iconSVG/employee.svg", 0.90f));
-        dsTransaksi.setIcon(new FlatSVGIcon("iconSVG/right-left.svg", 0.90f));
-        dsBerita.setIcon(new FlatSVGIcon("iconSVG/alert.svg", 0.90f));
-        dsAbsensi.setIcon(new FlatSVGIcon("iconSVG/presence.svg", 0.90f));
+        dsKaryawan.setIcon(new FlatSVGIcon("iconSVG/dsEmployee.svg", 0.90f));
+        dsTransaksi.setIcon(new FlatSVGIcon("iconSVG/dsTransaction.svg", 0.90f));
+        dsBerita.setIcon(new FlatSVGIcon("iconSVG/dsNews.svg", 0.90f));
+        dsAbsensi.setIcon(new FlatSVGIcon("iconSVG/dsWarehouse.svg", 0.90f));
         crazyPanel1.putClientProperty(FlatClientProperties.STYLE, ""
                 + "border:5,5,5,5,$Component.borderColor,,20");
         init();
@@ -216,7 +216,7 @@ public class Dashboard extends SimpleForm {
         jLabel9 = new javax.swing.JLabel();
 
         crazyPanel1.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
-            "arc:20;[light]background:shade(@background,2%);[dark]background:tint(@background,2%);[light]border:0,0,0,0,shade(@background,5%),,20;[dark]border:0,0,0,0,tint(@background,5%),,20",
+            "background:$Table.background;[light]border:0,0,0,0,shade(@background,5%),,20;[dark]border:0,0,0,0,tint(@background,5%),,20",
             null
         ));
         crazyPanel1.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
@@ -227,11 +227,12 @@ public class Dashboard extends SimpleForm {
         ));
 
         crazyPanel2.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
-            "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,3%)",
+            "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,1%)",
             new String[]{
                 "",
                 "[light]foreground:tint(@foreground,50%);[dark]foreground:shade(@foreground,50%)",
-                "font:bold +3"
+                "font:bold +3",
+                ""
             }
         ));
         crazyPanel2.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
@@ -255,7 +256,7 @@ public class Dashboard extends SimpleForm {
         crazyPanel1.add(crazyPanel2);
 
         crazyPanel3.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
-            "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,3%)",
+            "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,1%)",
             new String[]{
                 "",
                 "[light]foreground:tint(@foreground,50%);[dark]foreground:shade(@foreground,50%)",
@@ -283,7 +284,7 @@ public class Dashboard extends SimpleForm {
         crazyPanel1.add(crazyPanel3);
 
         crazyPanel4.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
-            "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,3%)",
+            "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,1%)",
             new String[]{
                 "",
                 "[light]foreground:tint(@foreground,50%);[dark]foreground:shade(@foreground,50%)",
@@ -311,7 +312,7 @@ public class Dashboard extends SimpleForm {
         crazyPanel1.add(crazyPanel4);
 
         crazyPanel5.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
-            "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,3%)",
+            "arc:20;[light]background:lighten(@background,3%);[dark]background:darken(@background,1%)",
             new String[]{
                 "",
                 "[light]foreground:tint(@foreground,50%);[dark]foreground:shade(@foreground,50%)",
@@ -349,7 +350,7 @@ public class Dashboard extends SimpleForm {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(576, Short.MAX_VALUE))
+                .addContainerGap(549, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

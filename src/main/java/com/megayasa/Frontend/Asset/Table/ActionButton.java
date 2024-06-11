@@ -3,7 +3,7 @@ package com.megayasa.Frontend.Asset.Table;
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import com.megayasa.Frontend.View.Personalia.Karyawan;
+import com.megayasa.Frontend.View.Personnel.formEmployee;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -42,7 +42,7 @@ public class ActionButton extends JButton {
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
         FlatMacDarkLaf.setup();
         java.awt.EventQueue.invokeLater(() -> {
-            new Karyawan().setVisible(true);
+            new formEmployee().setVisible(true);
         });
     }
 }

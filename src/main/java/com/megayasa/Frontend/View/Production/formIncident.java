@@ -1,4 +1,4 @@
-package com.megayasa.Frontend.View.Produksi;
+package com.megayasa.Frontend.View.Production;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -9,7 +9,6 @@ import com.megayasa.Backend.Helpers.ChangeDateFormat;
 import com.megayasa.Backend.Models.Incident;
 import com.megayasa.Backend.Utils.Injection;
 import com.megayasa.Backend.Utils.PrintReport;
-import com.megayasa.Backend.ViewModels.Responses.StockInOutResponseVm;
 import com.megayasa.Frontend.Asset.Table.TableActionCellEditor;
 import com.megayasa.Frontend.Asset.Table.TableActionCellRender;
 import com.megayasa.Frontend.Asset.Table.TableActionEvent;
@@ -27,12 +26,12 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author Ridho Multazam
  */
-public class Berita extends SimpleForm {
+public class formIncident extends SimpleForm {
 
     private IncidentController incidentController;
     private List<Incident> allIncidents;
     private List<Incident> filteredIncidents;
-    public Berita() {
+    public formIncident() {
         initComponents();
         applyTableStyle(tableBerita);
         initializeData();
@@ -61,7 +60,7 @@ public class Berita extends SimpleForm {
 
         jLabel1 = new javax.swing.JLabel();
         crazyPanel3 = new raven.crazypanel.CrazyPanel();
-        crazyPanel4 = new raven.crazypanel.CrazyPanel();
+        crazyPanel2 = new raven.crazypanel.CrazyPanel();
         txSearch = new javax.swing.JTextField();
         btAdd = new javax.swing.JButton();
         btPrint = new javax.swing.JButton();
@@ -82,7 +81,7 @@ public class Berita extends SimpleForm {
             null
         ));
 
-        crazyPanel4.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+        crazyPanel2.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "background:$Table.background",
             new String[]{
                 "JTextField.placeholderText=Search;background:@background",
@@ -91,7 +90,7 @@ public class Berita extends SimpleForm {
                 "background:lighten(@background,8%);borderWidth:1"
             }
         ));
-        crazyPanel4.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
+        crazyPanel2.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
             "",
             "[]push[][]",
             "",
@@ -106,7 +105,7 @@ public class Berita extends SimpleForm {
                 txSearchKeyTyped(evt);
             }
         });
-        crazyPanel4.add(txSearch);
+        crazyPanel2.add(txSearch);
 
         btAdd.setText("Tambah");
         btAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +113,7 @@ public class Berita extends SimpleForm {
                 btAddActionPerformed(evt);
             }
         });
-        crazyPanel4.add(btAdd);
+        crazyPanel2.add(btAdd);
 
         btPrint.setText("Print");
         btPrint.addActionListener(new java.awt.event.ActionListener() {
@@ -122,9 +121,9 @@ public class Berita extends SimpleForm {
                 btPrintActionPerformed(evt);
             }
         });
-        crazyPanel4.add(btPrint);
+        crazyPanel2.add(btPrint);
 
-        crazyPanel3.add(crazyPanel4);
+        crazyPanel3.add(crazyPanel2);
 
         tableBerita.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -153,19 +152,17 @@ public class Berita extends SimpleForm {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(0, 426, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(crazyPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(crazyPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addContainerGap(632, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(56, 56, 56)
-                    .addComponent(crazyPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addGap(14, 14, 14)
+                .addComponent(crazyPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -178,7 +175,7 @@ public class Berita extends SimpleForm {
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         // TODO add your handling code here:
-        tambahBerita a = new tambahBerita();
+        addIncident a = new addIncident();
         a.setVisible(true);
     }//GEN-LAST:event_btAddActionPerformed
 
@@ -223,7 +220,7 @@ public class Berita extends SimpleForm {
             @Override
             public void onEdit(int row) {
                 Incident incident = filteredIncidents.get(row);
-                tambahBerita t = new tambahBerita(incident.getId());
+                addIncident t = new addIncident(incident.getId());
                 t.setVisible(true);
             }
 
@@ -238,7 +235,7 @@ public class Berita extends SimpleForm {
                 if (confirmDelete == JOptionPane.YES_NO_OPTION) {
                     model.removeRow(row);
                     incidentController.deleteIncident(incident.getId());
-                    FormManager.showForm(new Berita());
+                    FormManager.showForm(new formIncident());
                 }
             }
         };
@@ -262,8 +259,8 @@ public class Berita extends SimpleForm {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
     private javax.swing.JButton btPrint;
+    private raven.crazypanel.CrazyPanel crazyPanel2;
     private raven.crazypanel.CrazyPanel crazyPanel3;
-    private raven.crazypanel.CrazyPanel crazyPanel4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tableBerita;

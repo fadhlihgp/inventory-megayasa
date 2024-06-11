@@ -270,6 +270,10 @@ public class addEmployee extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalendarActionPerformed
+        dateChooser.showPopup();
+    }//GEN-LAST:event_btCalendarActionPerformed
+
     private void btSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSimpanActionPerformed
         // TODO add your handling code here:
         Position cbPosition = (Position) Jabatan.getSelectedItem();
@@ -288,10 +292,6 @@ public class addEmployee extends javax.swing.JFrame {
         this.setVisible(false);
         FormManager.showForm(new formEmployee());
     }//GEN-LAST:event_btSimpanActionPerformed
-
-    private void btCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalendarActionPerformed
-        dateChooser.showPopup();
-    }//GEN-LAST:event_btCalendarActionPerformed
 
     private void loadPositionData() {
         DefaultComboBoxModel<Position> defaultComboBoxModel = new DefaultComboBoxModel<>();

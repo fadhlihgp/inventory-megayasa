@@ -17,7 +17,7 @@ import javax.swing.*;
  *
  * @author Ridho Multazam
  */
-public class tambahBarang extends javax.swing.JFrame {
+public class addStorage extends javax.swing.JFrame {
 
     private InventoryController inventoryController;
     private String inventoryCode;
@@ -25,13 +25,13 @@ public class tambahBarang extends javax.swing.JFrame {
     /**
      * Creates new form Test
      */
-    public tambahBarang(String code) {
+    public addStorage(String code) {
         inventoryCode = code;
         initComponents();
         initializeData();
     }
 
-    public tambahBarang() {
+    public addStorage() {
         initComponents();
         initializeData();
     }
@@ -171,7 +171,7 @@ public class tambahBarang extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new tambahBarang().setVisible(true);
+                new addStorage().setVisible(true);
             }
         });
     }

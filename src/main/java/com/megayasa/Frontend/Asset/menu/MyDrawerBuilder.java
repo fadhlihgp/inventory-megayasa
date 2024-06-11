@@ -25,11 +25,11 @@ import raven.drawer.component.menu.data.Item;
 import raven.drawer.component.menu.data.MenuItem;
 import com.megayasa.Frontend.Asset.forms.Dashboard;
 import com.megayasa.Frontend.View.Setting.formAccount;
-import com.megayasa.Frontend.View.Personalia.Karyawan;
-import com.megayasa.Frontend.View.Personalia.Absensi;
-import com.megayasa.Frontend.View.Produksi.Berita;
-import com.megayasa.Frontend.View.Produksi.Penyimpanan;
-import com.megayasa.Frontend.View.Produksi.Transaksi;
+import com.megayasa.Frontend.View.Personnel.formEmployee;
+import com.megayasa.Frontend.View.Personnel.formPresence;
+import com.megayasa.Frontend.View.Production.formIncident;
+import com.megayasa.Frontend.View.Production.formStorage;
+import com.megayasa.Frontend.View.Production.formTransaction;
 import raven.swing.AvatarIcon;
 
 /**
@@ -96,7 +96,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
             //
             new Item.Label("PERSONALIA"),
             new Item("Karyawan", "employee.svg"),
-            new Item("Absensi", "presence.svg"),
+            new Item("Presensi", "presence.svg"),
             //
             new Item.Label("PRODUKSI"),
             new Item("Barang", "warehouse.svg")
@@ -131,7 +131,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //                    new Item("Barang", "warehouse.svg")
 //                            .subMenu("Penyimpanan")
 //                            .subMenu("Transaksi"),
-//                    new Item("Berita", "alert.svg"),
+//                    new Item("formIncident", "alert.svg"),
 //                    //
 //                    new Item.Label("PENGATURAN");
 //                    new Item("Keluar", "logout.svg"),
@@ -144,7 +144,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //                    //
 //                    new Item.Label("PERSONALIA"),
 //                    new Item("Karyawan", "employee.svg"),
-//                    new Item("Absensi", "presence.svg"),
+//                    new Item("Presence", "presence.svg"),
 //                    //
 //                    new Item.Label("PENGATURAN");
 //                    new Item("Keluar", "logout.svg"),
@@ -204,13 +204,13 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         FormManager.showForm(new Dashboard());
                         break;
                     case 1:
-                        FormManager.showForm(new Karyawan());
+                        FormManager.showForm(new formEmployee());
                         break;
                     case 2:
-                        FormManager.showForm(new Absensi());
+                        FormManager.showForm(new formPresence());
                         break;
                     case 4:
-                        FormManager.showForm(new Berita());
+                        FormManager.showForm(new formIncident());
                         break;
                     case 5:
                         FormManager.showForm(new formAccount());
@@ -228,10 +228,10 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         // Submenu dipilih
                         switch (index[1]) {
                             case 0:
-                                FormManager.showForm(new Penyimpanan());
+                                FormManager.showForm(new formStorage());
                                 break;
                             case 1:
-                                FormManager.showForm(new Transaksi());
+                                FormManager.showForm(new formTransaction());
                                 break;
                             default:
                                 // Do nothing
@@ -266,7 +266,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //                                FormManager.showForm(new Dashboard3());
 //                                break;
 //                            case 2:
-//                                FormManager.showForm(new Berita());
+//                                FormManager.showForm(new formIncident());
 //                                break;
 //                            case 3:
 //                                logout();
@@ -281,7 +281,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 //                                FormManager.showForm(new Karyawan());
 //                                break;
 //                            case 2:
-//                                FormManager.showForm(new Absensi());
+//                                FormManager.showForm(new Presence());
 //                                break;
 //                            case 3:
 //                                logout();

@@ -23,13 +23,13 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author Ridho Multazam
  */
-public class Transaksi extends SimpleForm {
+public class formTransaction extends SimpleForm {
 
     private StockInOutController stockInOutController;
     private List<StockInOutResponseVm> allTransactions;
     private List<StockInOutResponseVm> filteredTransactions;
 
-    public Transaksi() {
+    public formTransaction() {
         initComponents();
         applyTableStyle(tableTransaksi);
         initializeData();
@@ -188,7 +188,7 @@ public class Transaksi extends SimpleForm {
 
     private void btTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTransaksiActionPerformed
         // TODO add your handling code here:
-        transaksiBarang a = new transaksiBarang();
+        addTransaction a = new addTransaction();
         a.setVisible(true);
     }//GEN-LAST:event_btTransaksiActionPerformed
 
