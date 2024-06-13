@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="92ddd8c5-bf51-4c80-a36f-d8f1bf8553d1">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="383"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
@@ -39,7 +39,7 @@
 	</style>
 	<subDataset name="Table Dataset 1" uuid="ffad6ba6-5eaf-44d3-9123-de59c68a41d1"/>
 	<queryString>
-		<![CDATA[select e.id, p.name as position, e.name, e.birthdate, e.address, e.gender,
+		<![CDATA[select e.id, p.name as position, e.name as employee , e.birthdate, e.address, e.gender,
 e.phone_number, e.identity_number
 from employee e
 join position p on p.id = e.position_id
@@ -49,9 +49,7 @@ ORDER BY e.id]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="position" class="java.lang.String"/>
-	<field name="name" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="employee" class="java.lang.String"/>
 	<field name="birthdate" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -180,7 +178,7 @@ ORDER BY e.id]]>
 					<textElement textAlignment="Center">
 						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{employee}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" positionType="Float" x="0" y="0" width="51" height="18" uuid="baa8c46e-ed11-4137-ac4d-a389f118e7c7"/>
@@ -196,7 +194,7 @@ ORDER BY e.id]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{position}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="">
+				<textField isStretchWithOverflow="true" pattern="dd MMMMM yyyy">
 					<reportElement style="Detail" positionType="Float" x="244" y="0" width="92" height="18" uuid="7c834924-ecfe-4a08-ab73-6bada3654a88"/>
 					<textElement textAlignment="Center">
 						<font size="10"/>
