@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2024 at 04:28 PM
+-- Generation Time: Jun 13, 2024 at 05:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -48,7 +48,7 @@ INSERT INTO `account` (`id`, `email`, `full_name`, `is_active`, `last_login`, `p
 ('16ecf466-577a-48b9-82a9-d9431e08cf8c', 'superadmin@email.com', 'Super Admin', b'1', '2024-05-30 20:19:03.000000', '$2a$10$it1K5OK3rSdanv.Ns75YJuH8Z15tN0W8VlFiZqBMqybFcUMHMkVBm', '0898989898', 'superadmin', NULL, '1'),
 ('8a772df3-9417-43d6-b258-ce7a56afbb6f', 'personaliaMegayasa@gmail.com', 'Staf Personalia', b'1', '2024-06-13 18:21:27.000000', '$2a$10$hTaJTrELPh9AugtBAYSkI.DQcPZnjwg8vxxrNMZDXXTYuA1z3ijKe', '081298771431', 'personalia', '110002', '2'),
 ('a0d4ba2c-4a87-4fb3-ae48-5bd41bf0a32c', 'ridhomultazam303@gmail.com', 'Ridho  Multazam', b'1', '2024-06-11 21:30:07.000000', '$2a$10$0l5X9Sl6QDoM0x/g7yDLD.df5at2v2d14syF8PRJ9YPnO73G5ccT6', '089626087984', 'admin', NULL, '1'),
-('fd003fbc-82bc-4504-a662-9757ef791507', 'gudangMegayasa@gmail.com', 'Staf Gudang', b'1', '2024-06-11 23:05:20.000000', '$2a$10$FTr3ZVbxGVwuvJzzEFYJFOMaysaY86ECS29SE/NgBSzELKxxhglfu', '081298748110', 'gudang', '110011', '3');
+('fd003fbc-82bc-4504-a662-9757ef791507', 'gudangMegayasa@gmail.com', 'Staf Gudang', b'1', '2024-06-13 21:31:08.000000', '$2a$10$FTr3ZVbxGVwuvJzzEFYJFOMaysaY86ECS29SE/NgBSzELKxxhglfu', '081298748110', 'gudang', '110011', '3');
 
 -- --------------------------------------------------------
 
@@ -99,6 +99,13 @@ CREATE TABLE `incident` (
   `title` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `incident`
+--
+
+INSERT INTO `incident` (`id`, `date`, `description`, `picture_url`, `title`) VALUES
+('IN-1306242502', '2024-06-07', 'Nama : XX\nUmur  : XX\nJatuh dikarenakan alat keamanan tidak sesuai', 'src/main/resources/upload/INS13-102025.jfif', 'Laporan Kecelakaan Kerja pada Proyek Pembangunan Gedung A');
+
 -- --------------------------------------------------------
 
 --
@@ -112,6 +119,24 @@ CREATE TABLE `inventory` (
   `stock` int(11) NOT NULL,
   `type` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`id`, `code`, `name`, `stock`, `type`) VALUES
+('005b5e58-3572-4019-b582-7e283e8f15cf', 'T008', 'Surveying Rod', 1, 'Peralatan'),
+('024381d3-0e00-4598-a3ca-08f52fc662c4', 'T007', 'Measuring Wheel', 1, 'Peralatan'),
+('06f8c113-b478-44a4-80cb-692687e60e25', 'T006', 'Laser Level', 1, 'Peralatan'),
+('1462b890-eced-4818-bf91-2c2c72637a0b', 'T009', 'Tape Measure', 3, 'Peralatan'),
+('15d1e560-fa83-484a-b66c-8bb2830c06fd', 'P003', 'Sepatu Safety', 10, 'Perlengkapan'),
+('22d3cbd2-d62c-45b8-8c2e-5ba18ed06bbf', 'T005', 'Theodolite', 1, 'Peralatan'),
+('89aceab2-1a1e-42f6-b103-e8c289f65783', 'T001', 'Gerinda', 2, 'Peralatan'),
+('97fa871b-32df-4b84-8a76-599287f24ef6', 'T004', 'Total Station', 1, 'Peralatan'),
+('9fedd18c-f086-45f2-9214-d0b4b2927467', 'T002', 'Bor Listrik	', 2, 'Peralatan'),
+('b3c947fa-54ca-4d05-97ca-d8fe9a9fe21f', 'P002', 'Rompi Safety', 10, 'Perlengkapan'),
+('c4051576-493a-4523-bd96-d8228f2af962', 'T003', 'Mesin Las', 1, 'Peralatan'),
+('f1e9b00c-dd06-47ff-89bb-c2d68c1a1fa4', 'P001', 'Helm Proyek	', 9, 'Perlengkapan');
 
 -- --------------------------------------------------------
 
@@ -136,7 +161,7 @@ CREATE TABLE `login_information` (
 --
 
 INSERT INTO `login_information` (`id`, `account_id`, `username`, `email`, `full_name`, `phone_number`, `role`, `role_id`, `expired_login`) VALUES
-('f887d445-3348-45cd-821e-e1823d04e9b4', '8a772df3-9417-43d6-b258-ce7a56afbb6f', 'personalia', 'personaliaMegayasa@gmail.com', 'Staf Personalia', '081298771431', 'Personalia', '2', '2024-06-16 18:21:27');
+('c4269ac4-2fdf-45d2-bc32-83dc8b872e90', 'fd003fbc-82bc-4504-a662-9757ef791507', 'gudang', 'gudangMegayasa@gmail.com', 'Staf Gudang', '081298748110', 'Staff', '3', '2024-06-16 21:31:08');
 
 -- --------------------------------------------------------
 
@@ -455,6 +480,25 @@ CREATE TABLE `stock_in_out` (
   `inventory_id` varchar(36) NOT NULL,
   `amount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stock_in_out`
+--
+
+INSERT INTO `stock_in_out` (`id`, `date`, `note`, `status`, `inventory_id`, `amount`) VALUES
+('IN-130624061', '2024-06-10', 'Stok Beli', b'1', '005b5e58-3572-4019-b582-7e283e8f15cf', 1),
+('IN-130624081', '2024-05-01', 'Stok Beli', b'1', 'f1e9b00c-dd06-47ff-89bb-c2d68c1a1fa4', 10),
+('IN-130624141', '2024-06-13', 'Stok Beli', b'1', '024381d3-0e00-4598-a3ca-08f52fc662c4', 1),
+('IN-130624161', '2024-05-01', 'Stok Beli', b'1', '15d1e560-fa83-484a-b66c-8bb2830c06fd', 10),
+('IN-130624241', '2024-06-03', 'Stok Beli', b'1', 'c4051576-493a-4523-bd96-d8228f2af962', 1),
+('IN-130624251', '2024-06-06', 'Stok Beli', b'1', '1462b890-eced-4818-bf91-2c2c72637a0b', 3),
+('IN-130624252', '2024-06-13', 'Stok Beli', b'1', '06f8c113-b478-44a4-80cb-692687e60e25', 1),
+('IN-130624391', '2024-05-01', 'Beli Stok', b'1', '89aceab2-1a1e-42f6-b103-e8c289f65783', 2),
+('IN-130624431', '2024-05-01', 'Stok Beli', b'1', 'b3c947fa-54ca-4d05-97ca-d8fe9a9fe21f', 10),
+('IN-130624433', '2024-06-13', 'Stok Beli', b'1', '97fa871b-32df-4b84-8a76-599287f24ef6', 1),
+('IN-130624494', '2024-06-13', 'Stok Beli', b'1', '22d3cbd2-d62c-45b8-8c2e-5ba18ed06bbf', 1),
+('IN-130624591', '2024-06-03', '', b'1', '9fedd18c-f086-45f2-9214-d0b4b2927467', 2),
+('OUT-130624391', '2024-06-05', 'Rusak', b'0', 'f1e9b00c-dd06-47ff-89bb-c2d68c1a1fa4', 1);
 
 --
 -- Indexes for dumped tables
