@@ -17,29 +17,11 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-validation</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.mysql</groupId>-->
-<!--            <artifactId>mysql-connector-j</artifactId>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-test</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>org.connectbot</groupId>
@@ -54,14 +36,14 @@
             <version>1.4</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+        <!-- JasperReports -->
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
             <version>6.20.5</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all -->
+        <!-- Groovy -->
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
@@ -69,141 +51,133 @@
             <type>pom</type>
         </dependency>
 
-        <!-- Dependensi untuk membaca file properties -->
+        <!-- Apache Commons Configuration -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-configuration2</artifactId>
             <version>2.7</version>
         </dependency>
 
-        <!-- Dependensi untuk ketergantungan commons-beanutils -->
+        <!-- Apache Commons BeanUtils -->
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.4</version>
         </dependency>
-        <!-- Dependensi untuk Absolute Layout -->
+
+        <!-- Absolute Layout -->
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE210</version>
         </dependency>
 
-        <!-- Mysql JDBC Driver -->
+        <!-- MySQL JDBC Driver -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
             <version>8.0.32</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.google.inject/guice -->
+        <!-- Google Guice -->
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>5.1.0</version>
         </dependency>
 
-        <!-- Dependensi untuk Absolute Layout -->
-        <dependency>
-            <groupId>org.netbeans.external</groupId>
-            <artifactId>AbsoluteLayout</artifactId>
-            <version>RELEASE210</version>
-        </dependency>
-
-         <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf -->
+        <!-- FlatLaf -->
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
             <version>3.4.1</version>
-            <type>jar</type>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf-extras -->
+        <!-- FlatLaf Extras -->
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf-extras</artifactId>
             <version>3.4.1</version>
-            <type>jar</type>
         </dependency>
 
-       <!-- https://mvnrepository.com/artifact/com.formdev/flatlaf-fonts-roboto -->
+        <!-- FlatLaf Fonts Roboto -->
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf-fonts-roboto</artifactId>
             <version>2.137</version>
         </dependency>
 
-         <!-- https://mvnrepository.com/artifact/io.github.bweng20/jSVG -->
+        <!-- jSVG -->
         <dependency>
             <groupId>io.github.bweng20</groupId>
             <artifactId>jSVG</artifactId>
             <version>1.2</version>
         </dependency>
 
-         <!-- https://mvnrepository.com/artifact/com.miglayout/miglayout-core -->
+        <!-- MigLayout Core -->
         <dependency>
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout-core</artifactId>
             <version>5.3</version>
         </dependency>
 
-         <!-- https://mvnrepository.com/artifact/com.miglayout/miglayout-swing -->
+        <!-- MigLayout Swing -->
         <dependency>
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout-swing</artifactId>
             <version>5.3</version>
         </dependency>
 
-      <!-- MANUAL LOCAL SWING CHART -->
+        <!-- Manual Local Swing Chart -->
         <dependency>
             <groupId>raven.chart</groupId>
             <artifactId>swing-chart</artifactId>
             <version>1.1.0-beta</version>
         </dependency>
 
-        <!-- MANUAL LOCAL SWING GLASSPANE  -->
+        <!-- Manual Local Swing Glasspane -->
         <dependency>
             <groupId>raven.popup</groupId>
             <artifactId>swing-glasspane-popup</artifactId>
             <version>1.4.0</version>
         </dependency>
-        <!-- MANUAL LOCAL SWING CRAZY PANEL  -->
+        
+        <!-- Manual Local Swing Crazy Panel -->
         <dependency>
             <groupId>raven.crazypanel</groupId>
             <artifactId>swing-crazy-panel</artifactId>
             <version>1.0.0</version>
         </dependency>
 
-        <!-- MANUAL LOCAL TABEL CUSTOM  -->
+        <!-- Manual Local Table Custom -->
         <dependency>
             <groupId>raven.tabel</groupId>
             <artifactId>table-custom</artifactId>
             <version>1.0.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/net.java.timingframework/timingframework-core -->
+        <!-- TimingFramework -->
         <dependency>
             <groupId>net.java.dev.timingframework</groupId>
             <artifactId>timingframework</artifactId>
             <version>1.0</version>
-            <type>jar</type>
         </dependency>
 
-         <!-- MANUAL LOCAL GLASSMORPHISM ICON  -->
+        <!-- Manual Local Glassmorphism Icon -->
         <dependency>
             <groupId>raven.glassmorphism</groupId>
             <artifactId>swing-glassmorphism-icon</artifactId>
             <version>1.0.1</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
+        <!-- JNA -->
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
             <version>5.5.0</version>
         </dependency>
 
-         <!-- MANUAL LOCAL DATE CHOOSER   -->
+        <!-- Manual Local Date Chooser -->
         <dependency>
             <groupId>com.raven</groupId>
             <artifactId>datechooser-swing</artifactId>
@@ -212,21 +186,22 @@
 
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
+   <build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <mainClass>com.megayasa.Frontend.View.Main</mainClass> <!-- Specify your main class here -->
+                <excludes>
+                    <exclude>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                    </exclude>
+                </excludes>
+            </configuration>
+        </plugin>
+     </plugins>
     </build>
 
 </project>
