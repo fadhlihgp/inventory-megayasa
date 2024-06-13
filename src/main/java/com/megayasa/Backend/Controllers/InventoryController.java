@@ -7,6 +7,7 @@ import com.megayasa.Backend.Services.Interfaces.InventoryService;
 import com.megayasa.Backend.ViewModels.Requests.InventoryRequestVm;
 import com.megayasa.Backend.ViewModels.Responses.InventoryResponseVm;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class InventoryController {
@@ -35,7 +36,14 @@ public class InventoryController {
     }
 
     public List<Inventory> findAllInventories(){
-        return inventoryService.findAllInventories();
+        List<Inventory> inventories = inventoryService.findAllInventories();
+        inventories.sort(new Comparator<Inventory>() {
+            @Override
+            public int compare(Inventory o1, Inventory o2) {
+                return o1.getCode().compareTo(o2.getCode());
+            }
+        });
+        return  inventories;
     }
 
     public InventoryResponseVm findInventoryByIdOrCode(String codeOrId){
