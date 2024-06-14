@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="92ddd8c5-bf51-4c80-a36f-d8f1bf8553d1">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.24184264611831"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
@@ -72,7 +72,7 @@ ORDER BY e.id]]>
 		<band height="103" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="163" height="102" uuid="7e48d00e-45ea-40c2-9469-a00eac08eda0"/>
-				<imageExpression><![CDATA["C:\\Users\\Rimuza\\Documents\\NetBeansProjects\\inventory-megayasa\\src\\main\\resources\\icon\\Logo_Megayasa.png"]]></imageExpression>
+				<imageExpression><![CDATA["D:\\Kuliah\\Semester 8\\KKP\\program\\inventory-megayasa\\src\\main\\resources\\icon\\Logo_Megayasa.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="59" width="802" height="23" uuid="11bb0ecc-fbf8-4b38-ad58-1fb443eb3ec6"/>

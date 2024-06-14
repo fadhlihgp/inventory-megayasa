@@ -38,7 +38,7 @@ order by a.date desc]]>
 		<band height="102" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="163" height="102" uuid="afa18174-79c3-4301-ac1f-75e1113f8376"/>
-				<imageExpression><![CDATA["C:\\Users\\Rimuza\\Documents\\NetBeansProjects\\inventory-megayasa\\src\\main\\resources\\icon\\Logo_Megayasa.png"]]></imageExpression>
+				<imageExpression><![CDATA["D:\\Kuliah\\Semester 8\\KKP\\program\\inventory-megayasa\\src\\main\\resources\\icon\\Logo_Megayasa.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="57" width="555" height="23" uuid="3f2787f6-49f5-49a3-9601-d949337d45a2"/>

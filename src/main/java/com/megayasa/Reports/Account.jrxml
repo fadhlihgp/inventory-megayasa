@@ -52,14 +52,14 @@ join role r on r.id = a.role_id]]>
 		<band height="105" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="163" height="102" uuid="6ee613fc-f7aa-45f7-bd3c-ace3afcef34c"/>
-				<imageExpression><![CDATA["C:\\Users\\Rimuza\\Documents\\NetBeansProjects\\inventory-megayasa\\src\\main\\resources\\icon\\Logo_Megayasa.png"]]></imageExpression>
+				<imageExpression><![CDATA["D:\\Kuliah\\Semester 8\\KKP\\program\\inventory-megayasa\\src\\main\\resources\\icon\\Logo_Megayasa.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="59" width="802" height="23" uuid="bc473c43-93bc-4933-ac78-e6649eb897ef"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="18"/>
 				</textElement>
-				<text><![CDATA[Laporan Data Karyawan]]></text>
+				<text><![CDATA[Laporan Data Akun]]></text>
 			</staticText>
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="90" width="802" height="1" uuid="a56e5762-a54c-4e93-a402-9de4c8d75b81"/>
