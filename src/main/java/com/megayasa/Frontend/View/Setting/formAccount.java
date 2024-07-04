@@ -15,8 +15,10 @@ import com.megayasa.Frontend.Asset.Table.TableActionEvent;
 import com.megayasa.Frontend.Asset.components.SimpleForm;
 import java.awt.Component;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -195,6 +197,8 @@ public class formAccount extends SimpleForm {
 
     private void btPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPrintActionPerformed
         // TODO add your handling code here:
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("REPORT_CLASS", PrintReport.class);
         new PrintReport().print("Account.jasper");
     }//GEN-LAST:event_btPrintActionPerformed
 
