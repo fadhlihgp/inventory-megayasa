@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+/src/main/resources/application.properties
+/src/main/java/com/megayasa/Frontend/assets/Login-SignUp-java-gui-main/build/
+/src/main/java/com/megayasa/Frontend/assets/Login-SignUp-java-gui-main/nbproject/private/
