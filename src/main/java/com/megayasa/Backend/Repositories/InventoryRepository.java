@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface InventoryRepository {
+    int inventoryTotal();
     Optional<Inventory> findById(String id);
     void delete(Inventory inventory);
     List<Inventory> findAll();
@@ -13,4 +14,5 @@ public interface InventoryRepository {
     void update(Inventory inventory);
     Optional<Inventory> findInventoryByIdOrCode(String idOrCode);
     Inventory findInventoryByCode(String code);
+    void deleteStockInOutWhereInventory(String inventoryId);
 }

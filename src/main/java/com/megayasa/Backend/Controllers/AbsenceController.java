@@ -32,7 +32,7 @@ public class AbsenceController {
         return absenceService.findAbsenceById(id);
     }
 
-    List<AbsenceDetailResponseVm> absenceDetailList(){
+    public List<AbsenceDetailResponseVm> absenceDetailList(){
         return absenceService.absenceDetailList();
     }
 }

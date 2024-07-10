@@ -29,4 +29,8 @@ public class PositionController {
     public List<Position> findAllPositions(){
         return positionService.findAllPositions();
     }
+
+    public Position findPositionById(String id) {
+        return positionService.findPositionById(id);
+    }
 }

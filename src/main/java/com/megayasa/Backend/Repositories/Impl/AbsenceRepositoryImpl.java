@@ -4,14 +4,13 @@ import com.google.inject.Inject;
 import com.megayasa.Backend.Models.Absence;
 import com.megayasa.Backend.Repositories.AbsenceRepository;
 import com.megayasa.Backend.Repositories.QueryRepository;
+import com.megayasa.Backend.ViewModels.Responses.AbsenceDashboardResponseVm;
 import com.megayasa.Backend.ViewModels.Responses.AbsenceResponseVm;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class AbsenceRepositoryImpl implements AbsenceRepository {
     private final Connection connection;
@@ -24,8 +23,54 @@ public class AbsenceRepositoryImpl implements AbsenceRepository {
     }
 
     @Override
+    public List<AbsenceDashboardResponseVm> absenceDashboard() {
+        List<AbsenceDashboardResponseVm> response = new ArrayList<>();
+        try {
+            String query = "WITH recursive dates AS (" +
+                    "    SELECT CURDATE() - INTERVAL 30 DAY AS date" +
+                    "    UNION ALL" +
+                    "    SELECT date + INTERVAL 1 DAY" +
+                    "    FROM dates" +
+                    "    WHERE date < CURDATE()" +
+                    ")" +
+                    "select d.date," +
+                    "       SUM(CASE WHEN presence.information = 'Sakit' THEN 1 ELSE 0 END ) as Sakit," +
+                    "       SUM(CASE WHEN presence.information = 'Hadir' THEN 1 ELSE 0 END ) as Hadir," +
+                    "       SUM(CASE WHEN presence.information = 'Izin' THEN 1 ELSE 0 END ) as Izin," +
+                    "       SUM(CASE WHEN presence.information = 'Cuti' THEN 1 ELSE 0 END ) as Cuti," +
+                    "       SUM(CASE WHEN presence.information = 'Alpa' THEN 1 ELSE 0 END ) as Alpa " +
+                    "from dates d " +
+                    "left join presence on d.date = presence.date " +
+                    "GROUP BY d.date";
+
+            ResultSet resultSet = connection.prepareStatement(query).executeQuery();
+            while (resultSet.next()) {
+                response.add(new AbsenceDashboardResponseVm(
+                        resultSet.getDate(1),
+                        resultSet.getInt(2),
+                        resultSet.getInt(3),
+                        resultSet.getInt(4),
+                        resultSet.getInt(5),
+                        resultSet.getInt(6)
+                ));
+            }
+            return response;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public Optional<Absence> findById(String id) {
         return queryRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Absence> findByEmployeeAndDate(String employeeId, Date date) {
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("employeeId", employeeId);
+        filters.put("date", date);
+        return queryRepository.findOneByFilter(filters, "AND");
     }
 
     @Override
@@ -40,12 +85,30 @@ public class AbsenceRepositoryImpl implements AbsenceRepository {
 
     @Override
     public void delete(Absence absence) {
-        queryRepository.deleteByClass(absence);
+        queryRepository.deleteById(absence.getId());
     }
 
     @Override
     public List<Absence> findAll() {
-        return queryRepository.findAll();
+        String query = "select * from presence order by date desc";
+        ResultSet resultSet = null;
+        List<Absence> results = new ArrayList<>();
+        try {
+            resultSet = connection.createStatement().executeQuery(query);
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                Date date = resultSet.getDate("date");
+                String information = resultSet.getString("information");
+                String note = resultSet.getString("note");
+                String employeeId = resultSet.getString("employee_id");
+                results.add(new Absence(id, date, information, note, employeeId));
+            }
+//            connection.close();
+            return results;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+//        return queryRepository.findAll();
     }
 
     @Override

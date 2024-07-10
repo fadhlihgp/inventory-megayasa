@@ -6,6 +6,7 @@ import com.megayasa.Backend.Repositories.InventoryRepository;
 import com.megayasa.Backend.Repositories.QueryRepository;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,10 +14,17 @@ import java.util.Optional;
 
 public class InventoryRepositoryImpl implements InventoryRepository {
     private final QueryRepository<Inventory, String> queryRepository;
+    private final Connection connection;
 
     @Inject
-    public InventoryRepositoryImpl(Connection connection) {
+    public InventoryRepositoryImpl(Connection connection, Connection connection1) {
         queryRepository = new QueryRepositoryImpl<>(Inventory.class, connection);
+        this.connection = connection1;
+    }
+
+    @Override
+    public int inventoryTotal() {
+        return queryRepository.count();
     }
 
     @Override
@@ -26,7 +34,7 @@ public class InventoryRepositoryImpl implements InventoryRepository {
 
     @Override
     public void delete(Inventory inventory) {
-        queryRepository.deleteByClass(inventory);
+        queryRepository.deleteById(inventory.getId());
     }
 
     @Override
@@ -58,5 +66,17 @@ public class InventoryRepositoryImpl implements InventoryRepository {
         Map<String, Object> filters = new HashMap<>();
         filters.put("code", code);
         return queryRepository.findOneByFilter(filters, "AND").orElse(null);
+    }
+
+    @Override
+    public void deleteStockInOutWhereInventory(String inventoryId) {
+        String sql = "DELETE FROM stock_in_out where inventory_id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, inventoryId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

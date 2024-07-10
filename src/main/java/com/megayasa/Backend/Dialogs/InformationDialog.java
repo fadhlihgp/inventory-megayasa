@@ -5,8 +5,8 @@ import java.awt.*;
 import java.util.Objects;
 
 public class InformationDialog {
-    private static final Icon successIcon = new ImageIcon(Objects.requireNonNull(InformationDialog.class.getResource("/icons/success.png")));
-    private static final Icon deleteIcon = new ImageIcon(Objects.requireNonNull(InformationDialog.class.getResource("/icons/delete.png")));
+    private static final Icon successIcon = new ImageIcon(Objects.requireNonNull(InformationDialog.class.getResource("/icon/success.png")));
+    private static final Icon deleteIcon = new ImageIcon(Objects.requireNonNull(InformationDialog.class.getResource("/icon/delete.png")));
     private static final Font customFont = new Font("Arial", Font.PLAIN, 14);
 
     static {

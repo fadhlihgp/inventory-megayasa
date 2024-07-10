@@ -1,22 +1,50 @@
 package com.megayasa.Frontend.View.Main;
 
-import javax.swing.JFrame;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.google.inject.Guice;
+import com.megayasa.Backend.Controllers.LoginController;
+import com.megayasa.Backend.Controllers.LoginInformationController;
+import com.megayasa.Backend.Models.LoginInformation;
+import com.megayasa.Backend.Utils.Injection;
+import com.megayasa.Backend.ViewModels.Requests.LoginRequestVm;
+import com.megayasa.Backend.ViewModels.Responses.LoginResponseVm;
+import com.megayasa.Frontend.Asset.application.Application;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import javax.imageio.ImageIO;
+
+/**
+ *
+ * @author Ridho Multazam
+ */
 public class Main extends javax.swing.JFrame {
     /**
      * Creates new form LoginPage
      */
     int xx, xy;
+    private final LoginController loginController;
+    private final LoginInformationController loginInformationController;
     public Main() {
+        loginController = Guice.createInjector(new Injection()).getInstance(LoginController.class);
+        loginInformationController = Guice.createInjector(new Injection()).getInstance(LoginInformationController.class);
+        checkLogin();
         initComponents();
+        setApplicationIcon();
         txUsername.setBackground(new java.awt.Color(0,0,0,1));
         txPassword.setBackground(new java.awt.Color(0,0,0,1));
-        
+
         txUsername.setText("USERNAME");
         txPassword.setText("PASSWORD");
+//        logo.setIcon(new FlatSVGIcon("iconSVG/worker.svg", 0.90f));
 
 //        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    
+
           // Menambahkan window listener untuk menangani event windowDeiconified
 //        addWindowListener(new WindowAdapter() {
 //            @Override
@@ -27,6 +55,27 @@ public class Main extends javax.swing.JFrame {
 //        });
     }
 
+//    Jika masih ada riwayat login (Belum logout) dan timeout expired login belum berakhir, maka akan dialihkan langsung ke halaman utama
+    private void checkLogin() {
+        LoginInformation loginInformation = loginInformationController.currentLogin();
+        if (loginInformation != null) {
+            if (loginInformation.getExpiredLogin().isAfter(LocalDateTime.now())) {
+                EventQueue.invokeLater(() -> this.setVisible(false));
+                new Application().open();
+            } else {
+                loginInformationController.deleteLoginInformation();
+            }
+        }
+    }
+    
+    private void setApplicationIcon() {
+        try {
+            Image icon = ImageIO.read(getClass().getResourceAsStream("/image/logoME.png"));
+            setIconImage(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -69,8 +118,8 @@ public class Main extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(1280, 720));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bt_close.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        bt_close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/close-30.png"))); // NOI18N
+        bt_close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bt_close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/close-30.png"))); // NOI18N
         bt_close.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bt_closeMouseClicked(evt);
@@ -78,8 +127,8 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel1.add(bt_close, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 10, -1, -1));
 
-        bt_minimize.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        bt_minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/minimize-30.png"))); // NOI18N
+        bt_minimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bt_minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/minimize-30.png"))); // NOI18N
         bt_minimize.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bt_minimizeMouseClicked(evt);
@@ -88,12 +137,12 @@ public class Main extends javax.swing.JFrame {
         jPanel1.add(bt_minimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 10, 30, 30));
 
         logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/worker-male-skin-type-3-100.png"))); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/worker-male-skin-type-3-100.png"))); // NOI18N
         jPanel1.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(578, 170, 124, 117));
 
         User.setBackground(new java.awt.Color(33, 72, 192));
         User.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        User.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
+        User.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
         User.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 UserFocusGained(evt);
@@ -117,7 +166,7 @@ public class Main extends javax.swing.JFrame {
         lock.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         lock.setForeground(new java.awt.Color(255, 255, 255));
         lock.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/lock.png"))); // NOI18N
+        lock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/lock.png"))); // NOI18N
         lock.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 lockFocusGained(evt);
@@ -136,10 +185,14 @@ public class Main extends javax.swing.JFrame {
         txPassword.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
         jPanel1.add(txPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 395, 300, 45));
 
-        btLogin.setBackground(new java.awt.Color(255, 255, 255));
         btLogin.setFont(new java.awt.Font("Monospaced", 1, 16)); // NOI18N
         btLogin.setForeground(new java.awt.Color(33, 72, 192));
         btLogin.setText("LOGIN");
+        btLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLoginActionPerformed(evt);
+            }
+        });
         jPanel1.add(btLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 483, 300, 45));
 
         forgotPassword.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
@@ -154,7 +207,7 @@ public class Main extends javax.swing.JFrame {
 
         Bg.setBackground(new java.awt.Color(255, 255, 255));
         Bg.setFont(new java.awt.Font("Monospaced", 1, 16)); // NOI18N
-        Bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/bg-login.png"))); // NOI18N
+        Bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bg-login.png"))); // NOI18N
         jPanel1.add(Bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, 1280, 720));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -168,7 +221,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_minimizeMouseClicked
 
     private void bt_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_closeMouseClicked
-        dispose();
+//        dispose();
+        System.exit(0);
     }//GEN-LAST:event_bt_closeMouseClicked
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
@@ -209,6 +263,18 @@ public class Main extends javax.swing.JFrame {
             txUsername.setText("USERNAME");
         }
     }//GEN-LAST:event_UserFocusLost
+
+    private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
+        // TODO add your handling code here:
+        String username = txUsername.getText();
+        String password = txPassword.getText();
+
+        LoginResponseVm login = loginController.login(new LoginRequestVm(username, password));
+        if (login != null) {
+            this.setVisible(false);
+            new Application().open();
+        }
+    }//GEN-LAST:event_btLoginActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -216,7 +282,7 @@ public class Main extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

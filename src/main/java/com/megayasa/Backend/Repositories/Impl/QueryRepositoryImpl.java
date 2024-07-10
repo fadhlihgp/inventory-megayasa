@@ -3,7 +3,7 @@ package com.megayasa.Backend.Repositories.Impl;
 import com.megayasa.Backend.Annotations.Db.Column;
 import com.megayasa.Backend.Annotations.Db.Id;
 import com.megayasa.Backend.Repositories.QueryRepository;
-import com.megayasa.Backend.Utils.ReflectionUtil;
+import com.megayasa.Backend.Annotations.Util.ReflectionUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -267,6 +267,36 @@ public class QueryRepositoryImpl<T, ID> implements QueryRepository<T, ID> {
             statement.close();
 
             return tList;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int count() {
+        try {
+            String tableName = ReflectionUtil.getTableName(tClass);
+            String query = String.format("Select Count(*) from %s as total", tableName);
+            ResultSet resultSet = connection.prepareStatement(query).executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int countWithCustomQuery(String query) {
+        try {
+            ResultSet resultSet = connection.prepareStatement(query).executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            } else {
+                return 0;
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

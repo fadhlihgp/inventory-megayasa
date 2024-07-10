@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Table(name = "absence")
+@Table(name = "presence")
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Absence {
     @Id

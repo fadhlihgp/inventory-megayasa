@@ -12,6 +12,8 @@ public interface QueryRepository<T, ID> {
     Optional<T> findOneByFilter(Map<String, Object> filters, String where);
     List<T> findListByFilter(Map<String, Object> filters, String where);
     List<T> findAll();
+    int count();
+    int countWithCustomQuery(String query);
     T update(T entity);
     void deleteById(ID id);
     void deleteByClass(T entity);

@@ -12,7 +12,7 @@ public interface InventoryService {
     void updateInventoryByCode(String code, InventoryRequestVm inventoryRequestVm);
     void updateInventoryById(String inventoryId, InventoryRequestVm inventoryRequestVm);
     void deleteInventoryByIdOrCode(String codeOrId);
-    List<InventoryResponseVm> findAllInventories();
+    List<Inventory> findAllInventories();
     InventoryResponseVm findInventoryByIdOrCode(String codeOrId);
     Inventory findInventoryById(String inventoryId);
 }
