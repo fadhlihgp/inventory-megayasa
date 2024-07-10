@@ -221,7 +221,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_minimizeMouseClicked
 
     private void bt_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_closeMouseClicked
-        dispose();
+//        dispose();
+        System.exit(0);
     }//GEN-LAST:event_bt_closeMouseClicked
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
